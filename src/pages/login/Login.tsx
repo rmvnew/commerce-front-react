@@ -45,15 +45,15 @@ const Login = () => {
     const auth = useContext(AuthContext)
 
 
-    const [email, setEmail] = useState('rmvnew@gmail.com')
-    const [password, setPassword] = useState('12345')
+    const [login, setLogin] = useState('rmvnew@gmail.com')
+    const [password, setPassword] = useState('k0975rp')
    
 
     const handleLogin = async () => {
 
-        if (email && password) {
+        if (login && password) {
 
-            const isLogged = await auth.signin(email, password)
+            const isLogged = await auth.signin(login, password)
 
             console.log(isLogged.status);
 
@@ -92,8 +92,8 @@ const Login = () => {
                     <input
                         className='form-control form-control-lg'
                         type="text"
-                        value={email}
-                        onChange={e => setEmail(e.target.value)}
+                        value={login}
+                        onChange={e => setLogin(e.target.value)}
                         placeholder="Digite seu email"
                     />
                     <input

@@ -1,13 +1,14 @@
 
 import { AnimatePresence, motion } from 'framer-motion'
 import { FaHome, FaBars } from 'react-icons/fa'
-import { AiOutlineInbox,AiFillSnippets } from 'react-icons/ai'
+import { AiOutlineInbox } from 'react-icons/ai'
 import { FiUser } from 'react-icons/fi'
 import { GiReceiveMoney } from 'react-icons/gi'
+import { AiFillSnippets } from 'react-icons/ai'
 import { NavLink } from 'react-router-dom';
 import { SlLogout } from "react-icons/sl";
 import { useContext, useState, useEffect } from 'react';
-// import { AuthContext } from '../../contexts/auth/AuthContext';
+import { AuthContext } from '../../auth/contexts/authContext';
 import './Sidebar.css'
 
 
@@ -25,21 +26,21 @@ const routes = [
         name: "Produtos",
         icon: <AiOutlineInbox />
     },
-    // {
-    //     path: "/user",
-    //     name: "Usuários",
-    //     icon: <FiUser />
-    // },
-    // {
-    //     path: "/work-order",
-    //     name: "Ordem de serviço",
-    //     icon: <AiFillSnippets />
-    // },
-    // {
-    //     path: "/sale",
-    //     name: "Venda",
-    //     icon: <GiReceiveMoney />
-    // }
+    {
+        path: "/user",
+        name: "Usuários",
+        icon: <FiUser />
+    },
+    {
+        path: "/work-order",
+        name: "Ordem de serviço",
+        icon: <AiFillSnippets />
+    },
+    {
+        path: "/sale",
+        name: "Venda",
+        icon: <GiReceiveMoney />
+    }
 ]
 
 const Sidebar = ({ children }: any) => {
@@ -57,8 +58,8 @@ const Sidebar = ({ children }: any) => {
         setIsExit(!isExit)
     }, [storageData])
 
-    // const auth = useContext(AuthContext)
-    const auth = true
+    const auth = useContext(AuthContext)
+    // const auth = true
 
     const [isopen, setIsOpen] = useState(true)
 
@@ -138,13 +139,13 @@ const Sidebar = ({ children }: any) => {
                             damping: 11,
                         }
                     }} >
-                        {/* {isExit && auth.user && <NavLink */}
-                        {isExit && auth && <NavLink
+                        {isExit && auth.user && <NavLink
+                     
                             to={'/login'} key={'Sair'} className="link" onClick={() => removeToken()}>
                             <div className="icon">{<SlLogout />}</div>
                             <AnimatePresence>
-                                {/* {isopen && auth.user && (<motion.div */}
-                                {isopen && auth && (<motion.div
+                                {isopen && auth.user && (<motion.div
+                              
                                     variants={showAnimation}
                                     initial="hidden"
                                     animate="show"

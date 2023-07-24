@@ -60,9 +60,10 @@ export const AuthProvider = ({children}:{children:JSX.Element}) =>{
                 }
             } else {
 
+                console.log(data);
                
                 setUser(data)
-                setToken(data.access_token)
+                setToken(data.token)
 
                 return {
                     message: 'pass',
@@ -85,6 +86,7 @@ export const AuthProvider = ({children}:{children:JSX.Element}) =>{
 
 
     const setToken = (token: string) => {
+       
         localStorage.setItem('authToken', token)
     }
 

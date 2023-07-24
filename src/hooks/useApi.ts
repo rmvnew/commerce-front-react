@@ -12,17 +12,26 @@ export const api = axios.create({
 })
 
 
+
+
 export const useApi = () => ({
     validateToken: async () => {
-        const response = await api.post('/auth/validate', { token })
+        const token = localStorage.getItem('authToken')
+
+        console.log('token: ',token);
+
+        const response = await api.post('/auth/validate', {token}, { headers: { Authorization: `Bearer ${token}` } })
         return response
     },
-    signin: async (email: string, password: string) => {
-        const response = await api.post('/login', { email, password })
+    signin: async (login: string, password: string) => {
+        
+        const response = await api.post('/auth/login', { login, password })
+
         return response.data
     },
     logout: async () => {
-        // const response = await api.post('/logout')
+        const token = localStorage.getItem('authToken')
+        // const response = await api.post('/logout', {}, { headers: { Authorization: `Bearer ${token}` } })
         // return response.data
     }
 })
