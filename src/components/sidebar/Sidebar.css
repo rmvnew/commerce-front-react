@@ -1,5 +1,7 @@
-* :root{
-    --sideBarColor: rgb(38, 67, 80);
+:root{
+    --sideBarActive: rgb(46, 57, 63);
+    --sideBarHover: rgb(76, 95, 104);
+    --sideBarBackground: rgb(74, 99, 131);
     --sideBarHoverColor: rgb(68, 113, 134);
   }
   
@@ -15,14 +17,14 @@
     transition: 0.2s cubic-bezier(0.6, -0.28,0.735,0.045);
     color: #FFF;
     font-weight: bold;
-    background: rgb(68, 113, 134);
+    background:var(--sideBarActive);
   }
 
   .active{
   
     border-right: 4px solid white;
     transition: 0.2s cubic-bezier(0.6, -0.28,0.735,0.045);
-    background: rgb(68, 113, 134);
+    background: var(--sideBarActive);
     color: #FFF;
   
   }
@@ -45,7 +47,8 @@
   
   
   .sidebar{
-    background: rgb(38, 67, 80) ;
+    /* background: rgb(38, 67, 80) ; */
+    background: var(--sideBarBackground) ;
     color: #FFF;
     height: 100vh;
   }

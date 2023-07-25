@@ -1,6 +1,7 @@
 
 import { AnimatePresence, motion } from 'framer-motion'
 import { FaHome, FaBars } from 'react-icons/fa'
+import { FiUsers } from 'react-icons/fi'
 import { AiOutlineInbox } from 'react-icons/ai'
 import { FiUser } from 'react-icons/fi'
 import { GiReceiveMoney } from 'react-icons/gi'
@@ -21,6 +22,11 @@ const routes = [
         path: "/",
         name: "Home",
         icon: <FaHome />
+    },
+    {
+        path: "/client",
+        name: "Clientes",
+        icon: <FiUsers />
     },
     {
         path: "/private",

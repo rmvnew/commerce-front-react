@@ -9,7 +9,7 @@ export const FooterArea = styled.div`
     width: 100%;
     bottom: 0;
     height: 35px;
-    background: rgb(38, 67, 80);
+    background: rgb(74, 99, 131);
     
 `
 
