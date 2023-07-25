@@ -59,8 +59,6 @@ const Login = () => {
 
             const isLogged = await auth.signin(login, password)
 
-            console.log(isLogged);
-           
             if (isLogged.status) {
 
                 console.log('logou');
@@ -71,9 +69,9 @@ const Login = () => {
             } else {
                 console.log('não logou');
                 console.log(isLogged.code);
-                if (isLogged.code === 401) {
+                if (isLogged.message === 'Incorrect password') {
                     msgToast('Senha inválida', 4000,false)
-                } else if (isLogged.code === 404) {
+                } else if (isLogged.message === 'Authentication failed') {
                     msgToast('Usuário inválido', 4000,false)
                 }
             }

@@ -40,10 +40,8 @@ export const useApi = () => ({
 
         } catch (error:any) {
 
-            console.log('Error: ',error.response);
-
             return {
-                message: error.message,
+                message: error.response.data.error,
                 code: error.response.status,
                 status: false
             }

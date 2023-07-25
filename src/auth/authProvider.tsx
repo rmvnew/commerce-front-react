@@ -48,10 +48,11 @@ export const AuthProvider = ({children}:{children:JSX.Element}) =>{
             };
         }
 
+       
         
         // Se a chamada da API não foi bem sucedida, retornar um objeto com a mensagem de erro,
         // código de status e status: false.
-        let message = data && data.data ? data.data.message : 'Error: No message provided';
+        let message = data && data.message ? data.message : 'Error: No message provided';
         let code = data ? data.code : 0;
         return {
             message: message,
