@@ -10,6 +10,7 @@ import { SlLogout } from "react-icons/sl";
 import { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../../auth/contexts/authContext';
 import './Sidebar.css'
+import { useApi } from '../../hooks/useApi'
 
 
 
@@ -44,10 +45,12 @@ const routes = [
 ]
 
 const Sidebar = ({ children }: any) => {
+    const auth = useContext(AuthContext)
 
-    function removeToken() {
-        console.log('limpa');
-        localStorage.removeItem('authToken')
+    function logout() {
+
+        auth.signout()
+       
     }
 
     const storageData = localStorage.getItem('authToken')
@@ -58,7 +61,7 @@ const Sidebar = ({ children }: any) => {
         setIsExit(!isExit)
     }, [storageData])
 
-    const auth = useContext(AuthContext)
+    // const auth = useContext(AuthContext)
     // const auth = true
 
     const [isopen, setIsOpen] = useState(true)
@@ -141,7 +144,7 @@ const Sidebar = ({ children }: any) => {
                     }} >
                         {isExit && auth.user && <NavLink
                      
-                            to={'/login'} key={'Sair'} className="link" onClick={() => removeToken()}>
+                            to={'/login'} key={'Sair'} className="link" onClick={() => logout()}>
                             <div className="icon">{<SlLogout />}</div>
                             <AnimatePresence>
                                 {isopen && auth.user && (<motion.div

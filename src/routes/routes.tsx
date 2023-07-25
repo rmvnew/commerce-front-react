@@ -12,24 +12,25 @@ export const AppRoutes = () => {
         <Routes>
 
             <Route path='/login' element={<Login />} />
-            
+
             <Route path="/" element={
-                <Footer>
-                    <Sidebar>
-                        
+                <RequireAuth>
+                    <Footer>
+                        <Sidebar>
                             <Home />
-                        
-                    </Sidebar>
-                </Footer>
+
+                        </Sidebar>
+                    </Footer>
+                </RequireAuth>
             } />
             <Route path="/private" element={
-                <Footer>
-                    <Sidebar>
-                        
+                <RequireAuth>
+                    <Footer>
+                        <Sidebar>
                             <Private />
-                        
-                    </Sidebar>
-                </Footer>
+                        </Sidebar>
+                    </Footer>
+                </RequireAuth>
             } />
         </Routes>
     )

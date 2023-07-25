@@ -5,7 +5,9 @@ import { ModalLogin } from '../../components/Modal.login';
 import { RecoverForm } from '../../components/recover-password/recover-password';
 import { LoginCard, LoginInputs, LoginTitle, MotionImgLogo } from './LoginStyled';
 import { toast } from 'react-toastify';
-import { motion } from 'framer-motion';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 
 
 
@@ -16,6 +18,8 @@ const Login = () => {
 
 
     const msgToast = (msg: string, timer: number, type: boolean) => {
+
+        
         if (type) {
             toast.success(msg, {
                 position: "top-right",
@@ -55,9 +59,10 @@ const Login = () => {
 
             const isLogged = await auth.signin(login, password)
 
-            console.log(isLogged.status);
-
+            console.log(isLogged);
+           
             if (isLogged.status) {
+
                 console.log('logou');
                 msgToast('Bem vindo!!', 2000,true)
                 setTimeout(() => {

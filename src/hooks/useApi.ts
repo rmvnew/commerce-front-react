@@ -16,22 +16,48 @@ export const api = axios.create({
 
 export const useApi = () => ({
     validateToken: async () => {
-        const token = localStorage.getItem('authToken')
 
-        console.log('token: ',token);
+        try {
+            const token = localStorage.getItem('authToken')
 
-        const response = await api.post('/auth/validate', {token}, { headers: { Authorization: `Bearer ${token}` } })
-        return response
+            console.log('token: ', token);
+
+            const response = await api.post('/auth/validate', { token }, { headers: { Authorization: `Bearer ${token}` } })
+            return response
+        } catch (error) {
+            console.log('Token validation failed:', error)
+            return null
+        }
+
     },
     signin: async (login: string, password: string) => {
-        
-        const response = await api.post('/auth/login', { login, password })
 
-        return response.data
+        try {
+
+            const response = await api.post('/auth/login', { login, password })
+
+            return response.data
+
+        } catch (error:any) {
+
+            console.log('Error: ',error.response);
+
+            return {
+                message: error.message,
+                code: error.response.status,
+                status: false
+            }
+        }
     },
     logout: async () => {
-        const token = localStorage.getItem('authToken')
-        // const response = await api.post('/logout', {}, { headers: { Authorization: `Bearer ${token}` } })
-        // return response.data
+
+        try {
+            const token = localStorage.getItem('authToken')
+            const response = await api.post('/auth/logout', { token }, { headers: { Authorization: `Bearer ${token}` } })
+            localStorage.removeItem('authToken')
+        } catch (error) {
+            console.log('Error in logout: ', error);
+        }
+
     }
 })

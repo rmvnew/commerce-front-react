@@ -1,4 +1,5 @@
 
+import { ToastContainer } from 'react-toastify';
 import './App.css';
 import { Header } from './components/header/Header';
 import Sidebar from './components/sidebar/Sidebar';
@@ -9,10 +10,10 @@ function App() {
     <div className="App">
 
 
-      <Header />
+      {/* <Header /> */}
 
       <AppRoutes />
-
+      <ToastContainer />
     </div>
   );
 }
