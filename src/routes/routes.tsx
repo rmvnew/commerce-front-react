@@ -5,7 +5,8 @@ import Sidebar from "../components/sidebar/Sidebar"
 import Footer from "../components/footer/Footer"
 import { RequireAuth } from "../auth/RequireAuth"
 import Login from "../pages/login/Login"
-import { Client } from "../pages/client"
+import { ClientList } from "../pages/client/list"
+import { ClientRegister } from "../pages/client/register"
 
 
 export const AppRoutes = () => {
@@ -23,11 +24,20 @@ export const AppRoutes = () => {
                     </Footer>
                 </RequireAuth>
             } />
-            <Route path="/client" element={
+            <Route path="/client/list" element={
                 <RequireAuth>
                     <Footer>
                         <Sidebar>
-                            <Client/>
+                            <ClientList/>
+                        </Sidebar>
+                    </Footer>
+                </RequireAuth>
+            } />
+            <Route path="/client/register" element={
+                <RequireAuth>
+                    <Footer>
+                        <Sidebar>
+                            <ClientRegister/>
                         </Sidebar>
                     </Footer>
                 </RequireAuth>

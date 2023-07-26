@@ -24,8 +24,13 @@ const routes = [
         icon: <FaHome />
     },
     {
-        path: "/client",
-        name: "Clientes",
+        path: "/client/list",
+        name: "listar Clientes",
+        icon: <FiUsers />
+    },
+    {
+        path: "/client/register",
+        name: "Registrar Clientes",
         icon: <FiUsers />
     },
     {
