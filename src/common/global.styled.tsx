@@ -1,35 +1,24 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 
-
-
-export const ClientContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* justify-content: center; */
-    width: 100vw;
-    height: 100vh;
-    background-color: #d1dddd;
-
+export const MainContent = styled.main`
+    // Isso deve ser a mesma altura do seu Header
+    
 
     @media (max-width: 2560px) {
-        width: 93vw;
-        height: 91vh;
+        margin-top: 6.5vh;
         
      }
 
      // Para telas até 1920px (Full HD)
      @media (max-width: 1920px) {
-        
-        width: 90vw;
-        height: 90vh;
+        margin-top: 9vh;
+       
      }
 
      // Para telas até 1366px (HD)
      @media (max-width: 1366px) {
-        width: 85vw;
-        height: 83vh;
+        margin-top: 12vh;
      }
 
      // Para telas até 1024px (tablets, iPads)
@@ -47,12 +36,4 @@ export const ClientContainer = styled.div`
         
      }
 
-
-
-`
-
-export const ClientTitle = styled.h1`
-    
-    color: blue;
-
-`
+`;

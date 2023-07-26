@@ -8,6 +8,7 @@ import Login from "../pages/login/Login"
 import { ClientList } from "../pages/client/list"
 import { ClientRegister } from "../pages/client/register"
 import { Header } from "../components/header/Header"
+import { MainContent } from "../common/global.styled"
 
 
 export const AppRoutes = () => {
@@ -32,7 +33,9 @@ export const AppRoutes = () => {
                     <Footer>
                         <Sidebar>
                             <Header>
-                                <ClientList />
+                                <MainContent>
+                                    <ClientList />
+                                </MainContent>
                             </Header>
                         </Sidebar>
                     </Footer>
@@ -43,7 +46,9 @@ export const AppRoutes = () => {
                     <Footer>
                         <Sidebar>
                             <Header>
-                                <ClientRegister />
+                                <MainContent>
+                                    <ClientRegister />
+                                </MainContent>
                             </Header>
                         </Sidebar>
                     </Footer>
@@ -53,7 +58,9 @@ export const AppRoutes = () => {
                 <RequireAuth>
                     <Footer>
                         <Sidebar>
-                            <Private />
+                            <MainContent>
+                                <Private />
+                            </MainContent>
                         </Sidebar>
                     </Footer>
                 </RequireAuth>

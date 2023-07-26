@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 
@@ -25,24 +26,24 @@ export const HeaderBody = styled.div`
 
      // Para telas até 1366px (HD)
      @media (max-width: 1366px) {
-        height: 90px; // Ajuste para o valor desejado
+        height: 90px; 
         width: 85vw;
         padding-right: 40px;
      }
 
      // Para telas até 1024px (tablets, iPads)
      @media (max-width: 1024px) {
-         height: 60px; // Ajuste para o valor desejado
+         height: 60px; 
      }
 
      // Para telas até 768px (tablets, iPads)
      @media (max-width: 768px) {
-         height: 50px; // Ajuste para o valor desejado
+         height: 50px; 
      }
 
      // Para telas até 480px (mobile)
      @media (max-width: 480px) {
-         height: 40px; // Ajuste para o valor desejado
+         height: 40px; 
      }
 `;
 
@@ -54,17 +55,32 @@ export const UserContainer = styled.div`
     margin-left: auto;
 
     h3 {
-        background-color: #ccc; // Altere para a cor desejada
-        border-radius: 50%; // Cria um círculo
-        width: 50px; // Ajuste para o tamanho desejado
-        height: 50px; // Ajuste para o tamanho desejado
+        background-color: #ccc; 
+        border-radius: 50%; 
+        width: 50px; 
+        height: 50px; 
         display: flex;
         align-items: center;
         justify-content: center;
     }
 
-    button {
-        // Estilize o botão aqui
+   
+`;
+
+
+export const ExitNavLink = styled(NavLink)`
+    
+    align-items: center;
+    margin-left: 20px;  
+    color: #9baebf;
+    margin-bottom: 10px;
+
+    .icon {
+        font-size: 1.5em;  
+    }
+
+    :hover{
+        color: white;
     }
 `;
 
