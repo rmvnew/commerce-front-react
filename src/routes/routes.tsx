@@ -7,6 +7,7 @@ import { RequireAuth } from "../auth/RequireAuth"
 import Login from "../pages/login/Login"
 import { ClientList } from "../pages/client/list"
 import { ClientRegister } from "../pages/client/register"
+import { Header } from "../components/header/Header"
 
 
 export const AppRoutes = () => {
@@ -19,16 +20,20 @@ export const AppRoutes = () => {
                 <RequireAuth>
                     <Footer>
                         <Sidebar>
-                            <Home />
+                            <Header>
+                                <Home />
+                            </Header>
                         </Sidebar>
                     </Footer>
                 </RequireAuth>
             } />
-            <Route path="/client/list" element={
+            <Route path="/client" element={
                 <RequireAuth>
                     <Footer>
                         <Sidebar>
-                            <ClientList/>
+                            <Header>
+                                <ClientList />
+                            </Header>
                         </Sidebar>
                     </Footer>
                 </RequireAuth>
@@ -37,7 +42,9 @@ export const AppRoutes = () => {
                 <RequireAuth>
                     <Footer>
                         <Sidebar>
-                            <ClientRegister/>
+                            <Header>
+                                <ClientRegister />
+                            </Header>
                         </Sidebar>
                     </Footer>
                 </RequireAuth>

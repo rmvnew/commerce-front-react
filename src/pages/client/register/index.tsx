@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { ClientFormMain, ClientRegisterContainer, FormContainer, UserFormLabel } from "./client.register.styled"
+import { ClientFormMain, ClientRegisterContainer, CardContainer, UserFormLabel } from "./client.register.styled"
 
 
 
@@ -28,7 +28,7 @@ export const ClientRegister = () => {
 
             <ClientFormMain>
 
-                <FormContainer>
+                <CardContainer>
                     <UserFormLabel>Nome</UserFormLabel>
                     <input
                         className="form-control form-control-lg"
@@ -37,9 +37,9 @@ export const ClientRegister = () => {
                         value={clientName}
                         onChange={(e) => setClientName(e.target.value)}
                     />
-                </FormContainer>
+                </CardContainer>
 
-                <FormContainer>
+                <CardContainer>
                     <UserFormLabel>Nome</UserFormLabel>
                     <input
                         className="form-control form-control-lg"
@@ -48,9 +48,58 @@ export const ClientRegister = () => {
                         value={clientName}
                         onChange={(e) => setClientName(e.target.value)}
                     />
-                </FormContainer>
+                </CardContainer>
+
+                <CardContainer>
+                    <UserFormLabel>Nome</UserFormLabel>
+                    <input
+                        className="form-control form-control-lg"
+                        type="text"
+                        placeholder="Digite o nome do client"
+                        value={clientName}
+                        onChange={(e) => setClientName(e.target.value)}
+                    />
+                </CardContainer>
 
             </ClientFormMain>
+
+            <ClientFormMain>
+
+                <CardContainer>
+                    <UserFormLabel>Nome</UserFormLabel>
+                    <input
+                        className="form-control form-control-lg"
+                        type="text"
+                        placeholder="Digite o nome do client"
+                        value={clientName}
+                        onChange={(e) => setClientName(e.target.value)}
+                    />
+                </CardContainer>
+
+                <CardContainer>
+                    <UserFormLabel>Nome</UserFormLabel>
+                    <input
+                        className="form-control form-control-lg"
+                        type="text"
+                        placeholder="Digite o nome do client"
+                        value={clientName}
+                        onChange={(e) => setClientName(e.target.value)}
+                    />
+                </CardContainer>
+
+                <CardContainer>
+                    <UserFormLabel>Nome</UserFormLabel>
+                    <input
+                        className="form-control form-control-lg"
+                        type="text"
+                        placeholder="Digite o nome do client"
+                        value={clientName}
+                        onChange={(e) => setClientName(e.target.value)}
+                    />
+                </CardContainer>
+
+            </ClientFormMain>
+
         </ClientRegisterContainer>
 
     )

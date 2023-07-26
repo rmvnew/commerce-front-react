@@ -2,7 +2,8 @@ import styled from "styled-components";
 
 export const ClientRegisterContainer = styled.div`
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     width: 90vw;
     height: 100vh;
     
@@ -10,25 +11,25 @@ export const ClientRegisterContainer = styled.div`
 
 export const UserFormLabel = styled.label`
     margin-right: 10px; /* Ajuste a margem conforme necessário */
-  font-size: 1.5rem;
-margin-bottom: 5px;
-margin-left: 15px;
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+    margin-left: 15px;
 `
 
-export const FormContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 10px;
-  margin-left: 20px;
+export const CardContainer = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+    margin-left: 20px;
 `;
 
 
 export const ClientFormMain = styled.div`
     display: flex;
     width: 80vw;
-    height: 80vh;
+    /* height: 80vh; */
     justify-content: center;
     align-items: center;
     margin-left: 20px;

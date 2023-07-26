@@ -24,15 +24,11 @@ const routes = [
         icon: <FaHome />
     },
     {
-        path: "/client/list",
-        name: "listar Clientes",
+        path: "/client",
+        name: "Clientes",
         icon: <FiUsers />
     },
-    {
-        path: "/client/register",
-        name: "Registrar Clientes",
-        icon: <FiUsers />
-    },
+
     {
         path: "/private",
         name: "Produtos",
@@ -61,7 +57,7 @@ const Sidebar = ({ children }: any) => {
     function logout() {
 
         auth.signout()
-       
+
     }
 
     const storageData = localStorage.getItem('authToken')
@@ -79,7 +75,7 @@ const Sidebar = ({ children }: any) => {
 
     const toggle = () => setIsOpen(!isopen)
 
-    
+
 
     const showAnimation = {
         hidden: {
@@ -117,33 +113,33 @@ const Sidebar = ({ children }: any) => {
                     {isopen && <motion.img src={require('../../common/assets/logo.png')} className="logo"></motion.img>}
 
                     <div className="bars">
-                        <FaBars onClick={toggle} />
+                        {/* <FaBars onClick={toggle} /> */}
                     </div>
                 </div>
+                <hr />
 
-               
 
                 <section className='routes'>
-                    {routes.map((route) => (
-
-
-
-                        <NavLink
-                           
-                            to={route.path} key={route.name} className="link">
-                            <div className="icon">{route.icon}</div>
-                            <AnimatePresence>
-                                {isopen && (<motion.div
-                                    variants={showAnimation}
-                                    initial="hidden"
-                                    animate="show"
-                                    exit="hidden"
-                                    className="link_text">{route.name}</motion.div>)}
-                            </AnimatePresence>
-                        </NavLink>
-
-                    ))}
+                    {routes.map((route) => {
+                        return (
+                            <>
+                                <NavLink to={route.path} key={route.name} className="link">
+                                    <div className="icon">{route.icon}</div>
+                                    <AnimatePresence>
+                                        {isopen && (<motion.div
+                                            variants={showAnimation}
+                                            initial="hidden"
+                                            animate="show"
+                                            exit="hidden"
+                                            className="link_text">{route.name}</motion.div>)}
+                                    </AnimatePresence>
+                                </NavLink>
+                                {route.name.includes("Registrar") && <div><hr /></div>}
+                            </>
+                        );
+                    })}
                 </section>
+
 
                 <section className="routes exit">
                     <motion.div animate={{
@@ -154,12 +150,12 @@ const Sidebar = ({ children }: any) => {
                         }
                     }} >
                         {isExit && auth.user && <NavLink
-                     
+
                             to={'/login'} key={'Sair'} className="link" onClick={() => logout()}>
                             <div className="icon">{<SlLogout />}</div>
                             <AnimatePresence>
                                 {isopen && auth.user && (<motion.div
-                              
+
                                     variants={showAnimation}
                                     initial="hidden"
                                     animate="show"

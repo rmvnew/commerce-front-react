@@ -1,5 +1,5 @@
 :root{
-    --sideBarActive: rgb(46, 57, 63);
+    --sideBarActive: rgb(64, 89, 103);
     --sideBarHover: rgb(76, 95, 104);
     --sideBarBackground: rgb(74, 99, 131);
     --sideBarHoverColor: rgb(68, 113, 134);
@@ -56,7 +56,7 @@
   @media screen and (max-width: 1100px) {
     
     .sidebar{
-      background: rgb(38, 67, 80) ;
+      background: rgb(74, 99, 131) ;
       color: #FFF;
       height: 210vh;
     }
@@ -73,9 +73,9 @@
 @media screen and (max-height: 850px) {
     
     .sidebar{
-      background: rgb(38, 67, 80) ;
+      background: rgb(74, 99, 131) ;
       color: #FFF;
-      height: 210vh;
+      height: 100vh;
     }
 
     .exit{

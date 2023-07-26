@@ -1,4 +1,4 @@
-import { Homemain, MyContainer } from "./home.styled"
+import {  MyContainer } from "./home.styled"
 
 
 export const Home = () => {
@@ -6,8 +6,7 @@ export const Home = () => {
 
     return (
         <MyContainer>
-            {/* <Homemain>Home</Homemain> */}
-            <img src={require('../../common/assets/main2.png')} width={700} height={600} alt="" />
+            <img src={require('../../common/assets/main2.png')} alt="" />
         </MyContainer>
     )
 }

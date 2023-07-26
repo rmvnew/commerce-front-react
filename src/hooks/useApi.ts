@@ -7,9 +7,15 @@ const token = localStorage.getItem('authToken')
 
 
 export const api = axios.create({
-    baseURL: apiUrl,
-    headers: { Authorization: `Bearer ${token}` }
+    baseURL: apiUrl
 })
+
+
+api.interceptors.request.use(config => {
+    const token = localStorage.getItem('authToken')
+    config.headers.Authorization = token ? `Bearer ${token}` : '';
+    return config;
+});
 
 
 
@@ -38,14 +44,23 @@ export const useApi = () => ({
 
             return response.data
 
-        } catch (error:any) {
-
-            return {
-                message: error.response.data.error,
-                code: error.response.status,
-                status: false
+        } catch (error: any) {
+            if (error.response) {
+                return {
+                    message: error.response.data.error,
+                    code: error.response.status,
+                    status: false
+                }
+            } else {
+                console.error('Error without response', error);
+                return {
+                    message: 'Erro desconhecido',
+                    code: 0,
+                    status: false
+                }
             }
         }
+
     },
     logout: async () => {
 
