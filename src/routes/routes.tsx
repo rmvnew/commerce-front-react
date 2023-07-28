@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router-dom"
 import { Home } from "../pages/Home"
-import { Private } from "../pages/Private"
 import Sidebar from "../components/sidebar/Sidebar"
 import Footer from "../components/footer/Footer"
 import { RequireAuth } from "../auth/RequireAuth"
@@ -9,6 +8,8 @@ import { ClientList } from "../pages/client/list"
 import { ClientRegister } from "../pages/client/register"
 import { Header } from "../components/header/Header"
 import { MainContent } from "../common/global.styled"
+import { Products } from "../pages/product/list"
+import { RegisterProducts } from "../pages/product/register"
 
 
 export const AppRoutes = () => {
@@ -54,17 +55,35 @@ export const AppRoutes = () => {
                     </Footer>
                 </RequireAuth>
             } />
-            <Route path="/private" element={
+
+            <Route path="/products" element={
                 <RequireAuth>
                     <Footer>
                         <Sidebar>
-                            <MainContent>
-                                <Private />
-                            </MainContent>
+                            <Header>
+                                <MainContent>
+                                    <Products/>
+                                </MainContent>
+                            </Header>
                         </Sidebar>
                     </Footer>
                 </RequireAuth>
             } />
+            
+            <Route path="/products/register" element={
+                <RequireAuth>
+                    <Footer>
+                        <Sidebar>
+                            <Header>
+                                <MainContent>
+                                    <RegisterProducts/>
+                                </MainContent>
+                            </Header>
+                        </Sidebar>
+                    </Footer>
+                </RequireAuth>
+            } />
+
         </Routes>
     )
 }

@@ -1,19 +1,102 @@
-import { useEffect, useState } from "react"
-import { ClientFormMain, ClientRegisterContainer, CardContainer, UserFormLabel } from "./client.register.styled"
-import { Button, FormControlLabel, Grid, InputAdornment, Switch, TextField } from "@mui/material"
+import { useEffect, useRef, useState } from "react"
+import { Button, FormControlLabel, Grid, Switch, TextField } from "@mui/material"
 import CNPJTextField from "../../../components/mask/cnpj.inputMask"
-import CpfTextField from "../../../components/mask/cpf.inputMask"
-import { Col, Row } from "react-bootstrap"
-import './registerClient.css'
+import CPFTextMask from "../../../components/mask/cpf.inputMask"
+import CEPTextFieldMask from "../../../components/mask/cep.inputMask"
+import { ClientInterface } from '../../../interfaces/client.interface';
+import PhoneTextFieldMask from "../../../components/mask/phone.inputMask"
+import { api } from "../../../hooks/useApi"
+import { useLocation, useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
+import axios from 'axios';
+import React from "react"
+import { ClientFormMain, ClientRows } from "./client.register.styled"
 
 
 
 export const ClientRegister = () => {
 
 
+    const location = useLocation()
+
+    const dataResult = location.state?.data
+
+    const navigate = useNavigate()
+
+
     const onSubmit = (event: any) => {
         event.preventDefault()
         console.log('testeeeeee');
+    }
+
+    function createClient() {
+
+
+        const client: ClientInterface = {
+
+            clientName: clientName,
+            clientCnpj: clientCnpj,
+            clientCpf: clientCpf,
+            clientEmail: clientEmail,
+            clientResponsible: clientResponsible,
+            company: company,
+            addressRequestDto: {
+                zipcode: zipcode,
+                state: state,
+                city: city,
+                district: district,
+                street: street,
+                homeNumber: homeNumber,
+            },
+            telephone: telephone,
+
+        }
+
+
+
+        api.post("/client", client)
+            .then((response) => {
+                navigate("/client")
+            })
+            .catch((error) => {
+
+                console.log(error.response);
+                toast.error(
+                    error.response.data.message,
+                    {
+                        // position: "bottom-center",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "colored",
+                    });
+            })
+
+    }
+
+  
+
+    
+
+ 
+
+    const allFieldsFilled = () => {
+        return (
+            clientName !== "" &&
+            clientEmail !== "" &&
+            clientResponsible !== "" &&
+            (company ? clientCnpj !== "" : clientCpf !== "") &&
+            zipcode !== "" &&
+            state !== "" &&
+            city !== "" &&
+            district !== "" &&
+            street !== "" &&
+            homeNumber !== "" &&
+            telephone !== ""
+        );
     }
 
 
@@ -33,20 +116,58 @@ export const ClientRegister = () => {
     const [homeNumber, setHomeNumber] = useState("")
     const [telephone, setTelephone] = useState("")
 
-    useEffect(() => {
-        console.log(company);
-    }, [company])
+    const homeNumberRef = useRef<HTMLInputElement | null>(null);
 
+
+    async function getAddress(cep:string) {
+        try {
+            const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
+
+            const address = response.data
+
+            console.log(address);
+
+            setState(address.uf)
+            setCity(address.localidade)
+            setDistrict(address.bairro)
+            setStreet(address.logradouro)
+
+            if (homeNumberRef.current !== null) {
+                homeNumberRef.current.focus();
+              }
+              
+
+
+            
+        } catch (error) {
+            console.error('Erro ao buscar CEP: ', error);
+        }
+    }
+
+
+
+    useEffect(()=>{
+
+        console.log(zipcode.length);
+
+        if(zipcode.length === 9){
+            console.log('entrou');
+            getAddress(zipcode.replace("-",""))
+        }
+
+    },[zipcode])
+
+    
 
     return (
 
 
-        <div className="registerMain">
+        <ClientFormMain >
 
 
             <form action="" onSubmit={onSubmit}>
 
-                <div className="rows">
+                <ClientRows >
 
                     <Grid container spacing={4}>
                         <Grid item xs={12} md={3}>
@@ -63,9 +184,9 @@ export const ClientRegister = () => {
                             />
                         </Grid>
                     </Grid>
-                </div>
+                </ClientRows>
 
-                <div className="rows">
+                <ClientRows>
 
                     <Grid container spacing={4}>
 
@@ -75,47 +196,58 @@ export const ClientRegister = () => {
                                 id="outlined-basic"
                                 label="Nome do Cliente"
                                 variant="outlined"
+                                value={clientName}
                                 onChange={(event) => setClientName(event.target.value)}
                                 inputProps={{
                                     style: {
                                         textAlign: 'center',
-                                        fontSize:'1.2rem'
+                                        fontSize: '1.2rem',
+
                                     }
                                 }}
                             />
                         </Grid>
 
-                        {company && <Grid item xs={12} md={3}>
-                            <TextField
-                                fullWidth
-                                id="outlined-basic"
-                                label="CNPJ"
-                                variant="outlined"
-                                onChange={(event) => setClientCnpj(event.target.value)}
-                                inputProps={{
-                                    style: {
-                                        textAlign: 'center',
-                                        fontSize:'1.2rem'
-                                    }
-                                }}
-                            />
-                        </Grid>}
 
-                        {!company && <Grid item xs={12} md={3}>
-                            <TextField
-                                fullWidth
-                                id="outlined-basic"
-                                label="CPF"
-                                variant="outlined"
-                                onChange={(event) => setClientCpf(event.target.value)}
-                                inputProps={{
-                                    style: {
-                                        textAlign: 'center',
-                                        fontSize:'1.2rem'
-                                    }
-                                }}
-                            />
-                        </Grid>}
+                        {company &&
+                            <Grid item xs={12} md={3}>
+                                <CNPJTextField
+                                    fullWidth
+                                    id="outlined-basic"
+                                    label="CNPJ"
+                                    variant="outlined"
+                                    value={clientCnpj}
+                                    onChange={setClientCnpj}
+                                    InputProps={{
+                                        style: {
+                                            textAlign: 'center',
+                                            fontSize: '1.2rem',
+
+                                        }
+                                    }}
+                                />
+                            </Grid>
+                        }
+
+
+                        {!company &&
+                            <Grid item xs={12} md={3}>
+                                <CPFTextMask
+                                    fullWidth
+                                    id="outlined-basic"
+                                    label="CPF"
+                                    variant="outlined"
+                                    value={clientCpf}
+                                    onChange={setClientCpf}
+                                    inputProps={{
+                                        style: {
+                                            textAlign: 'center',
+                                            fontSize: '1.2rem',
+
+                                        }
+                                    }}
+                                />
+                            </Grid>}
 
                         <Grid item xs={12} md={4}>
                             <TextField
@@ -123,11 +255,12 @@ export const ClientRegister = () => {
                                 id="outlined-basic"
                                 label="E-mail do cliente"
                                 variant="outlined"
+                                value={clientEmail}
                                 onChange={(event) => setClientEmail(event.target.value)}
                                 inputProps={{
                                     style: {
                                         textAlign: 'center',
-                                        fontSize:'1.2rem'
+                                        fontSize: '1.2rem'
                                     }
                                 }}
                             />
@@ -135,11 +268,11 @@ export const ClientRegister = () => {
 
                     </Grid>
 
-                </div>
+                </ClientRows>
 
 
 
-                <div className="rows">
+                <ClientRows>
 
                     <Grid container spacing={4}>
 
@@ -150,27 +283,29 @@ export const ClientRegister = () => {
                                 id="outlined-basic"
                                 label="Nome do Responsável"
                                 variant="outlined"
+                                value={clientResponsible}
                                 onChange={(event) => setClientResponsible(event.target.value)}
                                 inputProps={{
                                     style: {
                                         textAlign: 'center',
-                                        fontSize:'1.2rem'
+                                        fontSize: '1.2rem'
                                     }
                                 }}
                             />
                         </Grid>
 
                         <Grid item xs={12} md={3}>
-                            <TextField
+                            <CEPTextFieldMask
                                 fullWidth
                                 id="outlined-basic"
                                 label="CEP"
                                 variant="outlined"
-                                onChange={(event) => setZipcode(event.target.value)}
+                                value={zipcode}
+                                onChange={setZipcode}
                                 inputProps={{
                                     style: {
                                         textAlign: 'center',
-                                        fontSize:'1.2rem'
+                                        fontSize: '1.2rem'
                                     }
                                 }}
                             />
@@ -182,11 +317,12 @@ export const ClientRegister = () => {
                                 id="outlined-basic"
                                 label="Estado"
                                 variant="outlined"
+                                value={state}
                                 onChange={(event) => setState(event.target.value)}
                                 inputProps={{
                                     style: {
                                         textAlign: 'center',
-                                        fontSize:'1.2rem'
+                                        fontSize: '1.2rem'
                                     }
                                 }}
                             />
@@ -194,9 +330,9 @@ export const ClientRegister = () => {
 
                     </Grid>
 
-                </div>
+                </ClientRows>
 
-                <div className="rows">
+                <ClientRows>
 
                     <Grid container spacing={4}>
 
@@ -207,11 +343,12 @@ export const ClientRegister = () => {
                                 id="outlined-basic"
                                 label="Cidade"
                                 variant="outlined"
+                                value={city}
                                 onChange={(event) => setCity(event.target.value)}
                                 inputProps={{
                                     style: {
                                         textAlign: 'center',
-                                        fontSize:'1.2rem'
+                                        fontSize: '1.2rem'
                                     }
                                 }}
                             />
@@ -223,11 +360,12 @@ export const ClientRegister = () => {
                                 id="outlined-basic"
                                 label="Bairro"
                                 variant="outlined"
+                                value={district}
                                 onChange={(event) => setDistrict(event.target.value)}
                                 inputProps={{
                                     style: {
                                         textAlign: 'center',
-                                        fontSize:'1.2rem'
+                                        fontSize: '1.2rem'
                                     }
                                 }}
                             />
@@ -239,11 +377,12 @@ export const ClientRegister = () => {
                                 id="outlined-basic"
                                 label="Rua"
                                 variant="outlined"
+                                value={street}
                                 onChange={(event) => setStreet(event.target.value)}
                                 inputProps={{
                                     style: {
                                         textAlign: 'center',
-                                        fontSize:'1.2rem'
+                                        fontSize: '1.2rem'
                                     }
                                 }}
                             />
@@ -251,9 +390,9 @@ export const ClientRegister = () => {
 
                     </Grid>
 
-                </div>
+                </ClientRows>
 
-                <div className="rows">
+                <ClientRows>
 
                     <Grid container spacing={4}>
 
@@ -264,27 +403,30 @@ export const ClientRegister = () => {
                                 id="outlined-basic"
                                 label="Número"
                                 variant="outlined"
+                                value={homeNumber}
                                 onChange={(event) => setHomeNumber(event.target.value)}
                                 inputProps={{
                                     style: {
                                         textAlign: 'center',
-                                        fontSize:'1.2rem'
+                                        fontSize: '1.2rem'
                                     }
                                 }}
+                                inputRef={homeNumberRef}
                             />
                         </Grid>
 
                         <Grid item xs={12} md={4}>
-                            <TextField
+                            <PhoneTextFieldMask
                                 fullWidth
                                 id="outlined-basic"
                                 label="Telefone"
                                 variant="outlined"
-                                onChange={(event) => setTelephone(event.target.value)}
+                                value={telephone}
+                                onChange={setTelephone}
                                 inputProps={{
                                     style: {
                                         textAlign: 'center',
-                                        fontSize:'1.2rem'
+                                        fontSize: '1.2rem'
                                     }
                                 }}
                             />
@@ -294,28 +436,26 @@ export const ClientRegister = () => {
 
                     </Grid>
 
-                </div>
+                </ClientRows>
 
 
                 <Button
                     variant="contained"
                     style={{
                         fontSize: '1.2rem',
-                        width:'300px'
+                        width: '300px'
                     }}
+                    disabled={!allFieldsFilled()}
+                    onClick={createClient}
                 >
                     Salvar
                 </Button>
             </form>
 
-        </div>
+        </ClientFormMain>
 
 
 
     )
 }
 
-
-
-//     const [homeNumber, setHomeNumber] = useState("")
-//     const [telephone, setTelephone] = useState("")
