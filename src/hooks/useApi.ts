@@ -26,7 +26,6 @@ export const useApi = () => ({
         try {
             const token = localStorage.getItem('authToken')
 
-            console.log('token: ', token);
 
             const response = await api.post('/auth/validate', { token }, { headers: { Authorization: `Bearer ${token}` } })
             return response

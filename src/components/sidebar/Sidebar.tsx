@@ -12,6 +12,7 @@ import { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../../auth/contexts/authContext';
 import './Sidebar.css'
 import { useApi } from '../../hooks/useApi'
+import React from 'react'
 
 
 
@@ -30,7 +31,7 @@ const routes = [
     },
 
     {
-        path: "/private",
+        path: "/products",
         name: "Produtos",
         icon: <AiOutlineInbox />
     },
@@ -122,8 +123,8 @@ const Sidebar = ({ children }: any) => {
                 <section className='routes'>
                     {routes.map((route) => {
                         return (
-                            <>
-                                <NavLink to={route.path} key={route.name} className="link">
+                            <React.Fragment key={route.name}>
+                                <NavLink to={route.path}  className="link">
                                     <div className="icon">{route.icon}</div>
                                     <AnimatePresence>
                                         {isopen && (<motion.div
@@ -135,7 +136,7 @@ const Sidebar = ({ children }: any) => {
                                     </AnimatePresence>
                                 </NavLink>
                                 {route.name.includes("Registrar") && <div><hr /></div>}
-                            </>
+                            </React.Fragment>
                         );
                     })}
                 </section>

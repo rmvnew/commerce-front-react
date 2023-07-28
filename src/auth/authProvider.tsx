@@ -15,7 +15,7 @@ export const AuthProvider = ({children}:{children:JSX.Element}) =>{
         const validateToken = async () => {
           if (storageData) {
             const data = await api.validateToken()
-            console.log(data);
+           
             if (data && data.data) {
               setUser(data.data)
             } else {
@@ -33,9 +33,6 @@ export const AuthProvider = ({children}:{children:JSX.Element}) =>{
         const data = await api.signin(email, password);
 
 
-        console.log('Data: ',data.status);
-    
-        // Verificar se a chamada da API foi bem sucedida
         if (data && data.status === undefined) {
 
             setUser(data);
@@ -50,8 +47,7 @@ export const AuthProvider = ({children}:{children:JSX.Element}) =>{
 
        
         
-        // Se a chamada da API não foi bem sucedida, retornar um objeto com a mensagem de erro,
-        // código de status e status: false.
+        
         let message = data && data.message ? data.message : 'Error: No message provided';
         let code = data ? data.code : 0;
         return {
@@ -62,39 +58,6 @@ export const AuthProvider = ({children}:{children:JSX.Element}) =>{
     }
     
 
-    // const signin = async (email: string, password: string) => {
-
-    //     const data = await api.signin(email, password)
-
-    //     if (data.status === 200) {
-
-    //         if (data.name == "AxiosError") {
-
-    //             return {
-    //                 message: data.response.data.message,
-    //                 code: data.response.data.statusCode,
-    //                 status: false
-    //             }
-    //         } else {
-
-    //             console.log(data);
-               
-    //             setUser(data)
-    //             setToken(data.token)
-
-    //             return {
-    //                 message: 'pass',
-    //                 code: 200,
-    //                 status: true
-    //             }
-    //         }
-    //     }
-    //     return {
-    //         message: 'fail',
-    //         code: 0,
-    //         status: false
-    //     }
-    // }
 
     const signout = async () => {
         await api.logout()
@@ -104,7 +67,7 @@ export const AuthProvider = ({children}:{children:JSX.Element}) =>{
 
     const setToken = (token: string) => {
        
-        console.log(token);
+        
 
         localStorage.setItem('authToken', token)
     }

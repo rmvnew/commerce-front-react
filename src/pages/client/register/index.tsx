@@ -26,11 +26,12 @@ export const ClientRegister = () => {
 
     const onSubmit = (event: any) => {
         event.preventDefault()
-        console.log('testeeeeee');
     }
 
-    function createClient() {
 
+    
+
+    function createClient() {
 
         const client: ClientInterface = {
 
@@ -52,6 +53,16 @@ export const ClientRegister = () => {
 
         }
 
+        return client
+
+    }
+
+
+
+    function saveClient() {
+
+
+       const client = createClient()
 
 
         api.post("/client", client)
@@ -76,12 +87,42 @@ export const ClientRegister = () => {
             })
 
     }
-
-  
-
     
+    
+    function updateClient() {
 
- 
+
+       const client = createClient()
+
+
+        api.put(`/client/${clientId}`, client)
+            .then((response) => {
+                navigate("/client")
+            })
+            .catch((error) => {
+
+                console.log(error.response);
+                toast.error(
+                    error.response.data.message,
+                    {
+                        // position: "bottom-center",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "colored",
+                    });
+            })
+
+    }
+
+
+
+
+
+
 
     const allFieldsFilled = () => {
         return (
@@ -100,14 +141,14 @@ export const ClientRegister = () => {
     }
 
 
-
+    const [clientId, setClientId] = useState(0)
     const [clientName, setClientName] = useState("")
     const [clientCnpj, setClientCnpj] = useState("")
     const [clientCpf, setClientCpf] = useState("")
     const [clientEmail, setClientEmail] = useState("")
     const [clientResponsible, setClientResponsible] = useState("")
     const [company, setCompany] = useState(false)
-
+    const [update, setUpdate] = useState(false)
     const [zipcode, setZipcode] = useState("")
     const [state, setState] = useState("")
     const [city, setCity] = useState("")
@@ -119,13 +160,11 @@ export const ClientRegister = () => {
     const homeNumberRef = useRef<HTMLInputElement | null>(null);
 
 
-    async function getAddress(cep:string) {
+    async function getAddress(cep: string) {
         try {
             const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
 
             const address = response.data
-
-            console.log(address);
 
             setState(address.uf)
             setCity(address.localidade)
@@ -134,11 +173,11 @@ export const ClientRegister = () => {
 
             if (homeNumberRef.current !== null) {
                 homeNumberRef.current.focus();
-              }
-              
+            }
 
 
-            
+
+
         } catch (error) {
             console.error('Erro ao buscar CEP: ', error);
         }
@@ -146,18 +185,40 @@ export const ClientRegister = () => {
 
 
 
-    useEffect(()=>{
+    useEffect(() => {
 
-        console.log(zipcode.length);
-
-        if(zipcode.length === 9){
-            console.log('entrou');
-            getAddress(zipcode.replace("-",""))
+        if (zipcode.length === 9) {
+        
+            getAddress(zipcode.replace("-", ""))
         }
 
-    },[zipcode])
+    }, [zipcode])
 
-    
+
+
+    function setClient() {
+
+
+        setUpdate(dataResult === undefined ? false : true)
+        setClientId(dataResult === undefined ? '' : dataResult.clientId)
+        setClientName(dataResult === undefined ? '' : dataResult.clientName)
+        setClientCnpj(dataResult === undefined ? '' : dataResult.clientCnpj)
+        setClientCpf(dataResult === undefined ? '' : dataResult.clientCpf)
+        setClientEmail(dataResult === undefined ? '' : dataResult.clientEmail)
+        setClientResponsible(dataResult === undefined ? '' : dataResult.clientResponsible)
+        setTelephone(dataResult === undefined ? '' : dataResult.telephone)
+        setZipcode(dataResult === undefined ? '' : dataResult.zipcode)
+        setState(dataResult === undefined ? '' : dataResult.state)
+        setCity(dataResult === undefined ? '' : dataResult.city)
+        setDistrict(dataResult === undefined ? '' : dataResult.district)
+        setStreet(dataResult === undefined ? '' : dataResult.street)
+        setHomeNumber(dataResult === undefined ? '' : dataResult.homeNumber)
+
+    }
+
+    useEffect(() => {
+        setClient()
+    }, [])
 
     return (
 
@@ -438,18 +499,36 @@ export const ClientRegister = () => {
 
                 </ClientRows>
 
+                <ClientRows>
 
-                <Button
-                    variant="contained"
-                    style={{
-                        fontSize: '1.2rem',
-                        width: '300px'
-                    }}
-                    disabled={!allFieldsFilled()}
-                    onClick={createClient}
-                >
-                    Salvar
-                </Button>
+                    {update && <Button
+                        variant="contained"
+                        style={{
+                            fontSize: '1.2rem',
+                            width: '300px',
+                            background: 'grey'
+                        }}
+                        disabled={!allFieldsFilled()}
+                        onClick={updateClient}
+                    >
+                        Salvar
+                    </Button>}
+
+                    {!update && <Button
+                        variant="contained"
+                        style={{
+                            fontSize: '1.2rem',
+                            width: '300px'
+                        }}
+                        disabled={!allFieldsFilled()}
+                        onClick={saveClient}
+                    >
+                        Salvar
+                    </Button>}
+
+                </ClientRows>
+
+
             </form>
 
         </ClientFormMain>
