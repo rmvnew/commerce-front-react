@@ -33,7 +33,7 @@ const Login = () => {
             })
         } else {
             toast.error(msg, {
-                position: "bottom-center",
+                // position: "bottom-center",
                 autoClose: timer,
                 hideProgressBar: false,
                 closeOnClick: true,
@@ -73,6 +73,8 @@ const Login = () => {
                     msgToast('Senha inválida', 4000,false)
                 } else if (isLogged.message === 'Authentication failed') {
                     msgToast('Usuário inválido', 4000,false)
+                }else if(isLogged.message === 'Network Error'){
+                    msgToast('Falha ao conectar!', 4000,false)
                 }
             }
         }

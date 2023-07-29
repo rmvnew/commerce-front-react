@@ -53,7 +53,7 @@ export const useApi = () => ({
             } else {
                 console.error('Error without response', error);
                 return {
-                    message: 'Erro desconhecido',
+                    message: error.message,
                     code: 0,
                     status: false
                 }

@@ -1,7 +1,17 @@
+
+import { Button } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 
+
+export const BoxInput = styled.div`
+    display: flex;
+    align-items: start;
+    background-color: black;
+
+
+`
 
 
 export const ClientContainer = styled.div`
@@ -14,10 +24,21 @@ export const ClientContainer = styled.div`
     height: 100vh;
     background-color: #d1dddd;
 
+    
 
     @media (max-width: 2560px) {
         width: 93vw;
         height: 91vh;
+
+        input{
+        
+        width: 400px;
+        height: 30px;
+        border-radius: 5px;
+        border: solid 0.5px black;
+        margin-bottom: 5px;
+    }
+
         
      }
 
@@ -26,6 +47,15 @@ export const ClientContainer = styled.div`
         
         width: 90vw;
         height: 90vh;
+
+        input{
+        width: 400px;
+        height: 30px;
+        border-radius: 5px;
+        border: solid 0.5px black;
+        margin-bottom: 5px;
+    }
+
      }
 
      // Para telas até 1366px (HD)
@@ -62,6 +92,19 @@ export const ClientTitle = styled.h1`
 export const ClientTableButtonNavLink = styled(NavLink)`
  margin-top: 5px;
  margin-bottom: 5px;
+ margin-left: 10px;
+ border: 1px solid #000;
+
+ &:hover{
+  border: 1px solid #000;
+  box-shadow: #000 0px 2px 5px;
+ }
+`
+
+export const ClientButton = styled(Button)`
+ margin-top: 5px;
+ margin-bottom: 5px;
+ margin-left: 10px;
  border: 1px solid #000;
 
  &:hover{
@@ -112,5 +155,12 @@ export const LinkNewClient = styled(NavLink)`
 
     
 
+
+`
+
+export const CardActions = styled.div`
+
+
+    
 
 `

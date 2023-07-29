@@ -37,6 +37,9 @@ export const AuthProvider = ({children}:{children:JSX.Element}) =>{
 
             setUser(data);
             setToken(data.token);
+
+           
+            localStorage.setItem('userLogin',data.name)
     
             return {
                 message: 'pass',
