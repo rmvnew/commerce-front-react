@@ -6,8 +6,6 @@ import { RequireAuth } from "../auth/RequireAuth"
 import Login from "../pages/login/Login"
 import { ClientList } from "../pages/client/list"
 import { ClientRegister } from "../pages/client/register"
-import { Header } from "../components/header/Header"
-import { MainContent } from "../common/global.styled"
 import { Products } from "../pages/product/list"
 import { RegisterProducts } from "../pages/product/register"
 
@@ -22,9 +20,9 @@ export const AppRoutes = () => {
                 <RequireAuth>
                     <Footer>
                         <Sidebar>
-                            <Header>
-                                <Home />
-                            </Header>
+
+                            <Home />
+
                         </Sidebar>
                     </Footer>
                 </RequireAuth>
@@ -33,11 +31,11 @@ export const AppRoutes = () => {
                 <RequireAuth>
                     <Footer>
                         <Sidebar>
-                            <Header>
-                                <MainContent>
-                                    <ClientList />
-                                </MainContent>
-                            </Header>
+
+                            
+                                <ClientList />
+                            
+
                         </Sidebar>
                     </Footer>
                 </RequireAuth>
@@ -46,11 +44,11 @@ export const AppRoutes = () => {
                 <RequireAuth>
                     <Footer>
                         <Sidebar>
-                            <Header>
-                                <MainContent>
-                                    <ClientRegister />
-                                </MainContent>
-                            </Header>
+
+                           
+                                <ClientRegister />
+                            
+
                         </Sidebar>
                     </Footer>
                 </RequireAuth>
@@ -60,25 +58,25 @@ export const AppRoutes = () => {
                 <RequireAuth>
                     <Footer>
                         <Sidebar>
-                            <Header>
-                                <MainContent>
-                                    <Products/>
-                                </MainContent>
-                            </Header>
+
+                            
+                                <Products />
+                           
+
                         </Sidebar>
                     </Footer>
                 </RequireAuth>
             } />
-            
+
             <Route path="/products/register" element={
                 <RequireAuth>
                     <Footer>
                         <Sidebar>
-                            <Header>
-                                <MainContent>
-                                    <RegisterProducts/>
-                                </MainContent>
-                            </Header>
+
+                            
+                                <RegisterProducts />
+                            
+
                         </Sidebar>
                     </Footer>
                 </RequireAuth>

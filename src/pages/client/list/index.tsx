@@ -1,34 +1,25 @@
-import { BoxInput, CardLink, ClientButton, ClientContainer, ClientTableButtonNavLink, LinkNewClient, PaginationCardUser } from "./client.list.styled";
+import {
+    BoxInput, CardTableActions, ClientContainer,
+    ClientTableButton,
+    ClientTableButtonNavLink,
+    PaginationCardUser,
+    TableClient
+} from "./client.list.styled";
 import { api } from "../../../hooks/useApi";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { ImPencil2 } from 'react-icons/im';
 import { RiDeleteBinFill } from 'react-icons/ri';
-import { makeStyles } from '@mui/styles';
-import { CardActions, Fab, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Fab, FormControl, InputLabel, MenuItem, Pagination, Select, SelectChangeEvent, TextField } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import ConfirmationModal from "../../../components/modal/ConfirmationModal";
+import { NavLink } from "react-router-dom";
+import { parseISO, format } from 'date-fns';
+import { utcToZonedTime } from 'date-fns-tz'
 
 
-const useStyles = makeStyles({
-    table: {
-        width: '100%',
-        '& th, & td': {
-            border: '1px solid #ddd',
-        },
-    },
-    tableRow: {
-        '&&': {
-            height: '30px', // adjust as needed
-        },
-        '&:nth-of-type(odd)': {
-            backgroundColor: '#f2f2f2', // adjust color as needed
-        },
-    },
-});
 
 
 export const ClientList = () => {
-    const classes = useStyles();
 
     const [clients, setClients] = useState<any[]>([]);
     const [pages, setPages] = useState(0);
@@ -36,6 +27,7 @@ export const ClientList = () => {
     const [search, setSearch] = useState("")
     const [isModalOpen, setModalOpen] = useState(false);
     const [clientIdToChangeStatus, setClientIdToChangeStatus] = useState<number | null>(null); // New state
+    const [selectValue, setSelectValue] = useState('')
 
     const setResponse = (res: any) => {
         setClients(res.data.content)
@@ -54,6 +46,19 @@ export const ClientList = () => {
             });
     }
 
+    const getClientByFilter = async (search: string, page: number = 0) => {
+
+
+        const query = `/client?${selectValue}=${search}&page=${page}&size=8`
+
+        console.log('Query: ',query);
+
+        await api.get(query)
+            .then(response => {
+                setResponse(response);
+            });
+    }
+
     const changeStatus = async (id: number) => {
         await api.patch(`/client/${id}`)
             .then(res => {
@@ -64,6 +69,11 @@ export const ClientList = () => {
     useEffect(() => {
         getClient(page)
     }, [page]);
+
+
+    useEffect(() => {
+        getClientByFilter(search)
+    }, [search]);
 
     const openModal = (id: number) => {
         setClientIdToChangeStatus(id);
@@ -81,6 +91,29 @@ export const ClientList = () => {
         setModalOpen(false);
     };
 
+
+    function formatDate(dateString: string) {
+        const date = parseISO(dateString);
+
+
+        const timeZone = 'America/Manaus';
+        const zonedDate = utcToZonedTime(date, timeZone);
+
+        return format(zonedDate, 'dd/MM/yyyy HH:mm:ss'); // Formata a data
+    }
+
+    function formatCpf(value: string) {
+        return value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+    }
+
+    function formatCnpj(value: string) {
+        return value.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5");
+    }
+
+    const handleChangeSelect = (event: SelectChangeEvent<string>) => {
+        setSelectValue(event.target.value as string);
+    };
+
     return (
         <ClientContainer>
             <ConfirmationModal
@@ -90,11 +123,60 @@ export const ClientList = () => {
                 title="Confirmação de deleção"
                 message="Tem certeza de que deseja desativar este cliente?"
             />
-            <CardLink>
-                <BoxInput>
-                    <input type="text" />
+            <div>
+
+
+                <BoxInput style={{ display: 'flex', alignItems: 'center' }}>
+
+                    <FormControl variant="outlined" style={{ width: '240px', height: '40px' }}>
+                        <InputLabel id="demo-simple-select-outlined-label">Tipo de pesquisa</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-outlined-label"
+                            id="demo-simple-select-outlined"
+                            value={selectValue}
+                            onChange={handleChangeSelect}
+                            label="Tipo de pesquisa"
+                            style={{
+                                height: '40px',
+                                marginRight: '15px',
+                                marginBottom: '25px'
+                            }}
+                        >
+                            <MenuItem value="clientName">
+                                <em>Nome</em>
+                            </MenuItem>
+                            <MenuItem value={'clientCnpj'}>CNPJ</MenuItem>
+                            <MenuItem value={'clientCpf'}>CPF</MenuItem>
+                            <MenuItem value={'clientEmail'}>E-mail</MenuItem>
+                            <MenuItem value={'clientResponsible'}>Responsável</MenuItem>
+
+                        </Select>
+                    </FormControl>
+                    {/*...outros elementos*/}
+
+
+
+                    <TextField
+                        id="standard-basic"
+                        label="Busca"
+                        variant="standard"
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        InputLabelProps={{
+                            style: {
+                                left: '25px',
+
+                            }
+                        }}
+                        inputProps={{
+                            style: {
+                                paddingLeft: '10px',
+                                marginBottom: '15px'
+                            }
+                        }}
+                    />
                 </BoxInput>
-                <LinkNewClient to={'/client/register'}>
+                <NavLink to={'/client/register'}>
                     <Fab
                         color="primary"
                         aria-label="add"
@@ -106,37 +188,91 @@ export const ClientList = () => {
                         }}>
                         <AddIcon />
                     </Fab>
-                </LinkNewClient>
-            </CardLink>
-            <TableContainer component={Paper} sx={{
-                maxWidth: '90%',
-                margin: '0 auto',
-                marginBottom: '15px'
-            }}>
-                <Table className={classes.table} size="small">
+                </NavLink>
+            </div>
+
+            <TableClient >
+                <thead>
+                    <tr>
+                        <td>ID</td>
+                        <td>Nome</td>
+                        <td>CNPJ</td>
+                        <td>CPF</td>
+                        <td>E-mail</td>
+
+                        <td>Data Cadastro</td>
+                        <td>Ações</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {clients.map((client) => (
+                        // <tr key={client.clientId} className={classes.tableRow}>
+                        <tr key={client.clientId} >
+                            <td>{client.clientId}</td>
+                            <td>{client.clientName}</td>
+                            <td>{client.company ? formatCnpj(client.clientCnpj) : ''}</td>
+                            <td>{client.company ? '' : formatCpf(client.clientCpf)}</td>
+                            <td>{client.clientEmail}</td>
+
+                            <td>{formatDate(client.createAt)}</td>
+                            <td>
+                                <CardTableActions>
+                                    <ClientTableButtonNavLink to={"/client/register"} state={{
+                                        data: {
+                                            clientId: client.clientId,
+                                            clientName: client.clientName,
+                                            clientCnpj: client.clientCnpj,
+                                            clientCpf: client.clientCpf,
+                                            clientEmail: client.clientEmail,
+                                            clientResponsible: client.clientResponsible,
+                                            telephone: client.telephone,
+                                            company: client.company,
+                                            zipcode: client.address.zipcode,
+                                            state: client.address.state,
+                                            city: client.address.city,
+                                            district: client.address.district,
+                                            street: client.address.street,
+                                            homeNumber: client.address.homeNumber
+                                        }
+                                    }} className="btn btn-warning"><ImPencil2 /></ClientTableButtonNavLink>
+                                    <ClientTableButton
+                                        className="btn btn-danger"
+                                        onClick={() => openModal(client.clientId)}
+                                    >
+                                        <RiDeleteBinFill />
+                                    </ClientTableButton>
+                                </CardTableActions>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </TableClient>
+
+
+            {/* <Table className={classes.table} size="small">
                     <TableHead>
                         <TableRow>
-                            <TableCell>ID</TableCell>
-                            <TableCell>Nome</TableCell>
-                            <TableCell>CNPJ</TableCell>
-                            <TableCell>CPF</TableCell>
-                            <TableCell>E-mail</TableCell>
-                            <TableCell>Telefone</TableCell>
-                            <TableCell>Data Cadastro</TableCell>
-                            <TableCell>Ações</TableCell>
+                            <td>ID</td>
+                            <td>Nome</td>
+                            <td>CNPJ</td>
+                            <td>CPF</td>
+                            <td>E-mail</td>
+                            <td>Telefone</td>
+                            <td>Data Cadastro</td>
+                            <td>Ações</td>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {clients.map((client) => (
                             <TableRow key={client.clientId} className={classes.tableRow}>
-                                <TableCell>{client.clientId}</TableCell>
-                                <TableCell>{client.clientName}</TableCell>
-                                <TableCell>{client.company ? client.clientCnpj : ''}</TableCell>
-                                <TableCell>{client.company ? '' : client.clientCpf}</TableCell>
-                                <TableCell>{client.clientEmail}</TableCell>
-                                <TableCell>{client.telephone}</TableCell>
-                                <TableCell>{client.createAt}</TableCell>
-                                <TableCell>
+                                <td>{client.clientId}</td>
+                                <td>{client.clientName}</td>
+                                <td>{client.company ? client.clientCnpj : ''}</td>
+                                <td>{client.company ? '' : client.clientCpf}</td>
+                                <td>{client.clientEmail}</td>
+                                <td>{client.telephone}</td>
+                                <td>{client.createAt}</td>
+                                <td>
                                     <CardActions>
                                         <ClientTableButtonNavLink to={"/client/register"} state={{
                                             data: {
@@ -163,12 +299,14 @@ export const ClientList = () => {
                                             <RiDeleteBinFill />
                                         </ClientButton>
                                     </CardActions>
-                                </TableCell>
+                                </td>
                             </TableRow>
                         ))}
                     </TableBody>
-                </Table>
-            </TableContainer>
+                </Table> */}
+
+
+
             <PaginationCardUser>
                 <Pagination count={pages} color="primary" onChange={handleChange}></Pagination>
             </PaginationCardUser>
