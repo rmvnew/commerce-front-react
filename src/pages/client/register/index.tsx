@@ -11,6 +11,7 @@ import { toast } from "react-toastify"
 import axios from 'axios';
 import React from "react"
 import { ClientFormMain, ClientRows } from "./client.register.styled"
+import { TitleFont } from "../list/client.list.styled"
 
 
 
@@ -29,7 +30,7 @@ export const ClientRegister = () => {
     }
 
 
-    
+
 
     function createClient() {
 
@@ -62,7 +63,7 @@ export const ClientRegister = () => {
     function saveClient() {
 
 
-       const client = createClient()
+        const client = createClient()
 
 
         api.post("/client", client)
@@ -87,12 +88,12 @@ export const ClientRegister = () => {
             })
 
     }
-    
-    
+
+
     function updateClient() {
 
 
-       const client = createClient()
+        const client = createClient()
 
 
         api.put(`/client/${clientId}`, client)
@@ -188,7 +189,7 @@ export const ClientRegister = () => {
     useEffect(() => {
 
         if (zipcode.length === 9) {
-        
+
             getAddress(zipcode.replace("-", ""))
         }
 
@@ -222,84 +223,46 @@ export const ClientRegister = () => {
 
     return (
 
+        <>
 
-        <ClientFormMain >
-
-
-            <form action="" onSubmit={onSubmit}>
-
-                <ClientRows >
-
-                    <Grid container spacing={4}>
-                        <Grid item xs={12} md={3}>
-                            <FormControlLabel
-                                control={
-                                    <Switch
-                                        checked={company}
-                                        onChange={() => setCompany(!company)}
-                                        name="company"
-                                        inputProps={{ 'aria-label': 'secondary checkbox' }}
-                                    />
-                                }
-                                label="Empresa"
-                            />
-                        </Grid>
-                    </Grid>
-                </ClientRows>
-
-                <ClientRows>
-
-                    <Grid container spacing={4}>
-
-                        <Grid item xs={12} md={5}>
-                            <TextField
-                                fullWidth
-                                id="outlined-basic"
-                                label="Nome do Cliente"
-                                variant="outlined"
-                                value={clientName}
-                                onChange={(event) => setClientName(event.target.value)}
-                                inputProps={{
-                                    style: {
-                                        textAlign: 'center',
-                                        fontSize: '1.2rem',
-
-                                    }
-                                }}
-                            />
-                        </Grid>
+            <ClientFormMain >
+            {!update && <TitleFont>Cadastrar Cliente</TitleFont>}
+            {update && <TitleFont>Atualizar Cliente</TitleFont>}
 
 
-                        {company &&
+                <form action="" onSubmit={onSubmit}>
+
+                    <ClientRows >
+
+                        <Grid container spacing={4}>
                             <Grid item xs={12} md={3}>
-                                <CNPJTextField
-                                    fullWidth
-                                    id="outlined-basic"
-                                    label="CNPJ"
-                                    variant="outlined"
-                                    value={clientCnpj}
-                                    onChange={setClientCnpj}
-                                    InputProps={{
-                                        style: {
-                                            textAlign: 'center',
-                                            fontSize: '1.2rem',
-
-                                        }
-                                    }}
+                                <FormControlLabel
+                                    control={
+                                        <Switch
+                                            checked={company}
+                                            onChange={() => setCompany(!company)}
+                                            name="company"
+                                            inputProps={{ 'aria-label': 'secondary checkbox' }}
+                                        />
+                                    }
+                                    label="Empresa"
                                 />
                             </Grid>
-                        }
+                        </Grid>
+                    </ClientRows>
 
+                    <ClientRows>
 
-                        {!company &&
-                            <Grid item xs={12} md={3}>
-                                <CPFTextMask
+                        <Grid container spacing={4}>
+
+                            <Grid item xs={12} md={5}>
+                                <TextField
                                     fullWidth
                                     id="outlined-basic"
-                                    label="CPF"
+                                    label="Nome do Cliente"
                                     variant="outlined"
-                                    value={clientCpf}
-                                    onChange={setClientCpf}
+                                    value={clientName}
+                                    onChange={(event) => setClientName(event.target.value)}
                                     inputProps={{
                                         style: {
                                             textAlign: 'center',
@@ -308,232 +271,274 @@ export const ClientRegister = () => {
                                         }
                                     }}
                                 />
-                            </Grid>}
+                            </Grid>
 
-                        <Grid item xs={12} md={4}>
-                            <TextField
-                                fullWidth
-                                id="outlined-basic"
-                                label="E-mail do cliente"
-                                variant="outlined"
-                                value={clientEmail}
-                                onChange={(event) => setClientEmail(event.target.value)}
-                                inputProps={{
-                                    style: {
-                                        textAlign: 'center',
-                                        fontSize: '1.2rem'
-                                    }
-                                }}
-                            />
+
+                            {company &&
+                                <Grid item xs={12} md={3}>
+                                    <CNPJTextField
+                                        fullWidth
+                                        id="outlined-basic"
+                                        label="CNPJ"
+                                        variant="outlined"
+                                        value={clientCnpj}
+                                        onChange={setClientCnpj}
+                                        InputProps={{
+                                            style: {
+                                                textAlign: 'center',
+                                                fontSize: '1.2rem',
+
+                                            }
+                                        }}
+                                    />
+                                </Grid>
+                            }
+
+
+                            {!company &&
+                                <Grid item xs={12} md={3}>
+                                    <CPFTextMask
+                                        fullWidth
+                                        id="outlined-basic"
+                                        label="CPF"
+                                        variant="outlined"
+                                        value={clientCpf}
+                                        onChange={setClientCpf}
+                                        inputProps={{
+                                            style: {
+                                                textAlign: 'center',
+                                                fontSize: '1.2rem',
+
+                                            }
+                                        }}
+                                    />
+                                </Grid>}
+
+                            <Grid item xs={12} md={4}>
+                                <TextField
+                                    fullWidth
+                                    id="outlined-basic"
+                                    label="E-mail do cliente"
+                                    variant="outlined"
+                                    value={clientEmail}
+                                    onChange={(event) => setClientEmail(event.target.value)}
+                                    inputProps={{
+                                        style: {
+                                            textAlign: 'center',
+                                            fontSize: '1.2rem'
+                                        }
+                                    }}
+                                />
+                            </Grid>
+
                         </Grid>
 
-                    </Grid>
-
-                </ClientRows>
+                    </ClientRows>
 
 
 
-                <ClientRows>
+                    <ClientRows>
 
-                    <Grid container spacing={4}>
+                        <Grid container spacing={4}>
 
 
-                        <Grid item xs={12} md={5}>
-                            <TextField
-                                fullWidth
-                                id="outlined-basic"
-                                label="Nome do Responsável"
-                                variant="outlined"
-                                value={clientResponsible}
-                                onChange={(event) => setClientResponsible(event.target.value)}
-                                inputProps={{
-                                    style: {
-                                        textAlign: 'center',
-                                        fontSize: '1.2rem'
-                                    }
-                                }}
-                            />
+                            <Grid item xs={12} md={5}>
+                                <TextField
+                                    fullWidth
+                                    id="outlined-basic"
+                                    label="Nome do Responsável"
+                                    variant="outlined"
+                                    value={clientResponsible}
+                                    onChange={(event) => setClientResponsible(event.target.value)}
+                                    inputProps={{
+                                        style: {
+                                            textAlign: 'center',
+                                            fontSize: '1.2rem'
+                                        }
+                                    }}
+                                />
+                            </Grid>
+
+                            <Grid item xs={12} md={3}>
+                                <CEPTextFieldMask
+                                    fullWidth
+                                    id="outlined-basic"
+                                    label="CEP"
+                                    variant="outlined"
+                                    value={zipcode}
+                                    onChange={setZipcode}
+                                    inputProps={{
+                                        style: {
+                                            textAlign: 'center',
+                                            fontSize: '1.2rem'
+                                        }
+                                    }}
+                                />
+                            </Grid>
+
+                            <Grid item xs={12} md={4}>
+                                <TextField
+                                    fullWidth
+                                    id="outlined-basic"
+                                    label="Estado"
+                                    variant="outlined"
+                                    value={state}
+                                    onChange={(event) => setState(event.target.value)}
+                                    inputProps={{
+                                        style: {
+                                            textAlign: 'center',
+                                            fontSize: '1.2rem'
+                                        }
+                                    }}
+                                />
+                            </Grid>
+
                         </Grid>
 
-                        <Grid item xs={12} md={3}>
-                            <CEPTextFieldMask
-                                fullWidth
-                                id="outlined-basic"
-                                label="CEP"
-                                variant="outlined"
-                                value={zipcode}
-                                onChange={setZipcode}
-                                inputProps={{
-                                    style: {
-                                        textAlign: 'center',
-                                        fontSize: '1.2rem'
-                                    }
-                                }}
-                            />
+                    </ClientRows>
+
+                    <ClientRows>
+
+                        <Grid container spacing={4}>
+
+
+                            <Grid item xs={12} md={4}>
+                                <TextField
+                                    fullWidth
+                                    id="outlined-basic"
+                                    label="Cidade"
+                                    variant="outlined"
+                                    value={city}
+                                    onChange={(event) => setCity(event.target.value)}
+                                    inputProps={{
+                                        style: {
+                                            textAlign: 'center',
+                                            fontSize: '1.2rem'
+                                        }
+                                    }}
+                                />
+                            </Grid>
+
+                            <Grid item xs={12} md={4}>
+                                <TextField
+                                    fullWidth
+                                    id="outlined-basic"
+                                    label="Bairro"
+                                    variant="outlined"
+                                    value={district}
+                                    onChange={(event) => setDistrict(event.target.value)}
+                                    inputProps={{
+                                        style: {
+                                            textAlign: 'center',
+                                            fontSize: '1.2rem'
+                                        }
+                                    }}
+                                />
+                            </Grid>
+
+                            <Grid item xs={12} md={4}>
+                                <TextField
+                                    fullWidth
+                                    id="outlined-basic"
+                                    label="Rua"
+                                    variant="outlined"
+                                    value={street}
+                                    onChange={(event) => setStreet(event.target.value)}
+                                    inputProps={{
+                                        style: {
+                                            textAlign: 'center',
+                                            fontSize: '1.2rem'
+                                        }
+                                    }}
+                                />
+                            </Grid>
+
                         </Grid>
 
-                        <Grid item xs={12} md={4}>
-                            <TextField
-                                fullWidth
-                                id="outlined-basic"
-                                label="Estado"
-                                variant="outlined"
-                                value={state}
-                                onChange={(event) => setState(event.target.value)}
-                                inputProps={{
-                                    style: {
-                                        textAlign: 'center',
-                                        fontSize: '1.2rem'
-                                    }
-                                }}
-                            />
+                    </ClientRows>
+
+                    <ClientRows>
+
+                        <Grid container spacing={4}>
+
+
+                            <Grid item xs={12} md={4}>
+                                <TextField
+                                    fullWidth
+                                    id="outlined-basic"
+                                    label="Número"
+                                    variant="outlined"
+                                    value={homeNumber}
+                                    onChange={(event) => setHomeNumber(event.target.value)}
+                                    inputProps={{
+                                        style: {
+                                            textAlign: 'center',
+                                            fontSize: '1.2rem'
+                                        }
+                                    }}
+                                    inputRef={homeNumberRef}
+                                />
+                            </Grid>
+
+                            <Grid item xs={12} md={4}>
+                                <PhoneTextFieldMask
+                                    fullWidth
+                                    id="outlined-basic"
+                                    label="Telefone"
+                                    variant="outlined"
+                                    value={telephone}
+                                    onChange={setTelephone}
+                                    inputProps={{
+                                        style: {
+                                            textAlign: 'center',
+                                            fontSize: '1.2rem'
+                                        }
+                                    }}
+                                />
+                            </Grid>
+
+
+
                         </Grid>
 
-                    </Grid>
+                    </ClientRows>
 
-                </ClientRows>
+                    <ClientRows>
 
-                <ClientRows>
+                        {update && <Button
+                            variant="contained"
+                            style={{
+                                fontSize: '1.2rem',
+                                width: '300px',
+                                background: 'grey'
+                            }}
+                            disabled={!allFieldsFilled()}
+                            onClick={updateClient}
+                        >
+                            Salvar
+                        </Button>}
 
-                    <Grid container spacing={4}>
+                        {!update && <Button
+                            variant="contained"
+                            style={{
+                                fontSize: '1.2rem',
+                                width: '300px'
+                            }}
+                            disabled={!allFieldsFilled()}
+                            onClick={saveClient}
+                        >
+                            Salvar
+                        </Button>}
 
-
-                        <Grid item xs={12} md={4}>
-                            <TextField
-                                fullWidth
-                                id="outlined-basic"
-                                label="Cidade"
-                                variant="outlined"
-                                value={city}
-                                onChange={(event) => setCity(event.target.value)}
-                                inputProps={{
-                                    style: {
-                                        textAlign: 'center',
-                                        fontSize: '1.2rem'
-                                    }
-                                }}
-                            />
-                        </Grid>
-
-                        <Grid item xs={12} md={4}>
-                            <TextField
-                                fullWidth
-                                id="outlined-basic"
-                                label="Bairro"
-                                variant="outlined"
-                                value={district}
-                                onChange={(event) => setDistrict(event.target.value)}
-                                inputProps={{
-                                    style: {
-                                        textAlign: 'center',
-                                        fontSize: '1.2rem'
-                                    }
-                                }}
-                            />
-                        </Grid>
-
-                        <Grid item xs={12} md={4}>
-                            <TextField
-                                fullWidth
-                                id="outlined-basic"
-                                label="Rua"
-                                variant="outlined"
-                                value={street}
-                                onChange={(event) => setStreet(event.target.value)}
-                                inputProps={{
-                                    style: {
-                                        textAlign: 'center',
-                                        fontSize: '1.2rem'
-                                    }
-                                }}
-                            />
-                        </Grid>
-
-                    </Grid>
-
-                </ClientRows>
-
-                <ClientRows>
-
-                    <Grid container spacing={4}>
+                    </ClientRows>
 
 
-                        <Grid item xs={12} md={4}>
-                            <TextField
-                                fullWidth
-                                id="outlined-basic"
-                                label="Número"
-                                variant="outlined"
-                                value={homeNumber}
-                                onChange={(event) => setHomeNumber(event.target.value)}
-                                inputProps={{
-                                    style: {
-                                        textAlign: 'center',
-                                        fontSize: '1.2rem'
-                                    }
-                                }}
-                                inputRef={homeNumberRef}
-                            />
-                        </Grid>
+                </form>
 
-                        <Grid item xs={12} md={4}>
-                            <PhoneTextFieldMask
-                                fullWidth
-                                id="outlined-basic"
-                                label="Telefone"
-                                variant="outlined"
-                                value={telephone}
-                                onChange={setTelephone}
-                                inputProps={{
-                                    style: {
-                                        textAlign: 'center',
-                                        fontSize: '1.2rem'
-                                    }
-                                }}
-                            />
-                        </Grid>
+            </ClientFormMain>
 
 
-
-                    </Grid>
-
-                </ClientRows>
-
-                <ClientRows>
-
-                    {update && <Button
-                        variant="contained"
-                        style={{
-                            fontSize: '1.2rem',
-                            width: '300px',
-                            background: 'grey'
-                        }}
-                        disabled={!allFieldsFilled()}
-                        onClick={updateClient}
-                    >
-                        Salvar
-                    </Button>}
-
-                    {!update && <Button
-                        variant="contained"
-                        style={{
-                            fontSize: '1.2rem',
-                            width: '300px'
-                        }}
-                        disabled={!allFieldsFilled()}
-                        onClick={saveClient}
-                    >
-                        Salvar
-                    </Button>}
-
-                </ClientRows>
-
-
-            </form>
-
-        </ClientFormMain>
-
-
+        </>
 
     )
 }

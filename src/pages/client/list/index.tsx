@@ -3,7 +3,8 @@ import {
     ClientTableButton,
     ClientTableButtonNavLink,
     PaginationCardUser,
-    TableClient
+    TableClient,
+    TitleFont
 } from "./client.list.styled";
 import { api } from "../../../hooks/useApi";
 import { ChangeEvent, useEffect, useState } from "react";
@@ -27,7 +28,7 @@ export const ClientList = () => {
     const [search, setSearch] = useState("")
     const [isModalOpen, setModalOpen] = useState(false);
     const [clientIdToChangeStatus, setClientIdToChangeStatus] = useState<number | null>(null); // New state
-    const [selectValue, setSelectValue] = useState('')
+    const [selectValue, setSelectValue] = useState('clientName')
 
     const setResponse = (res: any) => {
         setClients(res.data.content)
@@ -116,6 +117,7 @@ export const ClientList = () => {
 
     return (
         <ClientContainer>
+            <TitleFont>Lista de Clientes</TitleFont>
             <ConfirmationModal
                 isOpen={isModalOpen}
                 onConfirm={handleConfirm}
