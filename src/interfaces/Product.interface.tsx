@@ -4,12 +4,20 @@
 export interface ProductInterface {
     name:string,
     barcode:string,
-    productCode:string,
-    productLocation:string
+    location:string,
+    code:string,
+    ncm:string
+    cfop:string
+    unitOfMeasurement:string
     quantity:number,
     minimalQuantity:number,
-    options:number,
-    purchasePrice:number,
-    salePrice:number
-    invoice:string
+    unitCost:number,
+    unitPrice:number,
+    categoryId:number,
+   
 }
+
+    
+    
+    
+  

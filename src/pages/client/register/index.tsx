@@ -196,6 +196,13 @@ export const ClientRegister = () => {
     }, [zipcode])
 
 
+    function handleButtonClick(){
+
+        navigate("/client")
+
+    }
+
+
 
     function setClient() {
 
@@ -510,7 +517,8 @@ export const ClientRegister = () => {
                             style={{
                                 fontSize: '1.2rem',
                                 width: '300px',
-                                background: 'grey'
+                                background: 'grey',
+                                fontFamily:'Black Han Sans'
                             }}
                             disabled={!allFieldsFilled()}
                             onClick={updateClient}
@@ -522,13 +530,29 @@ export const ClientRegister = () => {
                             variant="contained"
                             style={{
                                 fontSize: '1.2rem',
-                                width: '300px'
+                                width: '300px',
+                                fontFamily:'Black Han Sans'
                             }}
                             disabled={!allFieldsFilled()}
                             onClick={saveClient}
                         >
                             Salvar
                         </Button>}
+
+                        <Button
+                            variant="contained"
+                            style={{
+                                fontSize: '1.2rem',
+                                width: '300px',
+                                backgroundColor:'orangered',
+                                marginLeft:'20px',
+                                fontFamily:'Black Han Sans'
+                            }}
+                            
+                            onClick={handleButtonClick}
+                        >
+                            Voltar
+                        </Button>
 
                     </ClientRows>
 

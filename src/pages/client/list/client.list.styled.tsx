@@ -162,11 +162,11 @@ export const TableClient = styled.table`
     tbody {
         tr {
             &:nth-of-type(odd) {
-                background: #c5c5c5; // adjust color as needed
+                background: #e6e6e6; // adjust color as needed
             }
 
             &:hover{
-                background: #6d8fb2;
+                background: #627384;
                 color: white;
             }
 
