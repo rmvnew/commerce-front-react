@@ -30,6 +30,10 @@ export const Products = () => {
     const [haveData, setHaveData] = useState(false)
 
     const setResponse = (res: any) => {
+
+
+        console.log('Res: ',res.data.content);
+
         setProducts(res.data.content)
         setPages(res.data.totalPages)
     }
@@ -187,7 +191,7 @@ export const Products = () => {
 
                             </Select>
                         </FormControl>
-                        {/*...outros elementos*/}
+                       
 
 
 
@@ -211,26 +215,7 @@ export const Products = () => {
                             }}
                         />
                     </BoxInput>
-                    {/* <NavLink to={'/products/register'}>
-                        <Tooltip
-                            title="Adicionar"
-                            placement='left'
-                        >
-
-                            <Fab
-                                color="primary"
-                                aria-label="add"
-                                style={{
-                                    position: 'absolute',
-                                    top: '16px',
-                                    right: '16px',
-                                    marginBottom: '25px',
-                                }}>
-                                <AddIcon />
-                            </Fab>
-
-                        </Tooltip>
-                    </NavLink> */}
+                   
                 </div>
 
                 <TableProduct >
@@ -255,14 +240,22 @@ export const Products = () => {
                                 <td>{formatDate(product.createAt)}</td>
                                 <td>
                                     <CardTableActions>
-                                        <ProductTableButtonNavLink to={"/client/register"} state={{
+                                        <ProductTableButtonNavLink to={"/products/register"} state={{
+                                
                                             data: {
-                                                product
-                                                // productId: product.productId,
-                                                // productName: product.productName,
-                                                // productBarcode: product.productBarcode,
-                                                // productCode: product.productCode,
-                                                // productNcm: product.productNcm,
+                                                productId: product.productId,
+                                                productName: product.productName,
+                                                productBarcode: product.productBarcode,
+                                                productCode: product.productCode,
+                                                productNcm: product.productNcm,
+                                                productCfop: product.productCfop,
+                                                productUnitOfMeasurement: product.productUnitOfMeasurement,
+                                                productQuantity: product.productQuantity,
+                                                productMinimumStock: product.productMinimumStock,
+                                                productUnitCost: product.productUnitCost,
+                                                productUnitPrice: product.productUnitPrice,
+                                                categoryId: product.category.categoryId,
+
                                             }
                                         }} className="btn btn-warning"><ImPencil2 /></ProductTableButtonNavLink>
                                         <ProductTableButton

@@ -21,8 +21,9 @@ export const RegisterProducts = () => {
     const navigate = useNavigate();
 
 
-    function setClient() {
+    function setProduct() {
 
+        console.log('Data result: ',dataResult);
 
         setUpdate(dataResult === undefined ? false : true)
         setProductId(dataResult === undefined ? '' : dataResult.productId)
@@ -32,16 +33,26 @@ export const RegisterProducts = () => {
         setProductNcm(dataResult === undefined ? '' : dataResult.productNcm)
         setProductCfop(dataResult === undefined ? '' : dataResult.productCfop)
         setProductUnitOfMeasurement(dataResult === undefined ? '' : dataResult.productUnitOfMeasurement)
+
         setProductQuantity(dataResult === undefined ? '' : dataResult.productQuantity)
+        setProductQuantityInput(dataResult === undefined ? '' : `${dataResult.productQuantity}`.replace('.',','))
+
         setProductMinimumStock(dataResult === undefined ? '' : dataResult.productMinimumStock)
+        setProductMinimumStockInput(dataResult === undefined ? '' : `${dataResult.productMinimumStock}`.replace('.',','))
+
         setProductUnitCost(dataResult === undefined ? '' : dataResult.productUnitCost)
+        setProductUnitCostInput(dataResult === undefined ? '' : `${dataResult.productUnitCost}`.replace('.',','))
+
         setProductUnitPrice(dataResult === undefined ? '' : dataResult.productUnitPrice)
+        setProductUnitPriceInput(dataResult === undefined ? '' : `${dataResult.productUnitPrice}`.replace('.',','))
+
+        setCategoryId(dataResult === undefined ? '' : dataResult.categoryId)
 
 
     }
 
     useEffect(() => {
-        setClient()
+        setProduct()
     }, [])
 
 
@@ -84,9 +95,13 @@ export const RegisterProducts = () => {
     const [productCfop, setProductCfop] = useState("");
     const [productUnitOfMeasurement, setProductUnitOfMeasurement] = useState("");
     const [productQuantity, setProductQuantity] = useState(0);
+    const [productQuantityInput, setProductQuantityInput] = useState('0');
     const [productMinimumStock, setProductMinimumStock] = useState(0);
+    const [productMinimumStockInput, setProductMinimumStockInput] = useState('0');
     const [productUnitCost, setProductUnitCost] = useState(0.0);
+    const [productUnitCostInput, setProductUnitCostInput] = useState('0.0');
     const [productUnitPrice, setProductUnitPrice] = useState(0.0);
+    const [productUnitPriceInput, setProductUnitPriceInput] = useState('0.0');
     const [categoryId, setCategoryId] = useState(0);
     const [update, setUpdate] = useState(false)
 
@@ -140,6 +155,29 @@ export const RegisterProducts = () => {
 
     function updateProduct() {
 
+        const product = createProduct()
+
+        console.log('Product: ', product);
+
+        api.put(`/product/${productId}`, product)
+            .then((res) => {
+                navigate('/products')
+            }).catch(error => {
+                console.log('Update product error: ', error);
+                
+                toast.error(
+                    error.response.data.message,
+                    {
+                        
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "colored",
+                    });
+            })
     }
 
 
@@ -148,7 +186,7 @@ export const RegisterProducts = () => {
 
         api.get('/category')
             .then(res => {
-                console.log('Res: ', res.data.content);
+            
                 setCategories(res.data.content)
             }).catch(error => {
                 console.log(error);
@@ -166,6 +204,26 @@ export const RegisterProducts = () => {
     };
 
 
+    const handleInputChange = (
+        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+        setSystem: React.Dispatch<React.SetStateAction<number>>,
+        setInput: React.Dispatch<React.SetStateAction<string>>,
+      ) => {
+        const currentEvent = event as React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
+      
+        let { value } = event.target;
+      
+        setInput(value);
+      
+        value = value.replace(',', '.');
+      
+        const numberValue = value.includes('.') ? parseFloat(value) : parseInt(value);
+      
+        if (!isNaN(numberValue)) {
+          setSystem(numberValue);
+        }
+      };
+      
 
 
     return (
@@ -194,12 +252,12 @@ export const RegisterProducts = () => {
                                         style: {
                                             textAlign: 'center',
                                             fontSize: '1.2rem',
-                                            
+
 
                                         }
                                     }}
                                 />
-                                    
+
                             </Grid>
 
 
@@ -328,8 +386,8 @@ export const RegisterProducts = () => {
                                     id="outlined-basic"
                                     label="Quantidade"
                                     variant="outlined"
-                                    value={productQuantity}
-                                    onChange={(event) => setProductQuantity(Number(event.target.value))}
+                                    value={productQuantityInput}
+                                    onChange={(event) => handleInputChange(event,setProductQuantity,setProductQuantityInput)}
                                     inputProps={{
                                         style: {
                                             textAlign: 'center',
@@ -355,8 +413,8 @@ export const RegisterProducts = () => {
                                     id="outlined-basic"
                                     label="Quantidade minima"
                                     variant="outlined"
-                                    value={productMinimumStock}
-                                    onChange={(event) => setProductMinimumStock(Number(event.target.value))}
+                                    value={productMinimumStockInput}
+                                    onChange={(event) => handleInputChange(event,setProductMinimumStock,setProductMinimumStockInput)}
                                     inputProps={{
                                         style: {
                                             textAlign: 'center',
@@ -372,8 +430,8 @@ export const RegisterProducts = () => {
                                     id="outlined-basic"
                                     label="preço de compra"
                                     variant="outlined"
-                                    value={productUnitCost}
-                                    onChange={(event) => setProductUnitCost(Number(event.target.value))}
+                                    value={productUnitCostInput}
+                                    onChange={(event) => handleInputChange(event,setProductUnitCost,setProductUnitCostInput)}
                                     inputProps={{
                                         style: {
                                             textAlign: 'center',
@@ -389,8 +447,8 @@ export const RegisterProducts = () => {
                                     id="outlined-basic"
                                     label="preço de venda"
                                     variant="outlined"
-                                    value={productUnitPrice}
-                                    onChange={(event) => setProductUnitPrice(Number(event.target.value))}
+                                    value={productUnitPriceInput}
+                                    onChange={(event) => handleInputChange(event,setProductUnitPrice,setProductUnitCostInput)}
                                     inputProps={{
                                         style: {
                                             textAlign: 'center',
@@ -417,7 +475,8 @@ export const RegisterProducts = () => {
                                     >
 
                                         {categories.map(category => (
-                                            <MenuItem value={category.categoryId}>{category.categoryName}</MenuItem>
+                                            
+                                            <MenuItem key={category.categoryId} value={category.categoryId}>{category.categoryName}</MenuItem>
                                         ))}
 
 

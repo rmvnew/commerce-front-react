@@ -93,6 +93,7 @@ export const BoxInput = styled.div`
 
 export const TableProduct = styled.table`
     margin-bottom: 20px;
+    
 
     thead {
         tr {
