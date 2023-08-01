@@ -8,6 +8,7 @@ import { ClientList } from "../pages/client/list"
 import { ClientRegister } from "../pages/client/register"
 import { Products } from "../pages/product/list"
 import { RegisterProducts } from "../pages/product/register"
+import { PageNotFound } from "../pages/pagenotfound/NotFound"
 
 
 export const AppRoutes = () => {
@@ -75,6 +76,20 @@ export const AppRoutes = () => {
 
                             
                                 <RegisterProducts />
+                            
+
+                        </Sidebar>
+                    </Footer>
+                </RequireAuth>
+            } />
+            
+             <Route path="*" element={
+                <RequireAuth>
+                    <Footer>
+                        <Sidebar>
+
+                            
+                                <PageNotFound />
                             
 
                         </Sidebar>

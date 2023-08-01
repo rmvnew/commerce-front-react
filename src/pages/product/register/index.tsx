@@ -1,16 +1,48 @@
 import { useEffect, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ProductFormMain, ProductRows, TitleFont } from "./product.register.styled";
-import { Button, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, Switch, TextField } from "@mui/material";
+import { Button, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 import { api } from "../../../hooks/useApi";
 import { ProductInterface } from "../../../interfaces/Product.interface";
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { toast } from "react-toastify"
+
 
 
 
 
 export const RegisterProducts = () => {
+
+    const location = useLocation()
+
+    const dataResult = location.state?.data
+
+    const navigate = useNavigate();
+
+
+    function setClient() {
+
+
+        setUpdate(dataResult === undefined ? false : true)
+        setProductId(dataResult === undefined ? '' : dataResult.productId)
+        setProductName(dataResult === undefined ? '' : dataResult.productName)
+        setProductBarcode(dataResult === undefined ? '' : dataResult.productBarcode)
+        setProductCode(dataResult === undefined ? '' : dataResult.productCode)
+        setProductNcm(dataResult === undefined ? '' : dataResult.productNcm)
+        setProductCfop(dataResult === undefined ? '' : dataResult.productCfop)
+        setProductUnitOfMeasurement(dataResult === undefined ? '' : dataResult.productUnitOfMeasurement)
+        setProductQuantity(dataResult === undefined ? '' : dataResult.productQuantity)
+        setProductMinimumStock(dataResult === undefined ? '' : dataResult.productMinimumStock)
+        setProductUnitCost(dataResult === undefined ? '' : dataResult.productUnitCost)
+        setProductUnitPrice(dataResult === undefined ? '' : dataResult.productUnitPrice)
+
+
+    }
+
+    useEffect(() => {
+        setClient()
+    }, [])
 
 
 
@@ -18,17 +50,17 @@ export const RegisterProducts = () => {
 
 
         const product: ProductInterface = {
-            name: productName,
-            barcode: productBarcode,
-            location: productLocation,
-            code: productCode,
-            ncm: productNcm,
-            cfop: productCfop,
-            unitOfMeasurement: productUnitOfMeasurement,
-            quantity: productQuantity,
-            minimalQuantity: productMinimumStock,
-            unitCost: productUnitCost,
-            unitPrice: productUnitPrice,
+            productName: productName,
+            productBarcode: productBarcode,
+            productLocation: productLocation,
+            productCode: productCode,
+            productNcm: productNcm,
+            productCfop: productCfop,
+            productUnitOfMeasurement: productUnitOfMeasurement,
+            productQuantity: productQuantity,
+            productMinimumStock: productMinimumStock,
+            productUnitCost: productUnitCost,
+            productUnitPrice: productUnitPrice,
             categoryId: categoryId
         }
 
@@ -42,6 +74,7 @@ export const RegisterProducts = () => {
     }
 
 
+    const [productId, setProductId] = useState(0)
     const [categories, setCategories] = useState<any[]>([]);
     const [productName, setProductName] = useState("");
     const [productBarcode, setProductBarcode] = useState("");
@@ -56,8 +89,7 @@ export const RegisterProducts = () => {
     const [productUnitPrice, setProductUnitPrice] = useState(0.0);
     const [categoryId, setCategoryId] = useState(0);
     const [update, setUpdate] = useState(false)
-    
-    const navigate = useNavigate();
+
 
     const handleButtonClick = () => {
         navigate("/products");  // altere "/pagina-desejada" para o caminho desejado
@@ -79,6 +111,30 @@ export const RegisterProducts = () => {
 
 
     function saveProduct() {
+
+        const product = createProduct()
+
+        console.log('Product: ', product);
+
+        api.post("/product", product)
+            .then((res) => {
+                navigate('/products')
+            }).catch(error => {
+                console.log('Create product error: ', error);
+                // console.log(error.response);
+                toast.error(
+                    error.response.data.message,
+                    {
+                        // position: "bottom-center",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "colored",
+                    });
+            })
 
     }
 
@@ -110,6 +166,8 @@ export const RegisterProducts = () => {
     };
 
 
+
+
     return (
         <>
 
@@ -136,10 +194,12 @@ export const RegisterProducts = () => {
                                         style: {
                                             textAlign: 'center',
                                             fontSize: '1.2rem',
+                                            
 
                                         }
                                     }}
                                 />
+                                    
                             </Grid>
 
 
@@ -379,7 +439,7 @@ export const RegisterProducts = () => {
                                 fontSize: '1.2rem',
                                 width: '300px',
                                 background: 'grey',
-                                fontFamily:'Black Han Sans'
+                                fontFamily: 'Black Han Sans'
 
                             }}
                             disabled={!allFieldsFilled()}
@@ -393,7 +453,7 @@ export const RegisterProducts = () => {
                             style={{
                                 fontSize: '1.2rem',
                                 width: '300px',
-                                fontFamily:'Black Han Sans'
+                                fontFamily: 'Black Han Sans'
 
                             }}
                             disabled={!allFieldsFilled()}
@@ -407,11 +467,11 @@ export const RegisterProducts = () => {
                             style={{
                                 fontSize: '1.2rem',
                                 width: '300px',
-                                backgroundColor:'orangered',
-                                marginLeft:'20px',
-                                fontFamily:'Black Han Sans'
+                                backgroundColor: 'orangered',
+                                marginLeft: '20px',
+                                fontFamily: 'Black Han Sans'
                             }}
-                            
+
                             onClick={handleButtonClick}
                         >
                             Voltar

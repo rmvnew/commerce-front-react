@@ -2,17 +2,17 @@
 
 
 export interface ProductInterface {
-    name:string,
-    barcode:string,
-    location:string,
-    code:string,
-    ncm:string
-    cfop:string
-    unitOfMeasurement:string
-    quantity:number,
-    minimalQuantity:number,
-    unitCost:number,
-    unitPrice:number,
+    productName:string,
+    productBarcode:string,
+    productLocation:string,
+    productCode:string,
+    productNcm:string
+    productCfop:string
+    productUnitOfMeasurement:string
+    productQuantity:number,
+    productMinimumStock:number,
+    productUnitCost:number,
+    productUnitPrice:number,
     categoryId:number,
    
 }

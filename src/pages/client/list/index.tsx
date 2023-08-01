@@ -10,7 +10,7 @@ import { api } from "../../../hooks/useApi";
 import { ChangeEvent, useEffect, useState } from "react";
 import { ImPencil2 } from 'react-icons/im';
 import { RiDeleteBinFill } from 'react-icons/ri';
-import { Fab, FormControl, InputLabel, MenuItem, Pagination, Select, SelectChangeEvent, TextField } from "@mui/material";
+import { Fab, FormControl, InputLabel, MenuItem, Pagination, Select, SelectChangeEvent, TextField, Tooltip } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import ConfirmationModal from "../../../components/modal/ConfirmationModal";
 import { NavLink } from "react-router-dom";
@@ -179,6 +179,10 @@ export const ClientList = () => {
                     />
                 </BoxInput>
                 <NavLink to={'/client/register'}>
+                <Tooltip
+                        title="Adicionar"
+                        placement='left'
+                    >
                     <Fab
                         color="primary"
                         aria-label="add"
@@ -190,6 +194,7 @@ export const ClientList = () => {
                         }}>
                         <AddIcon />
                     </Fab>
+                    </Tooltip>
                 </NavLink>
             </div>
 
@@ -249,65 +254,6 @@ export const ClientList = () => {
                     ))}
                 </tbody>
             </TableClient>
-
-
-            {/* <Table className={classes.table} size="small">
-                    <TableHead>
-                        <TableRow>
-                            <td>ID</td>
-                            <td>Nome</td>
-                            <td>CNPJ</td>
-                            <td>CPF</td>
-                            <td>E-mail</td>
-                            <td>Telefone</td>
-                            <td>Data Cadastro</td>
-                            <td>Ações</td>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {clients.map((client) => (
-                            <TableRow key={client.clientId} className={classes.tableRow}>
-                                <td>{client.clientId}</td>
-                                <td>{client.clientName}</td>
-                                <td>{client.company ? client.clientCnpj : ''}</td>
-                                <td>{client.company ? '' : client.clientCpf}</td>
-                                <td>{client.clientEmail}</td>
-                                <td>{client.telephone}</td>
-                                <td>{client.createAt}</td>
-                                <td>
-                                    <CardActions>
-                                        <ClientTableButtonNavLink to={"/client/register"} state={{
-                                            data: {
-                                                clientId: client.clientId,
-                                                clientName: client.clientName,
-                                                clientCnpj: client.clientCnpj,
-                                                clientCpf: client.clientCpf,
-                                                clientEmail: client.clientEmail,
-                                                clientResponsible: client.clientResponsible,
-                                                telephone: client.telephone,
-                                                company: client.company,
-                                                zipcode: client.address.zipcode,
-                                                state: client.address.state,
-                                                city: client.address.city,
-                                                district: client.address.district,
-                                                street: client.address.street,
-                                                homeNumber: client.address.homeNumber
-                                            }
-                                        }} className="btn btn-warning"><ImPencil2 /></ClientTableButtonNavLink>
-                                        <ClientButton
-                                            className="btn btn-danger"
-                                            onClick={() => openModal(client.clientId)}
-                                        >
-                                            <RiDeleteBinFill />
-                                        </ClientButton>
-                                    </CardActions>
-                                </td>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table> */}
-
-
 
             <PaginationCardUser>
                 <Pagination count={pages} color="primary" onChange={handleChange}></Pagination>
