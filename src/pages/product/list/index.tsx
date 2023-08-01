@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom"
-import { BoxInput, CardTableActions, PaginationCardUser, ProductContainer, ProductTableButton, ProductTableButtonNavLink, TableProduct } from "./product.list.styled"
+import { BoxInput, CardTableActions, ImageListProductNotFound, PaginationCardUser, ProductContainer, ProductTableButton, ProductTableButtonNavLink, TableProduct } from "./product.list.styled"
 import { TitleFont } from "../register/product.register.styled"
 import ConfirmationModal from "../../../components/modal/ConfirmationModal"
 import { Fab, FormControl, IconButton, InputLabel, MenuItem, Pagination, Select, SelectChangeEvent, TextField, Tooltip } from "@mui/material"
@@ -142,6 +142,8 @@ export const Products = () => {
                             top: '16px',
                             right: '16px',
                             marginBottom: '25px',
+                            width:'90px',
+                            height:'90px'
                         }}>
                         <AddIcon />
                     </Fab>
@@ -150,7 +152,7 @@ export const Products = () => {
             </NavLink>
 
             {!haveData && <div>
-                <img src={require("../../../common/assets/await.png")} alt="" />
+                <ImageListProductNotFound src={require("../../../common/assets/await.png")} alt="" />
                 <h3>Nenhum produto encontrado</h3>
             </div>}
 

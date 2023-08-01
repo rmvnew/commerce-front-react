@@ -233,3 +233,24 @@ export const ClientTableButton = styled.button`
   box-shadow: #000 0px 2px 5px;
  }
 `
+
+
+export const ImageListClientNotFound = styled.img`
+        
+        
+
+    @media (max-width: 2560px) {
+
+        width: 700px;
+
+    }
+
+    @media (max-width: 1920px) {
+        width: 650px;
+    }
+
+    @media (max-width: 1366px) {
+        width: 450px;
+    }
+    
+`
