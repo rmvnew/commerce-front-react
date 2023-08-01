@@ -1,4 +1,5 @@
 
+import { GrNotes } from 'react-icons/gr';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 

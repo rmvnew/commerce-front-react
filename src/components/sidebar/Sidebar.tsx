@@ -6,16 +6,16 @@ import { AiOutlineInbox } from 'react-icons/ai'
 import { FiUser } from 'react-icons/fi'
 import { GiReceiveMoney } from 'react-icons/gi'
 import { AiFillSnippets } from 'react-icons/ai'
+import { FaFileInvoiceDollar } from 'react-icons/fa'
 import { NavLink } from 'react-router-dom';
 import { SlLogout } from "react-icons/sl";
 import { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../../auth/contexts/authContext';
 import './Sidebar.css'
-import { useApi } from '../../hooks/useApi'
 import React from 'react'
 
 
-
+const style = { color: "white", fontSize: "1.5em" }
 
 
 const routes = [
@@ -34,6 +34,11 @@ const routes = [
         path: "/products",
         name: "Produtos",
         icon: <AiOutlineInbox />
+    },
+    {
+        path: "/invoice",
+        name: "Notas",
+        icon: <FaFileInvoiceDollar />
     },
     {
         path: "/user",
