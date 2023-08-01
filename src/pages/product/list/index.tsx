@@ -70,6 +70,15 @@ export const Products = () => {
         getProduct(page)
     }, [page]);
 
+    useEffect(()=>{
+
+        if(products.length > 0){
+            setHaveData(true)
+        }else{
+            setHaveData(false)
+        }
+    },[products])
+
 
     // useEffect(() => {
     //     getClientByFilter(search)
@@ -136,10 +145,10 @@ export const Products = () => {
                 </Tooltip>
             </NavLink>
 
-            <div>
+            {!haveData && <div>
                 <img src={require("../../../common/assets/await.png")} alt="" />
                 <h3>Nenhum produto encontrado</h3>
-            </div>
+            </div>}
 
             {haveData && <div>
                 <ConfirmationModal
