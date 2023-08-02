@@ -144,6 +144,8 @@ export const ClientList = () => {
                             top: '16px',
                             right: '16px',
                             marginBottom: '25px',
+                            width:'70px',
+                            height:'70px'
                         }}>
                         <AddIcon />
                     </Fab>

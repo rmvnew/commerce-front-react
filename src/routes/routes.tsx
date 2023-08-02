@@ -10,6 +10,7 @@ import { Products } from "../pages/product/list"
 import { RegisterProducts } from "../pages/product/register"
 import { PageNotFound } from "../pages/pagenotfound/NotFound"
 import { InvoiceList } from "../pages/invoice/list"
+import { InvoiceRegister } from "../pages/invoice/register"
 
 
 export const AppRoutes = () => {
@@ -91,6 +92,21 @@ export const AppRoutes = () => {
 
                             
                                 <InvoiceList />
+                            
+
+                        </Sidebar>
+                    </Footer>
+                </RequireAuth>
+            } />
+            
+            
+             <Route path="/invoice/register" element={
+                <RequireAuth>
+                    <Footer>
+                        <Sidebar>
+
+                            
+                                <InvoiceRegister />
                             
 
                         </Sidebar>
