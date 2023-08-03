@@ -59,11 +59,3 @@ export const InvoiceRows = styled.div`
 `
 
 
-export const CardDatePicker = styled.div`
-   
-display: flex;
-width: 100%;
-position: relative;
-
-
-`
