@@ -1,8 +1,8 @@
 import { NavLink } from "react-router-dom"
-import { BoxInput, CardTableActions, ImageListProductNotFound, PaginationCardUser, ProductContainer, ProductTableButton, ProductTableButtonNavLink, TableProduct } from "./product.list.styled"
+import { BoxInput, CardTableActions,  PaginationCardUser, ProductContainer, ProductTableButton, ProductTableButtonNavLink, TableProduct } from "./product.list.styled"
 import { TitleFont } from "../register/product.register.styled"
 import ConfirmationModal from "../../../components/modal/ConfirmationModal"
-import { Fab, FormControl, IconButton, InputLabel, MenuItem, Pagination, Select, SelectChangeEvent, TextField, Tooltip } from "@mui/material"
+import { Fab, FormControl,  InputLabel, MenuItem, Pagination, Select, SelectChangeEvent, TextField, Tooltip } from "@mui/material"
 import { RiDeleteBinFill } from "react-icons/ri"
 import { ImPencil2 } from "react-icons/im"
 import AddIcon from '@mui/icons-material/Add';
@@ -10,6 +10,7 @@ import { useEffect, useState } from "react"
 import { api } from "../../../hooks/useApi"
 import { format, parseISO } from "date-fns"
 import { utcToZonedTime } from "date-fns-tz"
+import { ImageNotFound } from "../../../common/imageNotFound/imageNotfound"
 
 
 
@@ -152,8 +153,8 @@ export const Products = () => {
             </NavLink>
 
             {!haveData && <div>
-                <ImageListProductNotFound src={require("../../../common/assets/await.png")} alt="" />
-                <h3>Nenhum produto encontrado</h3>
+                <ImageNotFound message="Nenhum produto encontrado"/>
+                
             </div>}
 
             {haveData && <div>

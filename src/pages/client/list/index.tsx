@@ -2,13 +2,12 @@ import {
     BoxInput, CardTableActions, ClientContainer,
     ClientTableButton,
     ClientTableButtonNavLink,
-    ImageListClientNotFound,
     PaginationCardUser,
     TableClient,
     TitleFont
 } from "./client.list.styled";
 import { api } from "../../../hooks/useApi";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ImPencil2 } from 'react-icons/im';
 import { RiDeleteBinFill } from 'react-icons/ri';
 import { Fab, FormControl, InputLabel, MenuItem, Pagination, Select, SelectChangeEvent, TextField, Tooltip } from "@mui/material";
@@ -17,6 +16,7 @@ import ConfirmationModal from "../../../components/modal/ConfirmationModal";
 import { NavLink } from "react-router-dom";
 import { parseISO, format } from 'date-fns';
 import { utcToZonedTime } from 'date-fns-tz'
+import { ImageNotFound } from "../../../common/imageNotFound/imageNotfound";
 
 
 
@@ -129,7 +129,7 @@ export const ClientList = () => {
 
     return (
         <ClientContainer>
-            <TitleFont>Lista de Clientesss</TitleFont>
+            <TitleFont>Lista de Clientes</TitleFont>
 
             <NavLink to={'/client/register'}>
                 <Tooltip
@@ -154,8 +154,9 @@ export const ClientList = () => {
 
 
             {!haveData && <div>
-                <ImageListClientNotFound src={require("../../../common/assets/await.png")} alt="" />
-                <h3>Nenhum produto encontrado</h3>
+                
+                <ImageNotFound message="Nenhum Cliente encontrado"/>
+
             </div>}
 
             {haveData && <div>
@@ -286,6 +287,7 @@ export const ClientList = () => {
 
 
             </div>}
+
 
         </ClientContainer>
     );
