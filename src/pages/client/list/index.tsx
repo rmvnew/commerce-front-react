@@ -1,8 +1,5 @@
 import {
-    BoxInput, CardTableActions, ClientContainer,
-    ClientTableButton,
-    ClientTableButtonNavLink,
-    PaginationCardUser,
+    BoxInput, ClientContainer,
     TableClient,
     TitleFont
 } from "./client.list.styled";
@@ -17,6 +14,7 @@ import { NavLink } from "react-router-dom";
 import { parseISO, format } from 'date-fns';
 import { utcToZonedTime } from 'date-fns-tz'
 import { ImageNotFound } from "../../../common/imageNotFound/imageNotfound";
+import { CardTableActions, DesactiveTableButton, PaginationCard, TableButtonNavLink } from "../../../common/global.styled";
 
 
 
@@ -250,7 +248,7 @@ export const ClientList = () => {
                                 <td>{formatDate(client.createAt)}</td>
                                 <td>
                                     <CardTableActions>
-                                        <ClientTableButtonNavLink to={"/client/register"} state={{
+                                        <TableButtonNavLink to={"/client/register"} state={{
                                             data: {
                                                 clientId: client.clientId,
                                                 clientName: client.clientName,
@@ -267,13 +265,13 @@ export const ClientList = () => {
                                                 street: client.address.street,
                                                 homeNumber: client.address.homeNumber
                                             }
-                                        }} className="btn btn-warning"><ImPencil2 /></ClientTableButtonNavLink>
-                                        <ClientTableButton
+                                        }} className="btn btn-warning"><ImPencil2 /></TableButtonNavLink>
+                                        <DesactiveTableButton
                                             className="btn btn-danger"
                                             onClick={() => openModal(client.clientId)}
                                         >
                                             <RiDeleteBinFill />
-                                        </ClientTableButton>
+                                        </DesactiveTableButton>
                                     </CardTableActions>
                                 </td>
                             </tr>
@@ -281,9 +279,9 @@ export const ClientList = () => {
                     </tbody>
                 </TableClient>
 
-                <PaginationCardUser>
+                <PaginationCard>
                     <Pagination count={pages} color="primary" onChange={handleChange}></Pagination>
-                </PaginationCardUser>
+                </PaginationCard>
 
 
             </div>}

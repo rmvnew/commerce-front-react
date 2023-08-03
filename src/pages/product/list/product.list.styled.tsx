@@ -140,57 +140,6 @@ export const TableProduct = styled.table`
 `
 
 
-export const CardTableActions = styled.div`
-    display: flex;
-    justify-content: center;
-    margin: 5px 20px;
-
-
-    @media (max-width: 2560px) {
-        margin: 5px 20px;
-    }
-
-    @media (max-width: 1920px) {
-        margin: 5px 20px;
-    }
-
-    @media (max-width: 1366px) {
-        margin: 0 20px;
-    }
-    
-`
-
-export const ProductTableButtonNavLink = styled(NavLink)`
- margin: 5px 5px;
- 
- border: 1px solid #000;
-
- &:hover{
-  border: 1px solid #000;
-  box-shadow: #000 0px 2px 5px;
- }
-`
-export const ProductTableButton = styled.button`
- margin-top: 5px;
- margin-bottom: 5px;margin: 5px 5px;
- 
- border: 1px solid #000;
-
- &:hover{
-  border: 1px solid #000;
-  box-shadow: #000 0px 2px 5px;
- }
-`
-
-
-export const PaginationCardUser = styled.div`
-    /* background-color: aliceblue; */
-    display: flex;
-    justify-content: center;
-    /* margin-top: 20px; */
-
-
-`
 
 export const ImageListProductNotFound = styled.img`
         

@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom"
-import { BoxInput, CardTableActions,  PaginationCardUser, ProductContainer, ProductTableButton, ProductTableButtonNavLink, TableProduct } from "./product.list.styled"
+import { BoxInput,  ProductContainer, TableProduct } from "./product.list.styled"
 import { TitleFont } from "../register/product.register.styled"
 import ConfirmationModal from "../../../components/modal/ConfirmationModal"
 import { Fab, FormControl,  InputLabel, MenuItem, Pagination, Select, SelectChangeEvent, TextField, Tooltip } from "@mui/material"
@@ -11,6 +11,7 @@ import { api } from "../../../hooks/useApi"
 import { format, parseISO } from "date-fns"
 import { utcToZonedTime } from "date-fns-tz"
 import { ImageNotFound } from "../../../common/imageNotFound/imageNotfound"
+import { CardTableActions, DesactiveTableButton, PaginationCard, TableButtonNavLink } from "../../../common/global.styled"
 
 
 
@@ -243,7 +244,7 @@ export const Products = () => {
                                 <td>{formatDate(product.createAt)}</td>
                                 <td>
                                     <CardTableActions>
-                                        <ProductTableButtonNavLink to={"/products/register"} state={{
+                                        <TableButtonNavLink to={"/products/register"} state={{
                                 
                                             data: {
                                                 productId: product.productId,
@@ -260,13 +261,13 @@ export const Products = () => {
                                                 categoryId: product.category.categoryId,
 
                                             }
-                                        }} className="btn btn-warning"><ImPencil2 /></ProductTableButtonNavLink>
-                                        <ProductTableButton
+                                        }} className="btn btn-warning"><ImPencil2 /></TableButtonNavLink>
+                                        <DesactiveTableButton
                                             className="btn btn-danger"
                                             onClick={() => openModal(product.productId)}
                                         >
                                             <RiDeleteBinFill />
-                                        </ProductTableButton>
+                                        </DesactiveTableButton>
                                     </CardTableActions>
                                 </td>
                             </tr>
@@ -274,9 +275,9 @@ export const Products = () => {
                     </tbody>
                 </TableProduct>
 
-                <PaginationCardUser>
+                <PaginationCard>
                     <Pagination count={pages} color="primary" onChange={handleChange}></Pagination>
-                </PaginationCardUser>
+                </PaginationCard>
             </div>}
 
         </ProductContainer>
