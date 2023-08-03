@@ -29,3 +29,9 @@ export enum OrderStatus {
     FINISHED = 'FINISHED',
     CANCELED = 'CANCELED'
 }
+
+
+export enum InvoiceType{
+    INPUT = 'INPUT',
+    OUTPUT = 'OUTPUT'
+}

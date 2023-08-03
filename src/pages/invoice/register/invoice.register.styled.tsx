@@ -36,6 +36,7 @@ export const TitleFont = styled.h1`
     /* font-family: 'Black Ops One', cursive; */
     font-family: 'Black Han Sans', sans-serif;
     margin-top: 5px;
+    margin-bottom: 30px;
 `;
 
 
@@ -55,4 +56,14 @@ export const InvoiceRows = styled.div`
       @media (max-width: 1376px) {
          width: 80vw;
       }
+`
+
+
+export const CardDatePicker = styled.div`
+   
+display: flex;
+width: 100%;
+position: relative;
+
+
 `

@@ -7,6 +7,7 @@ import { ProductInterface } from "../../../interfaces/Product.interface";
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify"
+import { inputMoneyChange } from "../../../common/utils";
 
 
 
@@ -204,25 +205,7 @@ export const RegisterProducts = () => {
     };
 
 
-    const handleInputChange = (
-        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-        setSystem: React.Dispatch<React.SetStateAction<number>>,
-        setInput: React.Dispatch<React.SetStateAction<string>>,
-      ) => {
-        const currentEvent = event as React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
-      
-        let { value } = event.target;
-      
-        setInput(value);
-      
-        value = value.replace(',', '.');
-      
-        const numberValue = value.includes('.') ? parseFloat(value) : parseInt(value);
-      
-        if (!isNaN(numberValue)) {
-          setSystem(numberValue);
-        }
-      };
+    
       
 
 
@@ -387,7 +370,7 @@ export const RegisterProducts = () => {
                                     label="Quantidade"
                                     variant="outlined"
                                     value={productQuantityInput}
-                                    onChange={(event) => handleInputChange(event,setProductQuantity,setProductQuantityInput)}
+                                    onChange={(event) => inputMoneyChange(event,setProductQuantity,setProductQuantityInput)}
                                     inputProps={{
                                         style: {
                                             textAlign: 'center',
@@ -414,7 +397,7 @@ export const RegisterProducts = () => {
                                     label="Quantidade minima"
                                     variant="outlined"
                                     value={productMinimumStockInput}
-                                    onChange={(event) => handleInputChange(event,setProductMinimumStock,setProductMinimumStockInput)}
+                                    onChange={(event) => inputMoneyChange(event,setProductMinimumStock,setProductMinimumStockInput)}
                                     inputProps={{
                                         style: {
                                             textAlign: 'center',
@@ -431,7 +414,7 @@ export const RegisterProducts = () => {
                                     label="preço de compra"
                                     variant="outlined"
                                     value={productUnitCostInput}
-                                    onChange={(event) => handleInputChange(event,setProductUnitCost,setProductUnitCostInput)}
+                                    onChange={(event) => inputMoneyChange(event,setProductUnitCost,setProductUnitCostInput)}
                                     inputProps={{
                                         style: {
                                             textAlign: 'center',
@@ -448,7 +431,7 @@ export const RegisterProducts = () => {
                                     label="preço de venda"
                                     variant="outlined"
                                     value={productUnitPriceInput}
-                                    onChange={(event) => handleInputChange(event,setProductUnitPrice,setProductUnitCostInput)}
+                                    onChange={(event) => inputMoneyChange(event,setProductUnitPrice,setProductUnitCostInput)}
                                     inputProps={{
                                         style: {
                                             textAlign: 'center',
