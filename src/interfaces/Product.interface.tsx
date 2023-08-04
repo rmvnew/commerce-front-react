@@ -14,6 +14,7 @@ export interface ProductInterface {
     productUnitCost:number,
     productUnitPrice:number,
     categoryId:number,
+    invoiceNumber:string
    
 }
 

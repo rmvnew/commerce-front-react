@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ProductFormMain, ProductRows, TitleFont } from "./product.register.styled";
-import { Button, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
+import { Button, CircularProgress, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 import { api } from "../../../hooks/useApi";
 import { ProductInterface } from "../../../interfaces/Product.interface";
 import React from 'react';
@@ -24,32 +24,51 @@ export const RegisterProducts = () => {
 
     function setProduct() {
 
-        console.log('Data result: ',dataResult);
+        if (dataResult) {
 
-        setUpdate(dataResult === undefined ? false : true)
-        setProductId(dataResult === undefined ? '' : dataResult.productId)
-        setProductName(dataResult === undefined ? '' : dataResult.productName)
-        setProductBarcode(dataResult === undefined ? '' : dataResult.productBarcode)
-        setProductCode(dataResult === undefined ? '' : dataResult.productCode)
-        setProductNcm(dataResult === undefined ? '' : dataResult.productNcm)
-        setProductCfop(dataResult === undefined ? '' : dataResult.productCfop)
-        setProductUnitOfMeasurement(dataResult === undefined ? '' : dataResult.productUnitOfMeasurement)
+            console.log('DateResult: ', dataResult.invoiceLines);
 
-        setProductQuantity(dataResult === undefined ? '' : dataResult.productQuantity)
-        setProductQuantityInput(dataResult === undefined ? '' : `${dataResult.productQuantity}`.replace('.',','))
-
-        setProductMinimumStock(dataResult === undefined ? '' : dataResult.productMinimumStock)
-        setProductMinimumStockInput(dataResult === undefined ? '' : `${dataResult.productMinimumStock}`.replace('.',','))
-
-        setProductUnitCost(dataResult === undefined ? '' : dataResult.productUnitCost)
-        setProductUnitCostInput(dataResult === undefined ? '' : `${dataResult.productUnitCost}`.replace('.',','))
-
-        setProductUnitPrice(dataResult === undefined ? '' : dataResult.productUnitPrice)
-        setProductUnitPriceInput(dataResult === undefined ? '' : `${dataResult.productUnitPrice}`.replace('.',','))
-
-        setCategoryId(dataResult === undefined ? '' : dataResult.categoryId)
+            const invoice = getLastInvoice(dataResult.invoiceLines)
 
 
+
+            setUpdate(true)
+            setProductId(dataResult.productId)
+            setProductName(dataResult.productName)
+            setProductBarcode(dataResult.productBarcode)
+            setProductCode(dataResult.productCode)
+            setProductNcm(dataResult.productNcm)
+            setProductCfop(dataResult.productCfop)
+            setProductUnitOfMeasurement(dataResult.productUnitOfMeasurement)
+
+            setProductQuantity(dataResult.productQuantity)
+            setProductQuantityInput(`${dataResult.productQuantity}`.replace('.', ','))
+
+            setProductMinimumStock(dataResult.productMinimumStock)
+            setProductMinimumStockInput(`${dataResult.productMinimumStock}`.replace('.', ','))
+
+            setProductUnitCost(dataResult.productUnitCost)
+            setProductUnitCostInput(`${dataResult.productUnitCost}`.replace('.', ','))
+
+            setProductUnitPrice(dataResult.productUnitPrice)
+            setProductUnitPriceInput(`${dataResult.productUnitPrice}`.replace('.', ','))
+
+            setCategoryId(dataResult.categoryId)
+
+            setInvoiceNumber(invoice.invoice.invoiceNumber)
+
+        } else {
+            setUpdate(false)
+        }
+
+    }
+
+
+    function getLastInvoice(invoiceLines: any) {
+        let invoices: any[] = invoiceLines
+
+        invoices.sort((a, b) => a.invoiceLineId - b.invoiceLineId)
+        return invoices[invoices.length - 1]
     }
 
     useEffect(() => {
@@ -73,7 +92,8 @@ export const RegisterProducts = () => {
             productMinimumStock: productMinimumStock,
             productUnitCost: productUnitCost,
             productUnitPrice: productUnitPrice,
-            categoryId: categoryId
+            categoryId: Number(categoryId),
+            invoiceNumber: invoiceNumber
         }
 
         return product
@@ -103,12 +123,13 @@ export const RegisterProducts = () => {
     const [productUnitCostInput, setProductUnitCostInput] = useState('0.0');
     const [productUnitPrice, setProductUnitPrice] = useState(0.0);
     const [productUnitPriceInput, setProductUnitPriceInput] = useState('0.0');
-    const [categoryId, setCategoryId] = useState(0);
+    const [categoryId, setCategoryId] = useState('');
+    const [invoiceNumber, setInvoiceNumber] = useState('')
     const [update, setUpdate] = useState(false)
 
 
     const handleButtonClick = () => {
-        navigate("/products");  // altere "/pagina-desejada" para o caminho desejado
+        navigate("/products");
     };
 
     const allFieldsFilled = () => {
@@ -165,11 +186,11 @@ export const RegisterProducts = () => {
                 navigate('/products')
             }).catch(error => {
                 console.log('Update product error: ', error);
-                
+
                 toast.error(
                     error.response.data.message,
                     {
-                        
+
                         autoClose: 3000,
                         hideProgressBar: false,
                         closeOnClick: true,
@@ -187,7 +208,7 @@ export const RegisterProducts = () => {
 
         api.get('/category')
             .then(res => {
-            
+
                 setCategories(res.data.content)
             }).catch(error => {
                 console.log(error);
@@ -205,8 +226,12 @@ export const RegisterProducts = () => {
     };
 
 
-    
-      
+    useEffect(() => {
+        if (categories.length > 0) {
+            setCategoryId(categories[0].categoryId);
+        }
+    }, [categories]);
+
 
 
     return (
@@ -370,7 +395,7 @@ export const RegisterProducts = () => {
                                     label="Quantidade"
                                     variant="outlined"
                                     value={productQuantityInput}
-                                    onChange={(event) => inputMoneyChange(event,setProductQuantity,setProductQuantityInput)}
+                                    onChange={(event) => inputMoneyChange(event, setProductQuantity, setProductQuantityInput)}
                                     inputProps={{
                                         style: {
                                             textAlign: 'center',
@@ -390,14 +415,14 @@ export const RegisterProducts = () => {
 
                         <Grid container spacing={4}>
 
-                            <Grid item xs={12} md={3}>
+                            <Grid item xs={12} md={2}>
                                 <TextField
                                     fullWidth
                                     id="outlined-basic"
                                     label="Quantidade minima"
                                     variant="outlined"
                                     value={productMinimumStockInput}
-                                    onChange={(event) => inputMoneyChange(event,setProductMinimumStock,setProductMinimumStockInput)}
+                                    onChange={(event) => inputMoneyChange(event, setProductMinimumStock, setProductMinimumStockInput)}
                                     inputProps={{
                                         style: {
                                             textAlign: 'center',
@@ -407,14 +432,14 @@ export const RegisterProducts = () => {
                                 />
                             </Grid>
 
-                            <Grid item xs={12} md={3}>
+                            <Grid item xs={12} md={2}>
                                 <TextField
                                     fullWidth
                                     id="outlined-basic"
                                     label="preço de compra"
                                     variant="outlined"
                                     value={productUnitCostInput}
-                                    onChange={(event) => inputMoneyChange(event,setProductUnitCost,setProductUnitCostInput)}
+                                    onChange={(event) => inputMoneyChange(event, setProductUnitCost, setProductUnitCostInput)}
                                     inputProps={{
                                         style: {
                                             textAlign: 'center',
@@ -431,7 +456,7 @@ export const RegisterProducts = () => {
                                     label="preço de venda"
                                     variant="outlined"
                                     value={productUnitPriceInput}
-                                    onChange={(event) => inputMoneyChange(event,setProductUnitPrice,setProductUnitCostInput)}
+                                    onChange={(event) => inputMoneyChange(event, setProductUnitPrice, setProductUnitPriceInput)}
                                     inputProps={{
                                         style: {
                                             textAlign: 'center',
@@ -441,32 +466,49 @@ export const RegisterProducts = () => {
                                 />
                             </Grid>
 
+
+
                             <Grid item xs={12} md={3}>
 
                                 <FormControl variant="outlined" style={{ width: '100%', height: '100%' }}>
                                     <InputLabel id="demo-simple-select-outlined-label">Categoria</InputLabel>
-                                    <Select
-                                        labelId="demo-simple-select-outlined-label"
-                                        id="demo-simple-select-outlined"
-                                        value={categoryId}
-                                        onChange={handleChangeSelect}
-                                        label="Categoria"
-                                        style={{
-                                            height: '100%',
-
-                                        }}
-                                    >
-
-                                        {categories.map(category => (
-                                            
-                                            <MenuItem key={category.categoryId} value={category.categoryId}>{category.categoryName}</MenuItem>
-                                        ))}
-
-
-
-                                    </Select>
+                                    {categories.length > 0 ? (
+                                        <Select
+                                            labelId="demo-simple-select-outlined-label"
+                                            id="demo-simple-select-outlined"
+                                            value={categoryId}
+                                            onChange={handleChangeSelect}
+                                            label="Categoria"
+                                            style={{ height: '100%' }}
+                                        >
+                                            {categories.map((category) => (
+                                                <MenuItem key={category.categoryId} value={category.categoryId}>
+                                                    {category.categoryName}
+                                                </MenuItem>
+                                            ))}
+                                        </Select>
+                                    ) : (
+                                        <CircularProgress />
+                                    )}
                                 </FormControl>
 
+                            </Grid>
+
+                            <Grid item xs={12} md={2}>
+                                <TextField
+                                    fullWidth
+                                    id="outlined-basic"
+                                    label="Número da nota"
+                                    variant="outlined"
+                                    value={invoiceNumber}
+                                    onChange={(event) => setInvoiceNumber(event.target.value)}
+                                    inputProps={{
+                                        style: {
+                                            textAlign: 'center',
+                                            fontSize: '1.2rem'
+                                        }
+                                    }}
+                                />
                             </Grid>
 
                         </Grid>
@@ -532,3 +574,5 @@ export const RegisterProducts = () => {
         </>
     )
 }
+
+

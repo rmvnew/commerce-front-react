@@ -2,13 +2,14 @@ import { NavLink } from "react-router-dom"
 import { BoxInput, InvoiceMain, TitleFont } from "./invoice.list.styled"
 import { Fab, FormControl, InputLabel, MenuItem, Pagination, Select, SelectChangeEvent, TextField, Tooltip } from "@mui/material"
 import AddIcon from '@mui/icons-material/Add';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ImageNotFound } from "../../../common/imageNotFound/imageNotfound";
 import ConfirmationModal from "../../../components/modal/ConfirmationModal";
 import { TableClient } from "../../client/list/client.list.styled";
 import { CardTableActions, DesactiveTableButton, PaginationCard, TableButtonNavLink } from "../../../common/global.styled";
 import { ImPencil2 } from "react-icons/im";
 import { RiDeleteBinFill } from "react-icons/ri";
+import { api } from "../../../hooks/useApi";
 
 
 
@@ -16,9 +17,9 @@ import { RiDeleteBinFill } from "react-icons/ri";
 
 export const InvoiceList = () => {
 
-    const [haveData, setHaveData] = useState(false)
+    const [haveData, setHaveData] = useState(true)
     const [isModalOpen, setModalOpen] = useState(false);
-    const [invoiceIdToChangeStatus, setInvoiceIdToChangeStatus] = useState<number | null>(null); 
+    const [invoiceIdToChangeStatus, setInvoiceIdToChangeStatus] = useState<number | null>(null);
     const [selectValue, setSelectValue] = useState('')
     const [search, setSearch] = useState("")
     const [invoices, setInvoices] = useState<any[]>([]);
@@ -37,6 +38,33 @@ export const InvoiceList = () => {
         setPage(numberPage)
     }
 
+    const setResponse = (res: any) => {
+        setInvoices(res.data.content)
+        setPages(res.data.totalPages)
+    }
+
+    const getInvoice = async (page: number = 0) => {
+        await api.get(`/invoice?page=${page}&size=8`)
+            .then(response => {
+                setResponse(response)
+            })
+        }
+        
+       
+    useEffect(()=>{
+        getInvoice()
+    },[])
+
+    useEffect(() => {
+
+        if (invoices.length > 0) {
+            setHaveData(true)
+        } else {
+            setHaveData(false)
+        }
+
+    }, [invoices]);
+
     // const handleConfirm = async () => {
     //     if (invoiceIdToChangeStatus) {
     //         await changeStatus(clientIdToChangeStatus);
@@ -47,6 +75,8 @@ export const InvoiceList = () => {
     // const handleCancel = () => {
     //     setModalOpen(false);
     // };
+
+
 
 
     return (
@@ -153,47 +183,48 @@ export const InvoiceList = () => {
                     <thead>
                         <tr>
                             <td>ID</td>
-                            <td>Nome</td>
-                            <td>CNPJ</td>
-                            <td>CPF</td>
-                            <td>E-mail</td>
-
-                            <td>Data Cadastro</td>
+                            <td>Número</td>
+                            <td>Série</td>
+                            <td>Data nota</td>
+                            <td>Valor</td>
+                            <td>Tipo</td>
                             <td>Ações</td>
                         </tr>
                     </thead>
                     <tbody>
-                        {invoices.map((client) => (
-                            // <tr key={client.clientId} className={classes.tableRow}>
-                            <tr key={client.clientId} >
-                                <td>{client.clientId}</td>
-                                <td>{client.clientName}</td>
-                                <td>{client.clientEmail}</td>
+                        {invoices.map((invoice) => (
+                                <tr key={invoice.invoiceId} >
+                                <td>{invoice.invoiceId}</td>
+                                <td>{invoice.invoiceNumber}</td>
+                                <td>{invoice.invoiceSerie}</td>
+                                <td>{invoice.invoiceDate}</td>
+                                <td>{invoice.totalAmount}</td>
+                                <td>{invoice.invoiceType}</td>
 
-                                
                                 <td>
                                     <CardTableActions>
-                                        <TableButtonNavLink to={"/client/register"} state={{
+                                        <TableButtonNavLink to={"/invoice/register"} state={{
                                             data: {
-                                                clientId: client.clientId,
-                                                clientName: client.clientName,
-                                                clientCnpj: client.clientCnpj,
-                                                clientCpf: client.clientCpf,
-                                                clientEmail: client.clientEmail,
-                                                clientResponsible: client.clientResponsible,
-                                                telephone: client.telephone,
-                                                company: client.company,
-                                                zipcode: client.address.zipcode,
-                                                state: client.address.state,
-                                                city: client.address.city,
-                                                district: client.address.district,
-                                                street: client.address.street,
-                                                homeNumber: client.address.homeNumber
+                                                invoiceId: invoice.invoiceId,
+                                                invoiceNumber: invoice.invoiceNumber,
+                                                invoiceSerie: invoice.invoiceSerie,
+                                                invoiceDate: invoice.invoiceDate,
+                                                invoiceType: invoice.invoiceType,
+                                                dueDate: invoice.dueDate,
+                                                totalAmount: invoice.totalAmount,
+                                                supplier: invoice.supplier,
+                                                client: invoice.client,
+                                                paid: invoice.paid,
+                                                paymentDate: invoice.paymentDate,
+                                                invoiceNote: invoice.invoiceNote,
+                                                invoiceLines: invoice.invoiceLines,
+                                                sale: invoice.sale
+
                                             }
                                         }} className="btn btn-warning"><ImPencil2 /></TableButtonNavLink>
                                         <DesactiveTableButton
                                             className="btn btn-danger"
-                                            // onClick={() => openModal(client.clientId)}
+                                        // onClick={() => openModal(client.clientId)}
                                         >
                                             <RiDeleteBinFill />
                                         </DesactiveTableButton>

@@ -51,32 +51,37 @@ export const InvoiceRegister = () => {
 
 
     function setInvoice() {
+        
 
+        if (dataResult) {
+            
 
-        setUpdate(dataResult === undefined ? false : true)
+            setInvoiceId(dataResult.invoiceId);
+            setInvoiceNumber(dataResult.invoiceNumber);
+            setInvoiceSerie(dataResult.invoiceSerie)
+            setInvoiceDate(dataResult.invoiceDate);
+            setInvoiceType(dataResult.invoiceType === InvoiceType.INPUT ? 'Entrada':'Saída' );
+            setDueDate(dataResult.dueDate);
+            setTotalAmountInput(`${dataResult.totalAmount}`.replace('.',','));
 
-        if (update) {
-            setInvoiceId(dataResult.invoiceId)
-            setInvoiceNumber(dataResult.invoiceNumber)
-            setInvoiceDate(dataResult.invoiceDate)
-            setInvoiceType(dataResult.invoiceType)
-            setDueDate(dataResult.dueDate)
-            setTotalAmount(dataResult.totalAmount)
+            setSupplier(dataResult.supplier);
 
-            setSupplier(dataResult.supplier)
-
-            setSelectClient(dataResult.client)
-            setPaid(dataResult.paid)
-            setPaymentDate(dataResult.paymentDate)
-            setSaleCode(dataResult.saleCode)
+            setSelectClient(dataResult.client !== null? dataResult.client.clientName:'');
+            setPaid(dataResult.paid);
+            setPaymentDate(dataResult.paymentDate);
+            setInvoiceNote(dataResult.invoiceNote)
+            setSaleCode(dataResult.saleCode);
+            
+            setUpdate(true);
+        } else {
+            setUpdate(false);
         }
-
-
     }
 
     useEffect(() => {
-        setInvoice()
-    }, [])
+        setInvoice();
+    }, [dataResult]); // Adicionando dataResult como dependência
+
 
 
     function createInvoice() {
@@ -224,13 +229,13 @@ export const InvoiceRegister = () => {
 
     // console.log('Client: ', client);
 
-  
+
 
     return (
 
 
         <>
-        
+
 
             <InvoiceRegisterMain >
                 {!update && <TitleFont>Cadastrar Nota</TitleFont>}
@@ -351,7 +356,7 @@ export const InvoiceRegister = () => {
                                     label="Montante total"
                                     variant="outlined"
                                     value={totalAmountInput}
-                                    onChange={(event) => inputMoneyChange(event,setTotalAmount,setTotalAmountInput)}
+                                    onChange={(event) => inputMoneyChange(event, setTotalAmount, setTotalAmountInput)}
                                     inputProps={{
                                         style: {
                                             textAlign: 'center',

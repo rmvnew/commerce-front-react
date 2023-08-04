@@ -29,7 +29,7 @@ export const Products = () => {
     const [isModalOpen, setModalOpen] = useState(false);
     const [clientIdToChangeStatus, setClientIdToChangeStatus] = useState<number | null>(null); // New state
     const [selectValue, setSelectValue] = useState('productName')
-    const [haveData, setHaveData] = useState(false)
+    const [haveData, setHaveData] = useState(true)
 
     const setResponse = (res: any) => {
 
@@ -259,6 +259,7 @@ export const Products = () => {
                                                 productUnitCost: product.productUnitCost,
                                                 productUnitPrice: product.productUnitPrice,
                                                 categoryId: product.category.categoryId,
+                                                invoiceLines: product.invoiceLines,
 
                                             }
                                         }} className="btn btn-warning"><ImPencil2 /></TableButtonNavLink>

@@ -28,7 +28,7 @@ export const ClientList = () => {
     const [isModalOpen, setModalOpen] = useState(false);
     const [clientIdToChangeStatus, setClientIdToChangeStatus] = useState<number | null>(null); // New state
     const [selectValue, setSelectValue] = useState('clientName')
-    const [haveData, setHaveData] = useState(false)
+    const [haveData, setHaveData] = useState(true)
 
     const setResponse = (res: any) => {
         setClients(res.data.content)
