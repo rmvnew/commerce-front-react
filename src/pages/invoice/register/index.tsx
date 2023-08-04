@@ -32,14 +32,14 @@ export const InvoiceRegister = () => {
     const [invoiceSerie, setInvoiceSerie] = useState('')
     const [invoiceNote, setInvoiceNote] = useState('')
 
-    const [invoiceDate, setInvoiceDate] = useState<Date | null>(null)
+    const [invoiceDate, setInvoiceDate] = useState<Date | null>(new Date())
     const [invoiceType, setInvoiceType] = useState('')
-    const [dueDate, setDueDate] = useState<Date | null>(null)
+    const [dueDate, setDueDate] = useState<Date | null>(new Date())
     const [totalAmount, setTotalAmount] = useState(0)
     const [totalAmountInput, setTotalAmountInput] = useState('')
     const [paid, setPaid] = useState(false)
     const [paidInput, setPaidInput] = useState('')
-    const [paymentDate, setPaymentDate] = useState<Date | null>(null)
+    const [paymentDate, setPaymentDate] = useState<Date | null>(new Date())
 
     const [saleCode, setSaleCode] = useState('')
 
