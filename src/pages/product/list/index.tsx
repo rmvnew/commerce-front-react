@@ -49,18 +49,16 @@ export const Products = () => {
             });
     }
 
-    // const getClientByFilter = async (search: string, page: number = 0) => {
+    const getClientByFilter = async (search: string, page: number = 0) => {
 
 
-    //     const query = `/client?${selectValue}=${search}&page=${page}&size=8`
+        const query = `/product?${selectValue}=${search}&page=${page}&size=8`
 
-    //     console.log('Query: ',query);
-
-    //     await api.get(query)
-    //         .then(response => {
-    //             setResponse(response);
-    //         });
-    // }
+        await api.get(query)
+            .then(response => {
+                setResponse(response);
+            });
+    }
 
     const changeStatus = async (id: number) => {
         await api.patch(`/product/${id}`)
@@ -83,9 +81,9 @@ export const Products = () => {
     },[products])
 
 
-    // useEffect(() => {
-    //     getClientByFilter(search)
-    // }, [search]);
+    useEffect(() => {
+        getClientByFilter(search)
+    }, [search]);
 
     const openModal = (id: number) => {
         setClientIdToChangeStatus(id);
@@ -161,7 +159,7 @@ export const Products = () => {
                     onConfirm={handleConfirm}
                     onCancel={handleCancel}
                     title="Confirmação de deleção"
-                    message="Tem certeza de que deseja desativar este cliente?"
+                    message="Tem certeza de que deseja desativar este produto?"
                 />
                 <div>
 

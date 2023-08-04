@@ -52,7 +52,7 @@ export const ClientList = () => {
 
         const query = `/client?${selectValue}=${search}&page=${page}&size=8`
 
-        console.log('Query: ', query);
+       
 
         await api.get(query)
             .then(response => {
@@ -124,6 +124,7 @@ export const ClientList = () => {
     const handleChangeSelect = (event: SelectChangeEvent<string>) => {
         setSelectValue(event.target.value as string);
     };
+
 
     return (
         <ClientContainer>

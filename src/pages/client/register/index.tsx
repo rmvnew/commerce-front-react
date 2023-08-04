@@ -196,7 +196,7 @@ export const ClientRegister = () => {
     }, [zipcode])
 
 
-    function handleButtonClick(){
+    function handleButtonClick() {
 
         navigate("/client")
 
@@ -207,20 +207,28 @@ export const ClientRegister = () => {
     function setClient() {
 
 
-        setUpdate(dataResult === undefined ? false : true)
-        setClientId(dataResult === undefined ? '' : dataResult.clientId)
-        setClientName(dataResult === undefined ? '' : dataResult.clientName)
-        setClientCnpj(dataResult === undefined ? '' : dataResult.clientCnpj)
-        setClientCpf(dataResult === undefined ? '' : dataResult.clientCpf)
-        setClientEmail(dataResult === undefined ? '' : dataResult.clientEmail)
-        setClientResponsible(dataResult === undefined ? '' : dataResult.clientResponsible)
-        setTelephone(dataResult === undefined ? '' : dataResult.telephone)
-        setZipcode(dataResult === undefined ? '' : dataResult.zipcode)
-        setState(dataResult === undefined ? '' : dataResult.state)
-        setCity(dataResult === undefined ? '' : dataResult.city)
-        setDistrict(dataResult === undefined ? '' : dataResult.district)
-        setStreet(dataResult === undefined ? '' : dataResult.street)
-        setHomeNumber(dataResult === undefined ? '' : dataResult.homeNumber)
+        if (dataResult) {
+
+
+            setUpdate(true)
+            setCompany(dataResult.company)
+            setClientId(dataResult.clientId)
+            setClientName(dataResult.clientName)
+            setClientCnpj(dataResult.company ? dataResult.clientCnpj : "")
+            setClientCpf(dataResult.company ? "" : dataResult.clientCpf)
+            setClientEmail(dataResult.clientEmail)
+            setClientResponsible(dataResult.clientResponsible)
+            setTelephone(dataResult.telephone)
+            setZipcode(dataResult.zipcode)
+            setState(dataResult.state)
+            setCity(dataResult.city)
+            setDistrict(dataResult.district)
+            setStreet(dataResult.street)
+            setHomeNumber(dataResult.homeNumber)
+
+        } else {
+            setUpdate(false)
+        }
 
     }
 
@@ -233,8 +241,8 @@ export const ClientRegister = () => {
         <>
 
             <ClientFormMain >
-            {!update && <TitleFont>Cadastrar Cliente</TitleFont>}
-            {update && <TitleFont>Atualizar Cliente</TitleFont>}
+                {!update && <TitleFont>Cadastrar Cliente</TitleFont>}
+                {update && <TitleFont>Atualizar Cliente</TitleFont>}
 
 
                 <form action="" onSubmit={onSubmit}>
@@ -518,7 +526,7 @@ export const ClientRegister = () => {
                                 fontSize: '1.2rem',
                                 width: '300px',
                                 background: 'grey',
-                                fontFamily:'Black Han Sans'
+                                fontFamily: 'Black Han Sans'
                             }}
                             disabled={!allFieldsFilled()}
                             onClick={updateClient}
@@ -531,7 +539,7 @@ export const ClientRegister = () => {
                             style={{
                                 fontSize: '1.2rem',
                                 width: '300px',
-                                fontFamily:'Black Han Sans'
+                                fontFamily: 'Black Han Sans'
                             }}
                             disabled={!allFieldsFilled()}
                             onClick={saveClient}
@@ -544,11 +552,11 @@ export const ClientRegister = () => {
                             style={{
                                 fontSize: '1.2rem',
                                 width: '300px',
-                                backgroundColor:'orangered',
-                                marginLeft:'20px',
-                                fontFamily:'Black Han Sans'
+                                backgroundColor: 'orangered',
+                                marginLeft: '20px',
+                                fontFamily: 'Black Han Sans'
                             }}
-                            
+
                             onClick={handleButtonClick}
                         >
                             Voltar

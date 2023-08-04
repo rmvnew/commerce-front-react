@@ -109,7 +109,7 @@ export const InvoiceList = () => {
 
             {!haveData && <div>
 
-                <ImageNotFound message="Nenhum produto encontrado" />
+                <ImageNotFound message="Nenhuma nota encontrada" />
 
             </div>}
 
