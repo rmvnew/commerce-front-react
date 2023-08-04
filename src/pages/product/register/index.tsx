@@ -26,11 +26,7 @@ export const RegisterProducts = () => {
 
         if (dataResult) {
 
-            console.log('DateResult: ', dataResult.invoiceLines);
-
             const invoice = getLastInvoice(dataResult.invoiceLines)
-
-
 
             setUpdate(true)
             setProductId(dataResult.productId)

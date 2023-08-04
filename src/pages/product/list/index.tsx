@@ -33,9 +33,6 @@ export const Products = () => {
 
     const setResponse = (res: any) => {
 
-
-        console.log('Res: ',res.data.content);
-
         setProducts(res.data.content)
         setPages(res.data.totalPages)
     }
