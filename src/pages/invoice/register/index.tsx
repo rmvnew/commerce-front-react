@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { InvoiceRows, InvoiceRegisterMain, TitleFont } from "./invoice.register.styled"
+import { InvoiceRows, InvoiceRegisterMain} from "./invoice.register.styled"
 import { Autocomplete, Button, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material"
 import { api } from "../../../hooks/useApi"
 import BasicDatePicker from "../../../components/datepicker/datepicker"
@@ -9,6 +9,7 @@ import { InvoiceType } from "../../../common/enums"
 import { toast } from "react-toastify"
 import { inputMoneyChange } from "../../../common/utils"
 import { CardDatePicker } from "../../../components/datepicker/datepicker.styled"
+import { TitleFont } from "../../../common/global.styled"
 
 
 

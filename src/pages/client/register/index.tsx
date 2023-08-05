@@ -11,7 +11,7 @@ import { toast } from "react-toastify"
 import axios from 'axios';
 import React from "react"
 import { ClientFormMain, ClientRows } from "./client.register.styled"
-import { TitleFont } from "../list/client.list.styled"
+import { TitleFont } from "../../../common/global.styled"
 
 
 
