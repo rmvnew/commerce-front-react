@@ -1,12 +1,11 @@
 import { NavLink } from "react-router-dom"
-import { BoxInput, CardSearch, CardTableActions, DefaultTable, DesactiveTableButton, PaginationCard, TableButtonNavLink, TitleFont } from "../../common/global.styled"
+import { BoxInput, CardSearch, CardTableActions,  DesactiveTableButton, TitleFont } from "../../common/global.styled"
 import { CategoryContainer, CategoryTable } from "./category.styled"
 import { ImageNotFound } from "../../common/imageNotFound/imageNotfound"
 import { useEffect, useState } from "react"
 import ConfirmationModal from "../../components/modal/ConfirmationModal"
 import { Box, Button, TextField } from "@mui/material"
 import { RiDeleteBinFill } from "react-icons/ri"
-import { ImPencil2 } from "react-icons/im"
 import { api } from "../../hooks/useApi"
 import { GiSave } from "react-icons/gi"
 import { AiOutlineClear } from "react-icons/ai"
@@ -51,12 +50,8 @@ export const Category = () => {
 
     const setResponse = (res: any) => {
 
-        // console.log('Res: ', res);
-        // console.log('Res: ', res.data);
-
-
         setCategories(res.data)
-        // setPages(res.data.totalPages)
+        
     }
 
 
@@ -267,14 +262,10 @@ export const Category = () => {
                     </thead>
                     <tbody>
                         {categories.map((category) => (
-                            // <tr key={client.clientId} className={classes.tableRow}>
                             <tr key={category.categoryId}
                                 onClick={() => setUpdateCategory(category)}>
                                 <td>{category.categoryId}</td>
                                 <td>{category.categoryName}</td>
-
-
-
 
                                 <td>
                                     <CardTableActions>
@@ -291,11 +282,6 @@ export const Category = () => {
                         ))}
                     </tbody>
                 </CategoryTable>
-
-                {/* <PaginationCard>
-                    <Pagination count={pages} color="primary" onChange={handleChange}></Pagination>
-                </PaginationCard> */}
-
 
             </div>}
 
