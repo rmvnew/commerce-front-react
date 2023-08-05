@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom"
-import { BoxInput, CardTableActions, DefaultTable, DesactiveTableButton, PaginationCard, TableButtonNavLink, TitleFont } from "../../common/global.styled"
+import { BoxInput, CardSearch, CardTableActions, DefaultTable, DesactiveTableButton, PaginationCard, TableButtonNavLink, TitleFont } from "../../common/global.styled"
 import { CategoryContainer } from "./category.styled"
 import { ImageNotFound } from "../../common/imageNotFound/imageNotfound"
 import { useEffect, useState } from "react"
@@ -103,7 +103,7 @@ export const Category = () => {
 
             <TitleFont>Gerenciar Categorias</TitleFont>
 
-            <div>
+            <CardSearch>
                 <BoxInput style={{ display: 'flex', alignItems: 'center' }}>
 
                     <TextField
@@ -136,7 +136,7 @@ export const Category = () => {
                 </BoxInput>
 
 
-            </div>
+            </CardSearch>
             <br />
 
 
@@ -155,7 +155,7 @@ export const Category = () => {
                     title="Confirmação de deleção"
                     message="Tem certeza de que deseja desativar este cliente?"
                 />
-                <div>
+                <CardSearch>
 
 
                     <BoxInput style={{ display: 'flex', alignItems: 'center' }}>
@@ -182,7 +182,7 @@ export const Category = () => {
                         />
                     </BoxInput>
 
-                </div>
+                </CardSearch>
                 <br />
 
                 <DefaultTable >

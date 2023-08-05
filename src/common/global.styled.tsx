@@ -177,3 +177,11 @@ export const DefaultTable = styled.table`
         width: 75vw;
     }
 `
+
+
+export const CardSearch = styled.div`
+    
+margin-bottom: 25px;
+
+
+`

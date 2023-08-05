@@ -5,7 +5,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { useEffect, useState } from "react";
 import { ImageNotFound } from "../../../common/imageNotFound/imageNotfound";
 import ConfirmationModal from "../../../components/modal/ConfirmationModal";
-import { CardTableActions, DefaultTable, DesactiveTableButton, PaginationCard, TableButtonNavLink, TitleFont } from "../../../common/global.styled";
+import { CardSearch, CardTableActions, DefaultTable, DesactiveTableButton, PaginationCard, TableButtonNavLink, TitleFont } from "../../../common/global.styled";
 import { ImPencil2 } from "react-icons/im";
 import { RiDeleteBinFill } from "react-icons/ri";
 import { api } from "../../../hooks/useApi";
@@ -122,7 +122,7 @@ export const InvoiceList = () => {
                     message="Tem certeza de que deseja desativar este cliente?"
                 /> */}
 
-                <div>
+                <CardSearch>
 
 
                     <BoxInput style={{ display: 'flex', alignItems: 'center' }}>
@@ -156,27 +156,24 @@ export const InvoiceList = () => {
 
 
                         <TextField
-                            id="standard-basic"
-                            label="Busca"
-                            variant="standard"
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                            InputLabelProps={{
-                                style: {
-                                    left: '25px',
 
-                                }
-                            }}
+                            id="outlined-basic"
+                            label="Pesquisar"
+                            variant="outlined"
+                            value={search}
+                            onChange={(event) => setSearch(event.target.value)}
                             inputProps={{
                                 style: {
-                                    paddingLeft: '10px',
-                                    marginBottom: '15px'
+                                    textAlign: 'center',
+                                    border: 'none',
+                                    height: '10px'
+
                                 }
                             }}
                         />
                     </BoxInput>
 
-                </div>
+                </CardSearch>
 
                 <DefaultTable >
                     <thead>

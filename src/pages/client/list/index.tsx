@@ -1,7 +1,7 @@
 import {
     BoxInput, ClientContainer,
 
-    
+
 } from "./client.list.styled";
 import { api } from "../../../hooks/useApi";
 import { useEffect, useState } from "react";
@@ -14,7 +14,7 @@ import { NavLink } from "react-router-dom";
 import { parseISO, format } from 'date-fns';
 import { utcToZonedTime } from 'date-fns-tz'
 import { ImageNotFound } from "../../../common/imageNotFound/imageNotfound";
-import { CardTableActions, DefaultTable, DesactiveTableButton, PaginationCard, TableButtonNavLink, TitleFont } from "../../../common/global.styled";
+import { CardSearch, CardTableActions, DefaultTable, DesactiveTableButton, PaginationCard, TableButtonNavLink, TitleFont } from "../../../common/global.styled";
 
 
 
@@ -52,7 +52,7 @@ export const ClientList = () => {
 
         const query = `/client?${selectValue}=${search}&page=${page}&size=8`
 
-       
+
 
         await api.get(query)
             .then(response => {
@@ -143,8 +143,8 @@ export const ClientList = () => {
                             top: '16px',
                             right: '16px',
                             marginBottom: '25px',
-                            width:'70px',
-                            height:'70px'
+                            width: '70px',
+                            height: '70px'
                         }}>
                         <AddIcon />
                     </Fab>
@@ -153,8 +153,8 @@ export const ClientList = () => {
 
 
             {!haveData && <div>
-                
-                <ImageNotFound message="Nenhum Cliente encontrado"/>
+
+                <ImageNotFound message="Nenhum Cliente encontrado" />
 
             </div>}
 
@@ -167,7 +167,7 @@ export const ClientList = () => {
                     title="Confirmação de deleção"
                     message="Tem certeza de que deseja desativar este cliente?"
                 />
-                <div>
+                <CardSearch>
 
 
                     <BoxInput style={{ display: 'flex', alignItems: 'center' }}>
@@ -201,27 +201,24 @@ export const ClientList = () => {
 
 
                         <TextField
-                            id="standard-basic"
-                            label="Busca"
-                            variant="standard"
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                            InputLabelProps={{
-                                style: {
-                                    left: '25px',
 
-                                }
-                            }}
+                            id="outlined-basic"
+                            label="Pesquisar"
+                            variant="outlined"
+                            value={search}
+                            onChange={(event) => setSearch(event.target.value)}
                             inputProps={{
                                 style: {
-                                    paddingLeft: '10px',
-                                    marginBottom: '15px'
+                                    textAlign: 'center',
+                                    border: 'none',
+                                    height: '10px'
+
                                 }
                             }}
                         />
                     </BoxInput>
 
-                </div>
+                </CardSearch>
 
                 <DefaultTable >
                     <thead>

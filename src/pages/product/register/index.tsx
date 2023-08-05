@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ProductFormMain, ProductRows } from "./product.register.styled";
-import { Button, CircularProgress, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
+import { Button, CircularProgress, Fab, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Tooltip } from "@mui/material";
 import { api } from "../../../hooks/useApi";
 import { ProductInterface } from "../../../interfaces/Product.interface";
 import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify"
 import { inputMoneyChange } from "../../../common/utils";
 import { TitleFont } from "../../../common/global.styled";
+import AddIcon from '@mui/icons-material/Add';
 
 
 
@@ -237,6 +238,40 @@ export const RegisterProducts = () => {
             <ProductFormMain >
                 {!update && <TitleFont>Cadastrar Produto</TitleFont>}
                 {update && <TitleFont>Atualizar Produto</TitleFont>}
+
+
+                <NavLink to={'/category'}>
+                    <label style={{
+                        position: 'absolute',
+                        top: '75px',
+                        right: '16px',
+                        fontWeight:'bold',
+                        color:'green'
+
+                    }}>Categorias</label>
+                    <Tooltip
+                        title="Adicionar categoria"
+                        placement='left'
+                        
+                    >
+
+                        <Fab
+                            color="success"
+                            aria-label="add"
+                            style={{
+                                position: 'absolute',
+                                top: '100px',
+                                right: '16px',
+                                marginBottom: '25px',
+                                width: '70px',
+                                height: '70px'
+                            }}>
+                            <AddIcon />
+                        </Fab>
+
+                    </Tooltip>
+                </NavLink>
+
 
                 <form action="" onSubmit={onSubmit}>
 

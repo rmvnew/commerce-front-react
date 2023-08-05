@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom"
-import { BoxInput,  ProductContainer } from "./product.list.styled"
+import { BoxInput, ProductContainer } from "./product.list.styled"
 import ConfirmationModal from "../../../components/modal/ConfirmationModal"
-import { Fab, FormControl,  InputLabel, MenuItem, Pagination, Select, SelectChangeEvent, TextField, Tooltip } from "@mui/material"
+import { Fab, FormControl, InputLabel, MenuItem, Pagination, Select, SelectChangeEvent, TextField, Tooltip } from "@mui/material"
 import { RiDeleteBinFill } from "react-icons/ri"
 import { ImPencil2 } from "react-icons/im"
 import AddIcon from '@mui/icons-material/Add';
@@ -10,7 +10,7 @@ import { api } from "../../../hooks/useApi"
 import { format, parseISO } from "date-fns"
 import { utcToZonedTime } from "date-fns-tz"
 import { ImageNotFound } from "../../../common/imageNotFound/imageNotfound"
-import { CardTableActions, DefaultTable, DesactiveTableButton, PaginationCard, TableButtonNavLink, TitleFont } from "../../../common/global.styled"
+import { CardSearch, CardTableActions, DefaultTable, DesactiveTableButton, PaginationCard, TableButtonNavLink, TitleFont } from "../../../common/global.styled"
 
 
 
@@ -70,14 +70,14 @@ export const Products = () => {
         getProduct(page)
     }, [page]);
 
-    useEffect(()=>{
+    useEffect(() => {
 
-        if(products.length > 0){
+        if (products.length > 0) {
             setHaveData(true)
-        }else{
+        } else {
             setHaveData(false)
         }
-    },[products])
+    }, [products])
 
 
     useEffect(() => {
@@ -138,32 +138,8 @@ export const Products = () => {
                             top: '16px',
                             right: '16px',
                             marginBottom: '25px',
-                            width:'70px',
-                            height:'70px'
-                        }}>
-                        <AddIcon />
-                    </Fab>
-
-                </Tooltip>
-            </NavLink>
-            
-            
-            <NavLink to={'/category'}>
-                <Tooltip
-                    title="Adicionar categoria"
-                    placement='left'
-                >
-
-                    <Fab
-                        color="success"
-                        aria-label="add"
-                        style={{
-                            position: 'absolute',
-                            top: '100px',
-                            right: '16px',
-                            marginBottom: '25px',
-                            width:'70px',
-                            height:'70px'
+                            width: '70px',
+                            height: '70px'
                         }}>
                         <AddIcon />
                     </Fab>
@@ -171,9 +147,11 @@ export const Products = () => {
                 </Tooltip>
             </NavLink>
 
+
+           
             {!haveData && <div>
-                <ImageNotFound message="Nenhum produto encontrado"/>
-                
+                <ImageNotFound message="Nenhum produto encontrado" />
+
             </div>}
 
             {haveData && <div>
@@ -184,7 +162,7 @@ export const Products = () => {
                     title="Confirmação de deleção"
                     message="Tem certeza de que deseja desativar este produto?"
                 />
-                <div>
+                <CardSearch>
 
 
                     <BoxInput style={{ display: 'flex', alignItems: 'center' }}>
@@ -213,32 +191,29 @@ export const Products = () => {
 
                             </Select>
                         </FormControl>
-                       
+
 
 
 
                         <TextField
-                            id="standard-basic"
-                            label="Busca"
-                            variant="standard"
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                            InputLabelProps={{
-                                style: {
-                                    left: '25px',
 
-                                }
-                            }}
+                            id="outlined-basic"
+                            label="Pesquisar"
+                            variant="outlined"
+                            value={search}
+                            onChange={(event) => setSearch(event.target.value)}
                             inputProps={{
                                 style: {
-                                    paddingLeft: '10px',
-                                    marginBottom: '15px'
+                                    textAlign: 'center',
+                                    border: 'none',
+                                    height: '10px'
+
                                 }
                             }}
                         />
                     </BoxInput>
-                   
-                </div>
+
+                </CardSearch>
 
                 <DefaultTable >
                     <thead>
@@ -263,7 +238,7 @@ export const Products = () => {
                                 <td>
                                     <CardTableActions>
                                         <TableButtonNavLink to={"/products/register"} state={{
-                                
+
                                             data: {
                                                 productId: product.productId,
                                                 productName: product.productName,
