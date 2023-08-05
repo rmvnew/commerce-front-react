@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom"
 import { BoxInput, CardSearch, CardTableActions, DefaultTable, DesactiveTableButton, PaginationCard, TableButtonNavLink, TitleFont } from "../../common/global.styled"
-import { CategoryContainer } from "./category.styled"
+import { CategoryContainer, CategoryTable } from "./category.styled"
 import { ImageNotFound } from "../../common/imageNotFound/imageNotfound"
 import { useEffect, useState } from "react"
 import ConfirmationModal from "../../components/modal/ConfirmationModal"
@@ -8,8 +8,14 @@ import { Box, Button, TextField } from "@mui/material"
 import { RiDeleteBinFill } from "react-icons/ri"
 import { ImPencil2 } from "react-icons/im"
 import { api } from "../../hooks/useApi"
+import { GiSave } from "react-icons/gi"
+import { AiOutlineClear } from "react-icons/ai"
 
 
+interface CategoryInterface {
+    categoryId: number,
+    categoryName: string
+}
 
 
 export const Category = () => {
@@ -18,11 +24,30 @@ export const Category = () => {
     const [categories, setCategories] = useState<any[]>([]);
     const [categoryName, setCategoryName] = useState('')
     const [haveData, setHaveData] = useState(false)
-    const [pages, setPages] = useState(0);
-    const [page, setPage] = useState(0);
+
     const [search, setSearch] = useState("")
     const [isModalOpen, setModalOpen] = useState(false);
-    const [clientIdToChangeStatus, setClientIdToChangeStatus] = useState<number | null>(null); // New state
+    const [categoryToDelete, setCategoryToDelete] = useState<number | null>(null); // New state
+    const [category, setCategory] = useState({})
+    const [update, setUpdate] = useState(false)
+    const [categoryId,setCategoryId] = useState(0)
+
+
+    const clearCategory = () => {
+        setUpdate(false)
+        setCategoryName('')
+        setSearch('')
+    }
+
+    const setUpdateCategory = (category: CategoryInterface) => {
+
+        console.log(category);
+        setUpdate(true)
+        setCategory(category)
+        setCategoryName(category.categoryName)
+        setCategoryId(category.categoryId)
+
+    }
 
     const setResponse = (res: any) => {
 
@@ -34,33 +59,30 @@ export const Category = () => {
         // setPages(res.data.totalPages)
     }
 
-    const handleChange = (e: any, currentPage: any) => {
-        const numberPage = currentPage - 1
-        setPage(numberPage)
-    }
+
 
     const openModal = (id: number) => {
-        setClientIdToChangeStatus(id);
+        setCategoryToDelete(id);
         setModalOpen(true);
     };
 
     const getCategories = async () => {
-        await api.get(`/category/all`)
+        await api.get(`/category/all?name=${search}`)
             .then(response => {
                 setResponse(response);
             });
     }
 
-    const changeStatus = async (id: number) => {
-        // await api.patch(`/client/${id}`)
-        //     .then(res => {
-        //         getClient()
-        //     })
+    const deleteCategory = async (id: number) => {
+        await api.delete(`/category/${id}`)
+            .then(res => {
+                getCategories()
+            })
     }
 
     useEffect(() => {
         getCategories()
-    }, [])
+    }, [search])
 
     useEffect(() => {
 
@@ -74,8 +96,8 @@ export const Category = () => {
 
 
     const handleConfirm = async () => {
-        if (clientIdToChangeStatus) {
-            await changeStatus(clientIdToChangeStatus);
+        if (categoryToDelete) {
+            await deleteCategory(categoryToDelete);
         }
         setModalOpen(false);
     };
@@ -91,6 +113,22 @@ export const Category = () => {
             .then(response => {
 
                 getCategories()
+                setCategoryName('')
+
+            }).catch(error => {
+                console.log('Error: ', error);
+            })
+
+    }
+
+
+    const updateCategory = async () => {
+
+        await api.put(`/category/${categoryId}`, { categoryName: categoryName })
+            .then(response => {
+
+                getCategories()
+                setCategoryName('')
 
             }).catch(error => {
                 console.log('Error: ', error);
@@ -123,16 +161,49 @@ export const Category = () => {
                         }}
                     />
 
-                    <Button
+                    {!update && <Button
                         variant="contained"
                         onClick={saveCategory}
                         style={{
                             marginLeft: '20px',
-                            height: '40px'
+                            height: '40px',
+                            width: '150px',
+                            fontWeight:'bold'
                         }}
                     >
+                        <GiSave />
                         Salvar
+                    </Button>}
+
+                    {update && <Button
+                        variant="contained"
+                        onClick={updateCategory}
+                        style={{
+                            marginLeft: '20px',
+                            height: '40px',
+                            width: '150px',
+                            background: 'grey',
+                            fontWeight:'bold'
+                        }}
+                    >
+                        <GiSave />
+                        Atualizar
+                    </Button>}
+
+                    <Button
+                        variant="contained"
+                        onClick={clearCategory}
+                        style={{
+                            marginLeft: '20px',
+                            height: '40px',
+                            width: '150px',
+                            fontWeight:'bold'
+                        }}
+                    >
+                        <AiOutlineClear />  Limpar
                     </Button>
+
+
                 </BoxInput>
 
 
@@ -153,7 +224,7 @@ export const Category = () => {
                     onConfirm={handleConfirm}
                     onCancel={handleCancel}
                     title="Confirmação de deleção"
-                    message="Tem certeza de que deseja desativar este cliente?"
+                    message="Tem certeza de que deseja deletar a categoria?"
                 />
                 <CardSearch>
 
@@ -185,7 +256,7 @@ export const Category = () => {
                 </CardSearch>
                 <br />
 
-                <DefaultTable >
+                <CategoryTable >
                     <thead>
                         <tr>
                             <td>ID</td>
@@ -197,7 +268,8 @@ export const Category = () => {
                     <tbody>
                         {categories.map((category) => (
                             // <tr key={client.clientId} className={classes.tableRow}>
-                            <tr key={category.categoryId} >
+                            <tr key={category.categoryId}
+                                onClick={() => setUpdateCategory(category)}>
                                 <td>{category.categoryId}</td>
                                 <td>{category.categoryName}</td>
 
@@ -218,7 +290,7 @@ export const Category = () => {
                             </tr>
                         ))}
                     </tbody>
-                </DefaultTable>
+                </CategoryTable>
 
                 {/* <PaginationCard>
                     <Pagination count={pages} color="primary" onChange={handleChange}></Pagination>

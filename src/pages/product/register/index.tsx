@@ -245,7 +245,7 @@ export const RegisterProducts = () => {
                         position: 'absolute',
                         top: '75px',
                         right: '16px',
-                        fontWeight:'bold',
+                        fontWeight:'bold', 
                         color:'green'
 
                     }}>Categorias</label>

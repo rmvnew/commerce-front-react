@@ -52,3 +52,65 @@ export const CategoryContainer = styled.div`
 
      
 `
+
+export const CategoryTable = styled.table`
+   width: 100%;
+  display: block;
+
+  thead {
+    display: block;
+
+    tr {
+      display: table;
+      width: 100%;
+      table-layout: fixed;
+
+      td {
+        border: solid 1px black;
+        text-align: center;
+        padding: 5px 20px;
+        background-color: #49627b;
+        color: white;
+      }
+    }
+  }
+
+  tbody {
+    display: block;
+    max-height: 400px;
+    overflow-y: auto;
+
+    tr {
+      display: table;
+      width: 100%;
+      table-layout: fixed;
+
+      &:nth-of-type(odd) {
+        background: #e6e6e6;
+      }
+
+      &:hover{
+        background: #627384;
+        color: white;
+      }
+
+      td{
+        border: solid 1px black;
+        margin-left: 5px;
+        margin-right: 5px;
+      }
+    }
+  }
+
+  @media (max-width: 2560px) {
+    width: 83vw;
+  }
+
+  @media (max-width: 1920px) {
+    width: 80vw;
+  }
+
+  @media (max-width: 1366px) {
+    width: 75vw;
+  }
+`

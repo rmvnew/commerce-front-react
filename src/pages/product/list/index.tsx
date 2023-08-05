@@ -10,7 +10,7 @@ import { api } from "../../../hooks/useApi"
 import { format, parseISO } from "date-fns"
 import { utcToZonedTime } from "date-fns-tz"
 import { ImageNotFound } from "../../../common/imageNotFound/imageNotfound"
-import { CardSearch, CardTableActions, DefaultTable, DesactiveTableButton, PaginationCard, TableButtonNavLink, TitleFont } from "../../../common/global.styled"
+import { CardSearch, CardTableActions, DefaultTable, DesactiveTableButton, GlobalContainer, PaginationCard, TableButtonNavLink, TitleFont } from "../../../common/global.styled"
 
 
 
@@ -29,6 +29,7 @@ export const Products = () => {
     const [clientIdToChangeStatus, setClientIdToChangeStatus] = useState<number | null>(null); // New state
     const [selectValue, setSelectValue] = useState('productName')
     const [haveData, setHaveData] = useState(true)
+    const [size, setSize] = useState(window.innerWidth < 1920 ? 6 : 8);
 
     const setResponse = (res: any) => {
 
@@ -42,7 +43,7 @@ export const Products = () => {
     }
 
     const getProduct = async (page: number = 0) => {
-        await api.get(`/product?page=${page}&size=8`)
+        await api.get(`/product?page=${page}&size=${size}`)
             .then(response => {
                 setResponse(response);
             });
@@ -51,7 +52,7 @@ export const Products = () => {
     const getClientByFilter = async (search: string, page: number = 0) => {
 
 
-        const query = `/product?${selectValue}=${search}&page=${page}&size=8`
+        const query = `/product?${selectValue}=${search}&page=${page}&size=${size}`
 
         await api.get(query)
             .then(response => {
@@ -119,7 +120,7 @@ export const Products = () => {
 
     return (
 
-        <ProductContainer>
+        <GlobalContainer>
 
 
             <TitleFont>Lista de Produtos</TitleFont>
@@ -274,7 +275,7 @@ export const Products = () => {
                 </PaginationCard>
             </div>}
 
-        </ProductContainer>
+        </GlobalContainer>
 
     )
 }
