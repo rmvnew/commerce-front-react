@@ -1,6 +1,5 @@
 import { NavLink } from "react-router-dom"
-import { BoxInput,  ProductContainer, TableProduct } from "./product.list.styled"
-import { TitleFont } from "../register/product.register.styled"
+import { BoxInput,  ProductContainer } from "./product.list.styled"
 import ConfirmationModal from "../../../components/modal/ConfirmationModal"
 import { Fab, FormControl,  InputLabel, MenuItem, Pagination, Select, SelectChangeEvent, TextField, Tooltip } from "@mui/material"
 import { RiDeleteBinFill } from "react-icons/ri"
@@ -11,7 +10,7 @@ import { api } from "../../../hooks/useApi"
 import { format, parseISO } from "date-fns"
 import { utcToZonedTime } from "date-fns-tz"
 import { ImageNotFound } from "../../../common/imageNotFound/imageNotfound"
-import { CardTableActions, DesactiveTableButton, PaginationCard, TableButtonNavLink } from "../../../common/global.styled"
+import { CardTableActions, DefaultTable, DesactiveTableButton, PaginationCard, TableButtonNavLink, TitleFont } from "../../../common/global.styled"
 
 
 
@@ -127,7 +126,7 @@ export const Products = () => {
 
             <NavLink to={'/products/register'}>
                 <Tooltip
-                    title="Adicionar"
+                    title="Adicionar produto"
                     placement='left'
                 >
 
@@ -137,6 +136,30 @@ export const Products = () => {
                         style={{
                             position: 'absolute',
                             top: '16px',
+                            right: '16px',
+                            marginBottom: '25px',
+                            width:'70px',
+                            height:'70px'
+                        }}>
+                        <AddIcon />
+                    </Fab>
+
+                </Tooltip>
+            </NavLink>
+            
+            
+            <NavLink to={'/category'}>
+                <Tooltip
+                    title="Adicionar categoria"
+                    placement='left'
+                >
+
+                    <Fab
+                        color="success"
+                        aria-label="add"
+                        style={{
+                            position: 'absolute',
+                            top: '100px',
                             right: '16px',
                             marginBottom: '25px',
                             width:'70px',
@@ -217,7 +240,7 @@ export const Products = () => {
                    
                 </div>
 
-                <TableProduct >
+                <DefaultTable >
                     <thead>
                         <tr>
                             <td>ID</td>
@@ -269,7 +292,7 @@ export const Products = () => {
                             </tr>
                         ))}
                     </tbody>
-                </TableProduct>
+                </DefaultTable>
 
                 <PaginationCard>
                     <Pagination count={pages} color="primary" onChange={handleChange}></Pagination>

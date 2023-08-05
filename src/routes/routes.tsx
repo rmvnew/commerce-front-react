@@ -11,6 +11,7 @@ import { RegisterProducts } from "../pages/product/register"
 import { PageNotFound } from "../pages/pagenotfound/NotFound"
 import { InvoiceList } from "../pages/invoice/list"
 import { InvoiceRegister } from "../pages/invoice/register"
+import { Category } from "../pages/category/category"
 
 
 export const AppRoutes = () => {
@@ -107,6 +108,20 @@ export const AppRoutes = () => {
 
                             
                                 <InvoiceRegister />
+                            
+
+                        </Sidebar>
+                    </Footer>
+                </RequireAuth>
+            } />
+            
+            <Route path="/category" element={
+                <RequireAuth>
+                    <Footer>
+                        <Sidebar>
+
+                            
+                                <Category />
                             
 
                         </Sidebar>

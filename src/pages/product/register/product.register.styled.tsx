@@ -47,11 +47,3 @@ export const ProductRows = styled.div`
       }
 `
 
-
-export const TitleFont = styled.h1`
-    
-    /* font-family: 'Black Ops One', cursive; */
-    font-family: 'Black Han Sans', sans-serif;
-    margin-top: 5px;
-    margin-bottom: 30px;
-`;

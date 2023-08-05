@@ -5,8 +5,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { useEffect, useState } from "react";
 import { ImageNotFound } from "../../../common/imageNotFound/imageNotfound";
 import ConfirmationModal from "../../../components/modal/ConfirmationModal";
-import { TableClient } from "../../client/list/client.list.styled";
-import { CardTableActions, DesactiveTableButton, PaginationCard, TableButtonNavLink } from "../../../common/global.styled";
+import { CardTableActions, DefaultTable, DesactiveTableButton, PaginationCard, TableButtonNavLink, TitleFont } from "../../../common/global.styled";
 import { ImPencil2 } from "react-icons/im";
 import { RiDeleteBinFill } from "react-icons/ri";
 import { api } from "../../../hooks/useApi";
@@ -179,7 +178,7 @@ export const InvoiceList = () => {
 
                 </div>
 
-                <TableClient >
+                <DefaultTable >
                     <thead>
                         <tr>
                             <td>ID</td>
@@ -233,7 +232,7 @@ export const InvoiceList = () => {
                             </tr>
                         ))}
                     </tbody>
-                </TableClient>
+                </DefaultTable>
 
                 <PaginationCard>
                     <Pagination count={pages} color="primary" onChange={handleChange}></Pagination>

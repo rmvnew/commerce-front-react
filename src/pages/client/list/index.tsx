@@ -1,7 +1,7 @@
 import {
     BoxInput, ClientContainer,
-    TableClient,
-    TitleFont
+
+    
 } from "./client.list.styled";
 import { api } from "../../../hooks/useApi";
 import { useEffect, useState } from "react";
@@ -14,7 +14,7 @@ import { NavLink } from "react-router-dom";
 import { parseISO, format } from 'date-fns';
 import { utcToZonedTime } from 'date-fns-tz'
 import { ImageNotFound } from "../../../common/imageNotFound/imageNotfound";
-import { CardTableActions, DesactiveTableButton, PaginationCard, TableButtonNavLink } from "../../../common/global.styled";
+import { CardTableActions, DefaultTable, DesactiveTableButton, PaginationCard, TableButtonNavLink, TitleFont } from "../../../common/global.styled";
 
 
 
@@ -223,7 +223,7 @@ export const ClientList = () => {
 
                 </div>
 
-                <TableClient >
+                <DefaultTable >
                     <thead>
                         <tr>
                             <td>ID</td>
@@ -278,7 +278,7 @@ export const ClientList = () => {
                             </tr>
                         ))}
                     </tbody>
-                </TableClient>
+                </DefaultTable>
 
                 <PaginationCard>
                     <Pagination count={pages} color="primary" onChange={handleChange}></Pagination>

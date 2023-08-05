@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { ProductFormMain, ProductRows, TitleFont } from "./product.register.styled";
+import { ProductFormMain, ProductRows } from "./product.register.styled";
 import { Button, CircularProgress, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 import { api } from "../../../hooks/useApi";
 import { ProductInterface } from "../../../interfaces/Product.interface";
@@ -8,6 +8,7 @@ import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify"
 import { inputMoneyChange } from "../../../common/utils";
+import { TitleFont } from "../../../common/global.styled";
 
 
 
