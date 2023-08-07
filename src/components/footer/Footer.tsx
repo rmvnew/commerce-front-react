@@ -1,9 +1,7 @@
-import { useContext, useEffect, useState } from 'react';
-// import { AuthContext } from '../../contexts/auth/AuthContext';
+import { useEffect, useState } from 'react';
 import { FooterArea, FooterText, FooterName } from './FooterStyled';
-import { AuthContext } from '../../auth/contexts/authContext';
 import { api } from '../../hooks/useApi';
-import { Tooltip } from 'react-bootstrap';
+import { ProfileDisplayName } from '../../common/enums';
 
 
 
@@ -15,7 +13,9 @@ const Footer = ({ children }: any) => {
     function getUser() {
         api.get(`/users/email?email=${email}`)
             .then((res) => {
+                
                 setUser(res.data)
+
             }).catch(error => {
                 console.log(error);
             })
@@ -25,14 +25,13 @@ const Footer = ({ children }: any) => {
         getUser()
     }, [])
 
+
     const userName = user?.userCompleteName || ''
-    const userProfile = user?.profiles?.[0]?.profileName || ''
-    // Cria um array de nomes de perfil
-    const profileNames = user?.profiles?.map((profile: any) => profile.profileName) || []
 
+    const userProfile = ProfileDisplayName[user?.profile?.profileName as keyof typeof ProfileDisplayName] || '';
 
-    // Converte o array de nomes de perfil para uma string, com cada nome de perfil separado por uma vírgula e um espaço
-    const profileNamesString = profileNames.join(', ')
+    localStorage.setItem('currentProfile', user?.profile?.profileName)
+    
 
     return (
         <>
@@ -40,9 +39,9 @@ const Footer = ({ children }: any) => {
 
             <FooterArea className=" d-flex justify-content-around">
                 <FooterText className='name-left'>USUÁRIO: <FooterName className='name'>{userName}</FooterName></FooterText>
-                {/* <Tooltip title="Delete"> */}
-                    <FooterText className='name-right'>PERFIL: <FooterName className='name'>{userProfile}</FooterName></FooterText>
-                {/* </Tooltip> */}
+
+                <FooterText className='name-right'>PERFIL: <FooterName className='name'>{userProfile}</FooterName></FooterText>
+
             </FooterArea>
         </>
     )

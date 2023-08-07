@@ -35,3 +35,13 @@ export enum InvoiceType{
     INPUT = 'INPUT',
     OUTPUT = 'OUTPUT'
 }
+
+export enum Profile{
+    ADMIN = 'ADMIN',
+    USER = 'USER'
+}
+
+export const ProfileDisplayName = {
+    [Profile.USER]: 'Usuário',
+    [Profile.ADMIN]:'Administrador'
+}

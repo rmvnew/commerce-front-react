@@ -332,7 +332,7 @@ export const InvoiceRegister = () => {
                             <Grid item xs={12} md={3}>
                                 <CardDatePicker>
                                     <BasicDatePicker
-                                        label="Data de vencimento"
+                                        label="Data de saída"
                                         value={dueDate}
                                         onChange={setDueDate}
 

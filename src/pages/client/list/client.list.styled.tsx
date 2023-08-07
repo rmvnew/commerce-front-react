@@ -11,12 +11,9 @@ import styled from 'styled-components';
 export const BoxInput = styled.div`
     display: flex;
     
-
-    
     @media (max-width: 2560px) {
         
         width: 83vw;
-        
         
     }
     
@@ -24,13 +21,11 @@ export const BoxInput = styled.div`
     @media (max-width: 1920px) {
         
         width: 80vw;
-        
-        
+           
     }
     
     // Para telas até 1366px (HD)
     @media (max-width: 1366px) {
-        
         
         width: 75vw;
 

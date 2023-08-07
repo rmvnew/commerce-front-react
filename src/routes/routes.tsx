@@ -12,6 +12,8 @@ import { PageNotFound } from "../pages/pagenotfound/NotFound"
 import { InvoiceList } from "../pages/invoice/list"
 import { InvoiceRegister } from "../pages/invoice/register"
 import { Category } from "../pages/category/category"
+import { User } from "../pages/user/list/user"
+import { UserRegister } from "../pages/user/register"
 
 
 export const AppRoutes = () => {
@@ -122,6 +124,35 @@ export const AppRoutes = () => {
 
                             
                                 <Category />
+                            
+
+                        </Sidebar>
+                    </Footer>
+                </RequireAuth>
+            } />
+            
+            <Route path="/user" element={
+                <RequireAuth>
+                    <Footer>
+                        <Sidebar>
+
+                            
+                                <User />
+                            
+
+                        </Sidebar>
+                    </Footer>
+                </RequireAuth>
+            } />
+            
+            
+            <Route path="/user/register" element={
+                <RequireAuth>
+                    <Footer>
+                        <Sidebar>
+
+                            
+                                <UserRegister />
                             
 
                         </Sidebar>
