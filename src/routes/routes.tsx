@@ -14,6 +14,7 @@ import { InvoiceRegister } from "../pages/invoice/register"
 import { Category } from "../pages/category/category"
 import { User } from "../pages/user/list/user"
 import { UserRegister } from "../pages/user/register"
+import { Profile } from "../pages/profile/profile"
 
 
 export const AppRoutes = () => {
@@ -153,6 +154,20 @@ export const AppRoutes = () => {
 
                             
                                 <UserRegister />
+                            
+
+                        </Sidebar>
+                    </Footer>
+                </RequireAuth>
+            } />
+            
+            <Route path="/profile" element={
+                <RequireAuth>
+                    <Footer>
+                        <Sidebar>
+
+                            
+                                <Profile />
                             
 
                         </Sidebar>

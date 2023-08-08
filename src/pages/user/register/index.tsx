@@ -14,6 +14,8 @@ import { CommerceRegex } from "../../../common/regex";
 import IconButton from '@mui/material/IconButton';
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { ProfileDisplayName } from "../../../common/enums";
+import { TiArrowBackOutline } from "react-icons/ti";
+import ReplyIcon from '@mui/icons-material/Reply';
 
 
 export const UserRegister = () => {
@@ -511,6 +513,7 @@ export const UserRegister = () => {
 
                     <Button
                         variant="contained"
+                        // startIcon={<ReplyIcon sx={{fontSize:60}} />}
                         style={{
                             fontSize: '1.2rem',
                             width: '300px',
@@ -521,7 +524,7 @@ export const UserRegister = () => {
 
                         onClick={handleButtonClick}
                     >
-                        Voltar
+                       <ReplyIcon sx={{fontSize:40 }} /> Voltar
                     </Button>
 
                 </GlobalRows>

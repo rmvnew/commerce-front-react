@@ -10,6 +10,7 @@ import { toast } from "react-toastify"
 import { inputMoneyChange } from "../../../common/utils";
 import { TitleFont } from "../../../common/global.styled";
 import AddIcon from '@mui/icons-material/Add';
+import ReplyIcon from '@mui/icons-material/Reply';
 
 
 
@@ -590,7 +591,7 @@ export const RegisterProducts = () => {
 
                             onClick={handleButtonClick}
                         >
-                            Voltar
+                          <ReplyIcon sx={{fontSize:40 }}/>  Voltar
                         </Button>
 
                     </ProductRows>
