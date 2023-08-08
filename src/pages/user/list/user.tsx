@@ -30,7 +30,7 @@ export const User = () => {
     const [search, setSearch] = useState("")
     const [isModalOpen, setModalOpen] = useState(false);
     const [userIdToChangeStatus, setUserIdToChangeStatus] = useState<number | null>(null); // New state
-    const [selectValue, setSelectValue] = useState('userName')
+    const [selectValue, setSelectValue] = useState('userCompleteName')
     const [haveData, setHaveData] = useState(true)
     const [size, setSize] = useState(window.innerWidth < 1920 ? 6 : 8);
 
@@ -97,6 +97,8 @@ export const User = () => {
         await api.patch(`/users/change-status/${id}`)
             .then(res => {
                 getProduct()
+            }).catch(error => {
+                console.log('Error',error);
             })
     }
 
@@ -124,6 +126,7 @@ export const User = () => {
     };
 
     const handleConfirm = async () => {
+        
         if (userIdToChangeStatus) {
             await changeStatus(userIdToChangeStatus);
         }
@@ -217,13 +220,10 @@ export const User = () => {
                                     marginBottom: '25px'
                                 }}
                             >
-                                <MenuItem value="productName">
+                                <MenuItem value="userCompleteName">
                                     <em>Nome</em>
                                 </MenuItem>
-                                <MenuItem value={'productBarcode'}>Código de barras</MenuItem>
-                                <MenuItem value={'productCode'}>Código do produto</MenuItem>
-                                <MenuItem value={'productNcm'}>Código ncm</MenuItem>
-
+                                
 
                             </Select>
                         </FormControl>
@@ -285,7 +285,7 @@ export const User = () => {
                                         }} className="btn btn-warning"><ImPencil2 /></TableButtonNavLink>
                                         <DesactiveTableButton
                                             className="btn btn-danger"
-                                            onClick={() => openModal(user.productId)}
+                                            onClick={() => openModal(user.userId)}
                                         >
                                             <RiDeleteBinFill />
                                         </DesactiveTableButton>
