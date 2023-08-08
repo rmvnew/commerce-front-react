@@ -10,6 +10,7 @@ import { toast } from "react-toastify"
 import { inputMoneyChange } from "../../../common/utils"
 import { CardDatePicker } from "../../../components/datepicker/datepicker.styled"
 import { TitleFont } from "../../../common/global.styled"
+import ReplyIcon from '@mui/icons-material/Reply';
 
 
 
@@ -524,7 +525,7 @@ export const InvoiceRegister = () => {
 
                             onClick={handleButtonClick}
                         >
-                            Voltar
+                          <ReplyIcon sx={{fontSize:40 }}/>  Voltar
                         </Button>
 
                     </InvoiceRows>

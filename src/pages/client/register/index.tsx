@@ -12,6 +12,7 @@ import axios from 'axios';
 import React from "react"
 import { ClientFormMain, ClientRows } from "./client.register.styled"
 import { TitleFont } from "../../../common/global.styled"
+import ReplyIcon from '@mui/icons-material/Reply';
 
 
 
@@ -559,7 +560,7 @@ export const ClientRegister = () => {
 
                             onClick={handleButtonClick}
                         >
-                            Voltar
+                          <ReplyIcon sx={{fontSize:40 }}/>  Voltar
                         </Button>
 
                     </ClientRows>
