@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 export const SaleMain = styled.div`
 
-    width: 85vw;
+    
     margin-left: 10px;
     margin-top: 10px;
     display: grid;
@@ -13,19 +13,38 @@ export const SaleMain = styled.div`
                          "body1 body2"
                          "footer footer";
     gap:15px ;
+
+
+    @media (max-width: 2560px) {
+
+        width: 85vw;
+
+    }
+
+    @media (max-width: 1920px) {
+    
+
+
+    }
+
+    @media (max-width: 1366px) {
+    
+        width: 83vw;
+
+    }
     
 `
 
 export const SaleTop = styled.div`
     grid-area: top;
-    background-color: rgb(38, 67, 80);
+    background-color: rgb(68, 113, 134);
     border-radius: 10px;
     padding: 10px;
     
 
 `
 export const SaleBody1 = styled.div`
-    background-color: rgb(38, 67, 80);
+    background-color: rgb(68, 113, 134);
     border-radius: 10px;
     padding: 10px;
 
@@ -99,7 +118,7 @@ export const LabelTytleLastInput = styled.label`
 
 export const SaleBody2 = styled.div`
     grid-area: body2;
-    background-color: rgb(38, 67, 80);
+    background-color: rgb(68, 113, 134);
     border-radius: 10px;
     padding: 10px;
     /* overflow: scroll; */
@@ -115,7 +134,8 @@ export const SaleCardTable = styled.div`
     width: 100%;
     height: 98%;
    
-    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: scroll;
 
 `
 
@@ -125,7 +145,7 @@ export const SaleCardTable = styled.div`
 export const SaleTable = styled.table`
 
     margin: 10px;
-    width: 97%;
+    width: 95%;
    
    
        
@@ -193,7 +213,7 @@ export const SaleTableTBodyTd = styled.td`
 
 export const SaleFooter = styled.div`
     grid-area: footer;
-    background-color: rgb(38, 67, 80);
+    background-color: rgb(68, 113, 134);
     border-radius: 10px;
     padding: 10px;
     display: flex;
@@ -259,6 +279,26 @@ export const CardSellResult = styled.div`
     border-radius: 10px;
     box-shadow: #1cacff 0px 4px 8px;
     z-index: 3;
+
+    @media (max-width: 2560px) {
+
+       
+
+    }
+
+    @media (max-width: 1920px) {
+
+
+
+    }
+
+    @media (max-width: 1366px) {
+
+        h2{
+            font-size: 1.6rem;
+        }
+
+    }
 
 ` 
 
@@ -333,6 +373,43 @@ export const CardButtonCommandServiceOrder = styled.div`
 
 
 
+    @media (max-width: 2560px) {
+
+       
+
+    }
+
+    @media (max-width: 1920px) {
+
+
+
+    }
+
+    @media (max-width: 1366px) {
+
+        button{
+        width: 45%;
+        height: 80%;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 1rem;
+        font-style: italic;
+        border: 2px solid #000;
+
+        &:hover{
+            border: 2px solid #000;
+            box-shadow: #8f8f03 0px 4px 7px;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+    }
+        
+    }
+
+
 `
 
 export const CardBody3 = styled.div`
@@ -355,19 +432,93 @@ export const SaleTitle = styled.h1`
     font-size: 3.5rem;
     text-align: center;
     color: #FFF;
+
+    @media (max-width: 2560px) {
+
+       
+
+    }
+
+    @media (max-width: 1920px) {
+
+
+
+    }
+
+    @media (max-width: 1366px) {
+
+        font-size: 2rem;
+        
+    }
 `
 
 export const SaleLogo = styled.img`
     position: relative;
     left: 35px;
-    width: 80px;
-    height: 70px;
+    
+
+    @media (max-width: 2560px) {
+
+        width: 80px;
+        height: 70px;
+
+    }
+
+    @media (max-width: 1920px) {
+
+
+
+    }
+
+    @media (max-width: 1366px) {
+
+        width: 50px;
+        height: 40px;
+        
+    }
 `
 
 export const SaleTitleCard = styled.div`
     
 
     display: flex;
+    @media (max-width: 2560px) {
 
+       
+
+    }
+
+    @media (max-width: 1920px) {
+
+
+
+    }
+
+    @media (max-width: 1366px) {
+
+
+        
+    }
 
 `
+
+
+
+
+// @media (max-width: 2560px) {
+
+    
+
+// }
+
+// @media (max-width: 1920px) {
+
+
+
+// }
+
+// @media (max-width: 1366px) {
+
+
+    
+// }
