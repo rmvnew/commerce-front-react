@@ -49,7 +49,7 @@ export const Products = () => {
             });
     }
 
-    const getClientByFilter = async (search: string, page: number = 0) => {
+    const getProductByFilter = async (search: string, page: number = 0) => {
 
 
         const query = `/product?${selectValue}=${search}&page=${page}&size=${size}`
@@ -82,7 +82,7 @@ export const Products = () => {
 
 
     useEffect(() => {
-        getClientByFilter(search)
+        getProductByFilter(search)
     }, [search]);
 
     const openModal = (id: number) => {

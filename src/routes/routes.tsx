@@ -15,6 +15,7 @@ import { Category } from "../pages/category/category"
 import { User } from "../pages/user/list/user"
 import { UserRegister } from "../pages/user/register"
 import { Profile } from "../pages/profile/profile"
+import { Sale } from "../pages/sale/Sale"
 
 
 export const AppRoutes = () => {
@@ -168,6 +169,20 @@ export const AppRoutes = () => {
 
                             
                                 <Profile />
+                            
+
+                        </Sidebar>
+                    </Footer>
+                </RequireAuth>
+            } />
+            
+            <Route path="/sale" element={
+                <RequireAuth>
+                    <Footer>
+                        <Sidebar>
+
+                            
+                                <Sale />
                             
 
                         </Sidebar>
