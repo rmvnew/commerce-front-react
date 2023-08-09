@@ -19,7 +19,6 @@ import {
     SaleCardTable,
     CardBody1,
     CardSellResult,
-    ImputProductProcessQuantity,
     ImputProductProcessSearch,
     CardBody2,
     ImputProductProcessLastNumber,
@@ -35,20 +34,19 @@ import {
 import { SearchProduct } from './search/sale.product.search';
 import { Modal, Select } from 'antd';
 import cart from '../../common/assets/cart.png'
-import { ProductInterface } from '../../interfaces/Product.interface';
 
 
 
 export const Sale = () => {
 
 
-    const getProductByBarcode = async (page: number = 1, name: string = "") => {
+    const getProductByBarcode = async (page: number = 0, name: string = "") => {
 
         await api.get(`/product?productBarcode=${name}`)
             .then((res) => {
- 
+
                 const [product] = res.data.content
-               
+
                 setProduct(product)
 
                 setTimeout(() => {
@@ -130,9 +128,28 @@ export const Sale = () => {
 
     const onKeyChange = (event: any) => {
 
+        let quantity = 0
+        let barcode = ''
+
         if (event.key === 'Enter') {
 
-            getProductByBarcode(1, search)
+            const index = search.indexOf('x')
+
+            if (index !== -1) {
+
+                quantity = Number(search.substring(0, index))
+                barcode = search.substring(index + 1)
+                getProductByBarcode(0, barcode)
+                setItemQuantity(quantity)
+
+            } else {
+
+                quantity = 1
+                barcode = search
+                getProductByBarcode(0, search)
+                setItemQuantity(1)
+
+            }
 
         }
 
@@ -142,7 +159,7 @@ export const Sale = () => {
         console.log(finalItemList);
     }, [finalItemList])
 
-    
+
     useEffect(() => {
 
         if (product.productName !== undefined) {
@@ -198,7 +215,7 @@ export const Sale = () => {
 
     const setChooiceByBarcode = (prod: any) => {
 
-        console.log('Prod',prod);
+        // console.log('Prod',prod);
 
         prod.productQuantity = itemQuantity
         process(prod)
@@ -222,8 +239,6 @@ export const Sale = () => {
     }
 
 
-    // console.log('renderizou');
-
 
     return (
         <>
@@ -242,7 +257,7 @@ export const Sale = () => {
 
                     <CardBody1 className="row">
                         <>
-                            <div className="col-2">
+                            {/* <div className="col-2">
                                 <label>Quantidade</label>
                                 <ImputProductProcessQuantity type="text"
                                     className="form-control form-control"
@@ -250,11 +265,11 @@ export const Sale = () => {
                                     onChange={e => setItemQuantity(Number(e.target.value))}
                                 />
 
-                            </div>
+                            </div> */}
 
-                            
 
-                            <div className="col-10">
+
+                            <div className="col-12">
                                 <label>Busca</label>
                                 <ImputProductProcessSearch type="text"
                                     ref={nameInputRef}
