@@ -25,7 +25,7 @@ export const ClientFormMain = styled.div`
       @media (max-width: 1376px) {
          margin-top: 100px;
          width: 85vw;
-         height: 77vh;
+         height: 70vh;
       }
 
 `
