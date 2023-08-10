@@ -515,6 +515,7 @@ export const InvoiceRegister = () => {
 
                         <Button
                             variant="contained"
+                            startIcon={<ReplyIcon sx={{ fontSize: 40 }} />}
                             style={{
                                 fontSize: '1.2rem',
                                 width: '300px',
@@ -525,7 +526,7 @@ export const InvoiceRegister = () => {
 
                             onClick={handleButtonClick}
                         >
-                          <ReplyIcon sx={{fontSize:40 }}/>  Voltar
+                           Voltar
                         </Button>
 
                     </InvoiceRows>

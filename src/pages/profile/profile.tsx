@@ -209,6 +209,7 @@ export const Profile = () => {
 
                     <Button
                         variant="contained"
+                        startIcon={<ReplyIcon sx={{ fontSize: 40 }} />}
                         onClick={back}
                         style={{
                             marginLeft: '20px',
@@ -218,7 +219,7 @@ export const Profile = () => {
                             backgroundColor: 'orangered'
                         }}
                     >
-                        <ReplyIcon sx={{fontSize:30 }}/>  Voltar
+                         Voltar
                     </Button>
 
 

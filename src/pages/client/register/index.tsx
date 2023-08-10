@@ -550,6 +550,7 @@ export const ClientRegister = () => {
 
                         <Button
                             variant="contained"
+                            startIcon={<ReplyIcon sx={{ fontSize: 40 }} />}
                             style={{
                                 fontSize: '1.2rem',
                                 width: '300px',
@@ -560,7 +561,7 @@ export const ClientRegister = () => {
 
                             onClick={handleButtonClick}
                         >
-                          <ReplyIcon sx={{fontSize:40 }}/>  Voltar
+                            Voltar
                         </Button>
 
                     </ClientRows>

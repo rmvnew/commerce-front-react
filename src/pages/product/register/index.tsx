@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ProductFormMain, ProductRows } from "./product.register.styled";
-import { Button, CircularProgress, Fab, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Tooltip } from "@mui/material";
+import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, Fab, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Tooltip } from "@mui/material";
 import { api } from "../../../hooks/useApi";
 import { ProductInterface } from "../../../interfaces/Product.interface";
 import React from 'react';
@@ -11,6 +11,7 @@ import { inputMoneyChange } from "../../../common/utils";
 import { TitleFont } from "../../../common/global.styled";
 import AddIcon from '@mui/icons-material/Add';
 import ReplyIcon from '@mui/icons-material/Reply';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 
 
@@ -27,9 +28,11 @@ export const RegisterProducts = () => {
 
     function setProduct() {
 
+        
         if (dataResult) {
-
-            const invoice = getLastInvoice(dataResult.invoiceLines)
+            
+            const invoice = getLastInvoice(dataResult.invoiceLines) !== undefined ? getLastInvoice(dataResult.invoiceLines) : null
+           
 
             setUpdate(true)
             setProductId(dataResult.productId)
@@ -54,7 +57,7 @@ export const RegisterProducts = () => {
 
             setCategoryId(dataResult.categoryId)
 
-            setInvoiceNumber(invoice.invoice.invoiceNumber)
+            setInvoiceNumber(invoice !== null ? invoice.invoice.invoiceNumber: '')
 
         } else {
             setUpdate(false)
@@ -126,6 +129,38 @@ export const RegisterProducts = () => {
     const [invoiceNumber, setInvoiceNumber] = useState('')
     const [update, setUpdate] = useState(false)
 
+    const [file, setFile] = useState<File | null>(null);
+    const [showUploader, setShowUploader] = useState(false);
+
+
+
+    const onFileChange = (e: any) => {
+        setFile(e.target.files[0]);
+    }
+
+    const onUpload = async () => {
+        const formData = new FormData();
+
+        if (file) {
+            formData.append('file', file);
+
+            try {
+                 await api.post('/product/import', formData)
+                .then(res =>{
+
+                    navigate('/products')
+                    
+                }).catch(error=>{
+                    console.log('Error: ',error);
+                })
+            } catch (error) {
+                console.error("Erro ao importar produtos", error);
+            }
+        } else {
+            console.warn("Nenhum arquivo selecionado!");
+        }
+    }
+
 
     const handleButtonClick = () => {
         navigate("/products");
@@ -149,8 +184,6 @@ export const RegisterProducts = () => {
     function saveProduct() {
 
         const product = createProduct()
-
-        console.log('Product: ', product);
 
         api.post("/product", product)
             .then((res) => {
@@ -178,7 +211,6 @@ export const RegisterProducts = () => {
 
         const product = createProduct()
 
-        console.log('Product: ', product);
 
         api.put(`/product/${productId}`, product)
             .then((res) => {
@@ -246,14 +278,14 @@ export const RegisterProducts = () => {
                         position: 'absolute',
                         top: '75px',
                         right: '16px',
-                        fontWeight:'bold', 
-                        color:'green'
+                        fontWeight: 'bold',
+                        color: 'green'
 
                     }}>Categorias</label>
                     <Tooltip
                         title="Adicionar categoria"
                         placement='left'
-                        
+
                     >
 
                         <Fab
@@ -550,6 +582,37 @@ export const RegisterProducts = () => {
 
                     <ProductRows>
 
+                        <Dialog open={showUploader} onClose={() => setShowUploader(false)}>
+                            <DialogTitle>Importar Arquivo CSV</DialogTitle>
+                            <DialogContent>
+                                <input type="file" onChange={onFileChange} />
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={() => setShowUploader(false)} color="error">
+                                    Cancelar
+                                </Button>
+                                <Button onClick={onUpload} color="primary">
+                                    Upload
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
+
+                        <Button
+                            variant="contained"
+                            startIcon={<CloudUploadIcon sx={{ fontSize: 40 }} />}
+                            style={{
+                                fontSize: '1.2rem',
+                                width: '250px',
+                                height: '43px',
+                                backgroundColor: 'blue',
+                                marginRight: '20px',
+                                fontFamily: 'Black Han Sans'
+                            }}
+                            onClick={() => setShowUploader(true)}
+                        >
+                            Importar
+                        </Button>
+
                         {update && <Button
                             variant="contained"
                             style={{
@@ -581,8 +644,10 @@ export const RegisterProducts = () => {
 
                         <Button
                             variant="contained"
+                            startIcon={<ReplyIcon sx={{ fontSize: 40 }} />}
                             style={{
                                 fontSize: '1.2rem',
+                                height: '43px',
                                 width: '300px',
                                 backgroundColor: 'orangered',
                                 marginLeft: '20px',
@@ -591,7 +656,7 @@ export const RegisterProducts = () => {
 
                             onClick={handleButtonClick}
                         >
-                          <ReplyIcon sx={{fontSize:40 }}/>  Voltar
+                              Voltar
                         </Button>
 
                     </ProductRows>
