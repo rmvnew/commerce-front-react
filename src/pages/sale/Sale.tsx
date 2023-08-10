@@ -36,6 +36,15 @@ import { Modal, Select } from 'antd';
 import cart from '../../common/assets/cart.png'
 
 
+interface SaleInterface {
+    item: number,
+    id: number,
+    name: string,
+    quantity: number,
+    price: number,
+    value: number
+}
+
 
 export const Sale = () => {
 
@@ -66,6 +75,7 @@ export const Sale = () => {
         setDiscount(0)
         setSumPercent(false)
         setItemsInProcess([])
+        localStorage.removeItem('currentSale')
 
     }
 
@@ -88,6 +98,7 @@ export const Sale = () => {
     }
 
     const [product, setProduct] = useState<any>({})
+    // const [prod, setProd] = useState<any>(null)
     const [search, setSearch] = useState("")
     const [itemsInProcess, setItemsInProcess] = useState<any[]>([])
     const [finalItemList, setFinalItemList] = useState<any[]>([])
@@ -155,9 +166,7 @@ export const Sale = () => {
 
     }
 
-    useEffect(() => {
-        console.log(finalItemList);
-    }, [finalItemList])
+
 
 
     useEffect(() => {
@@ -171,10 +180,9 @@ export const Sale = () => {
     }, [detectEnter])
 
     useEffect(() => {
-        // const result = totalValue - discount
+
         const currentPercent = discount / 100
         const discountValue = totalValue * currentPercent
-        // console.log(discountValue);
         const result = totalValue - discountValue
         setDiscountValue(discountValue)
         setFinalTotalvalue(result)
@@ -189,21 +197,54 @@ export const Sale = () => {
 
     const process = (prod: any) => {
 
+        console.log('1 Itens: ',itemsInProcess);
+
         setSearch('')
-        const currentItems = itemsInProcess
-        currentItems.push(prod)
+        const currentItems = [...itemsInProcess,prod]
+        
+        localStorage.setItem('currentSale', JSON.stringify(currentItems))
         setItemsInProcess(currentItems)
-        setTimeout(() => {
-            // console.log('Items: ', itemsInProcess);
-            sumProducts()
-            setItemQuantity(1)
-            nameInputRef.current?.focus()
-            setChosenItem(prod)
-            setShowModalSearch(false)
-        }, 500)
+
+
 
     }
 
+    useEffect(() => {
+        setTimeout(() => {
+            const rawData = localStorage.getItem('currentSale');
+
+            if (rawData !== null) {
+                try {
+                    const currentSale = JSON.parse(rawData);
+
+                    if (currentSale) {
+                        setItemsInProcess(currentSale);
+                        // itemsInProcess.forEach(prod => setProd(prod))
+                    }
+                } catch (error) {
+                    console.error("Erro ao interpretar 'currentSale' como JSON:", error);
+                }
+            }
+        }, 1000)
+    }, []);
+
+
+    useEffect(() => {
+        setTimeout(() => {
+
+            console.log('2 Itens: ',itemsInProcess);
+
+            for (let item of itemsInProcess) {
+                sumProducts()
+                setItemQuantity(1)
+                nameInputRef.current?.focus()
+                setChosenItem(item)
+                setShowModalSearch(false)
+
+            }
+
+        }, 1000)
+    }, [itemsInProcess])
 
     const setChooiceByName = (prod: any, quantity: number = 1) => {
 
@@ -239,6 +280,8 @@ export const Sale = () => {
     }
 
 
+    console.log('Local: ',localStorage.getItem('currentSale'));
+    
 
     return (
         <>
@@ -257,16 +300,6 @@ export const Sale = () => {
 
                     <CardBody1 className="row">
                         <>
-                            {/* <div className="col-2">
-                                <label>Quantidade</label>
-                                <ImputProductProcessQuantity type="text"
-                                    className="form-control form-control"
-                                    value={itemQuantity}
-                                    onChange={e => setItemQuantity(Number(e.target.value))}
-                                />
-
-                            </div> */}
-
 
 
                             <div className="col-12">
@@ -383,10 +416,6 @@ export const Sale = () => {
 
                 <SaleFooter>
 
-                    {/* <CardSellResult>
-                        <label>valor</label>
-                        <h2>teste</h2>
-                    </CardSellResult> */}
 
                     <CardSellResult>
                         <label>Sub-total</label>
