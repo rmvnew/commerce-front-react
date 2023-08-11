@@ -282,6 +282,7 @@ export const RegisterProducts = () => {
                         color: 'green'
 
                     }}>Categorias</label>
+                    
                     <Tooltip
                         title="Adicionar categoria"
                         placement='left'

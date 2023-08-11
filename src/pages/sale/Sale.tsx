@@ -34,6 +34,7 @@ import {
 import { SearchProduct } from './search/sale.product.search';
 import { Modal, Select } from 'antd';
 import cart from '../../common/assets/cart.png'
+import { RemoveItemModal } from '../../components/modal/SimpleModal';
 
 
 interface SaleInterface {
@@ -113,6 +114,10 @@ export const Sale = () => {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [sumPercent, setSumPercent] = useState(false)
     const [showPercent, setShowPercent] = useState(false)
+
+    const [removeItemModalVisible, setRemoveItemModalVisible] = useState(false);
+    const [selectedItem, setSelectedItem] = useState<any>(null);
+
 
 
     const showModal = () => {
@@ -197,11 +202,11 @@ export const Sale = () => {
 
     const process = (prod: any) => {
 
-        console.log('1 Itens: ',itemsInProcess);
+        console.log('1 Itens: ', itemsInProcess);
 
         setSearch('')
-        const currentItems = [...itemsInProcess,prod]
-        
+        const currentItems = [...itemsInProcess, prod]
+
         localStorage.setItem('currentSale', JSON.stringify(currentItems))
         setItemsInProcess(currentItems)
 
@@ -230,9 +235,10 @@ export const Sale = () => {
 
 
     useEffect(() => {
+
         setTimeout(() => {
 
-            console.log('2 Itens: ',itemsInProcess);
+            console.log('2 Itens: ', itemsInProcess);
 
             for (let item of itemsInProcess) {
                 sumProducts()
@@ -244,6 +250,7 @@ export const Sale = () => {
             }
 
         }, 1000)
+
     }, [itemsInProcess])
 
     const setChooiceByName = (prod: any, quantity: number = 1) => {
@@ -280,18 +287,52 @@ export const Sale = () => {
     }
 
 
-    console.log('Local: ',localStorage.getItem('currentSale'));
+    // console.log('Local: ',localStorage.getItem('currentSale'));
+
+
+    const showItemSelected = (index: number) => {
+        const item = itemsInProcess[index];
+        setSelectedItem(item);
+        setRemoveItemModalVisible(true);
+    };
+
+    const confirmRemoveItem = (item: any) => {
+        // Filtrando os itens
+        const filteredItems = itemsInProcess.filter(i => i.productId !== item.productId);
+        
+        // Atualizando o localStorage
+        localStorage.setItem('currentSale', JSON.stringify(filteredItems));
+        
+        // Atualizando o estado
+        setItemsInProcess(filteredItems);
+        setRemoveItemModalVisible(false);
+    };
     
+
+
+
+
 
     return (
         <>
+
+            <RemoveItemModal
+                visible={removeItemModalVisible}
+                item={selectedItem}
+                onClose={() => setRemoveItemModalVisible(false)}
+                onConfirm={confirmRemoveItem}
+            />
+
             <SaleMain>
 
                 <SaleTop>
 
                     <SaleTitleCard>
+
                         <SaleLogo src={cart} />
+
                         <SaleTitle>Venda de produtos</SaleTitle>
+
                     </SaleTitleCard>
 
                 </SaleTop>
@@ -397,7 +438,7 @@ export const Sale = () => {
                             </thead>
                             <tbody>
                                 {itemsInProcess.map((prod, i) => (
-                                    <SaleTableTBodyTr onClick={() => alert(i + 1)} key={i}>
+                                    <SaleTableTBodyTr onClick={() => showItemSelected(i)} key={i}>
                                         <SaleTableTBodyTd >{i + 1}</SaleTableTBodyTd>
                                         <SaleTableTBodyTd >{prod.productId}</SaleTableTBodyTd>
                                         <SaleTableTBodyTd >{prod.productName}</SaleTableTBodyTd>
