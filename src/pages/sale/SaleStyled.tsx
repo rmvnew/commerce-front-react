@@ -6,24 +6,42 @@ export const SaleMain = styled.div`
     
     margin-left: 10px;
     margin-top: 10px;
-    display: grid;
+    /* display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 10vh 62vh 15vh;
     grid-template-areas: "top top"
                          "body1 body2"
                          "footer footer";
-    gap:15px ;
+    gap:15px ; */
 
 
     @media (max-width: 2560px) {
 
-        width: 85vw;
+        width: 91vw;
+
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 10vh 68vh 15vh;
+        grid-template-areas: "top top"
+                            "body1 body2"
+                            "footer footer";
+        gap:15px ;
+        
 
     }
 
     @media (max-width: 1920px) {
     
 
+        width: 88vw;
+
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 10vh 64vh 15vh;
+        grid-template-areas: "top top"
+                            "body1 body2"
+                            "footer footer";
+        gap:15px ;
 
     }
 
@@ -31,20 +49,28 @@ export const SaleMain = styled.div`
     
         width: 83vw;
 
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 10vh 62vh 15vh;
+        grid-template-areas: "top top"
+                            "body1 body2"
+                            "footer footer";
+        gap:15px ;
+
     }
     
 `
 
 export const SaleTop = styled.div`
     grid-area: top;
-    background-color: rgb(68, 113, 134);
+    background-color: rgb(74, 99, 131);
     border-radius: 10px;
     padding: 10px;
     
 
 `
 export const SaleBody1 = styled.div`
-    background-color: rgb(68, 113, 134);
+    background-color: rgb(74, 99, 131);
     border-radius: 10px;
     padding: 10px;
 
@@ -118,7 +144,7 @@ export const LabelTytleLastInput = styled.label`
 
 export const SaleBody2 = styled.div`
     grid-area: body2;
-    background-color: rgb(68, 113, 134);
+    background-color: rgb(74, 99, 131);
     border-radius: 10px;
     padding: 10px;
     /* overflow: scroll; */
@@ -213,7 +239,7 @@ export const SaleTableTBodyTd = styled.td`
 
 export const SaleFooter = styled.div`
     grid-area: footer;
-    background-color: rgb(68, 113, 134);
+    background-color: rgb(74, 99, 131);
     border-radius: 10px;
     padding: 10px;
     display: flex;
@@ -265,7 +291,11 @@ export const Suggestion = styled.div`
 `
 
 export const CardSellResult = styled.div`
-    
+
+    display:flex ;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     /* background-color: #2e3131; */
     background-image: linear-gradient(
         to top, #1b232e, #1c2a37,
@@ -281,18 +311,43 @@ export const CardSellResult = styled.div`
     z-index: 3;
 
     @media (max-width: 2560px) {
+        
+        label{
+            font-style: italic;
+            font-weight: 600;
+            font-size: 1.8rem;
+        
+        }
 
-       
+        h2{
+            font-size: 2.6rem;
+        }
 
     }
 
     @media (max-width: 1920px) {
 
+        label{
+            font-style: italic;
+            font-weight: 600;
+            font-size: 1.4rem;
+        
+        }
 
+        h2{
+            font-size: 1.6rem;
+        }
 
     }
 
     @media (max-width: 1366px) {
+
+        label{
+            font-style: italic;
+            font-weight: 600;
+            font-size: 1.1rem;
+        
+        }
 
         h2{
             font-size: 1.6rem;
@@ -323,9 +378,31 @@ export const ImputProductProcessSearch = styled.input`
 export const ImputProductProcessLastName = styled.input`
 
         
-        font-weight: 600;
-        font-size: 0.8rem;
-        padding-left: 20px;
+        
+
+        @media (max-width: 2560px) {
+
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding-left: 20px;
+
+        }
+
+        @media (max-width: 1920px) {
+
+            font-weight: 600;
+            font-size: 1rem;
+            padding-left: 20px;
+
+        }
+
+        @media (max-width: 1366px) {
+
+            font-weight: 600;
+            font-size: 0.8rem;
+            padding-left: 20px;
+
+        }
        
     
 `
@@ -333,11 +410,35 @@ export const ImputProductProcessLastName = styled.input`
 export const ImputProductProcessLastNumber = styled.input`
 
         
-        font-weight: 600;
-        font-size: 0.8rem;
-        padding-left: 20px;
-        text-align: center;
         
+    
+        @media (max-width: 2560px) {
+       
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding-left: 20px;
+            text-align: center;
+       
+
+        }
+
+        @media (max-width: 1920px) {
+
+            font-weight: 600;
+            font-size: 1rem;
+            padding-left: 20px;
+            text-align: center;
+
+        }
+
+        @media (max-width: 1366px) {
+
+            font-weight: 600;
+            font-size: 0.8rem;
+            padding-left: 20px;
+            text-align: center;
+
+        }
     
 `
 
@@ -375,13 +476,49 @@ export const CardButtonCommandServiceOrder = styled.div`
 
     @media (max-width: 2560px) {
 
-       
+        button{
+        width: 45%;
+        height: 80%;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 2rem;
+        font-style: italic;
+        border: 2px solid #000;
+
+            &:hover{
+                border: 2px solid #000;
+                box-shadow: #8f8f03 0px 4px 7px;
+                font-weight: 600;
+                font-size: 2.1rem;
+            }
+
+        }
 
     }
 
     @media (max-width: 1920px) {
 
+        button{
+        width: 45%;
+        height: 80%;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 1.5rem;
+        font-style: italic;
+        border: 2px solid #000;
 
+            &:hover{
+                border: 2px solid #000;
+                box-shadow: #8f8f03 0px 4px 7px;
+                font-weight: 600;
+                font-size: 1.6rem;
+            }
+
+        }
 
     }
 
@@ -398,14 +535,14 @@ export const CardButtonCommandServiceOrder = styled.div`
         font-style: italic;
         border: 2px solid #000;
 
-        &:hover{
-            border: 2px solid #000;
-            box-shadow: #8f8f03 0px 4px 7px;
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
+            &:hover{
+                border: 2px solid #000;
+                box-shadow: #8f8f03 0px 4px 7px;
+                font-weight: 600;
+                font-size: 1.1rem;
+            }
 
-    }
+        }
         
     }
 
@@ -428,6 +565,7 @@ align-items: center;
 
 export const SaleTitle = styled.h1`
 
+    
     width: 100%;
     font-size: 3.5rem;
     text-align: center;
@@ -435,13 +573,13 @@ export const SaleTitle = styled.h1`
 
     @media (max-width: 2560px) {
 
-       
+       margin-top: 25px;
 
     }
 
     @media (max-width: 1920px) {
 
-
+        margin-top: 5px;
 
     }
 
@@ -459,6 +597,7 @@ export const SaleLogo = styled.img`
 
     @media (max-width: 2560px) {
 
+        margin-top: 25px;
         width: 80px;
         height: 70px;
 
@@ -466,7 +605,7 @@ export const SaleLogo = styled.img`
 
     @media (max-width: 1920px) {
 
-
+        margin-top: 5px;
 
     }
 

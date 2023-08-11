@@ -1,5 +1,10 @@
 :root{
-    --sideBarActive: rgb(64, 89, 103);
+    --sideBarActive: linear-gradient(
+      to top, #1b232e, #1c2a37,
+      #1c3140, #1a3948, #164150,
+      #164150, #164150, #164150, 
+      #1a3948, #1c3140, #1c2a37, #1b232e);
+    /* --sideBarActive: rgb(64, 89, 103); */
     --sideBarHover: rgb(76, 95, 104);
     --sideBarBackground: rgb(74, 99, 131);
     --sideBarHoverColor: rgb(68, 113, 134);
