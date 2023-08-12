@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
 import { BoxInput, ProductContainer } from "./product.list.styled"
 import ConfirmationModal from "../../../components/modal/ConfirmationModal"
 import { Fab, FormControl, InputLabel, MenuItem, Pagination, Select, SelectChangeEvent, TextField, Tooltip } from "@mui/material"
@@ -11,6 +11,7 @@ import { format, parseISO } from "date-fns"
 import { utcToZonedTime } from "date-fns-tz"
 import { ImageNotFound } from "../../../common/imageNotFound/imageNotfound"
 import { CardSearch, CardTableActions, DefaultTable, DesactiveTableButton, GlobalContainer, PaginationCard, TableButtonNavLink, TitleFont } from "../../../common/global.styled"
+import { toast } from "react-toastify"
 
 
 
@@ -19,7 +20,7 @@ import { CardSearch, CardTableActions, DefaultTable, DesactiveTableButton, Globa
 
 export const Products = () => {
 
-
+    const navigate = useNavigate();
 
     const [products, setProducts] = useState<any[]>([]);
     const [pages, setPages] = useState(0);
@@ -42,34 +43,86 @@ export const Products = () => {
         setPage(numberPage)
     }
 
-    const getProduct = async (page: number = 0) => {
-        await api.get(`/product?page=${page}&size=${size}`)
-            .then(response => {
-                setResponse(response);
-            });
-    }
+    // const getProduct = async (page: number = 0) => {
 
-    const getProductByFilter = async (search: string, page: number = 0) => {
+    //     try {
 
+    //         await api.get(`/product?page=${page}&size=${size}`)
+    //             .then(response => {
+    //                 setResponse(response);
+    //             });
 
-        const query = `/product?${selectValue}=${search}&page=${page}&size=${size}`
+    //     } catch (error:any) {
 
-        await api.get(query)
-            .then(response => {
-                setResponse(response);
-            });
+    //         toast.error(`1 - Error: ${error.message}`, {
+    //             autoClose: 3000,
+    //             hideProgressBar: false,
+    //             closeOnClick: true,
+    //             pauseOnHover: true,
+    //             draggable: true,
+    //             progress: undefined,
+    //             theme: "colored",
+    //         })
+            
+    //     }
+
+    // }
+
+    const getProductByFilter = async (search: string = '', page: number = 0) => {
+
+        try {
+
+            const query = `/product?${selectValue}=${search}&page=${page}&size=${size}`
+
+            await api.get(query)
+                .then(response => {
+                    setResponse(response);
+                });
+
+        } catch (error:any) {
+           
+            toast.error(`2 - Error: ${error.message}`, {
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            })
+
+            navigate('/login')
+            
+        }
+
     }
 
     const changeStatus = async (id: number) => {
-        await api.patch(`/product/${id}`)
-            .then(res => {
-                getProduct()
+
+        try {
+
+            await api.patch(`/product/${id}`)
+                .then(res => {
+                    getProductByFilter()
+                })
+
+        } catch (error:any) {
+            
+            toast.error(`3 - Error: ${error.message}`, {
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
             })
+        }
     }
 
-    useEffect(() => {
-        getProduct(page)
-    }, [page]);
+    // useEffect(() => {
+    //     getProduct(page)
+    // }, [page]);
 
     useEffect(() => {
 
@@ -149,7 +202,7 @@ export const Products = () => {
             </NavLink>
 
 
-           
+
             {!haveData && <div>
                 <ImageNotFound message="Nenhum produto encontrado" />
 
