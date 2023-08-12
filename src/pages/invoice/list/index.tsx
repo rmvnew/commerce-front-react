@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
 import { BoxInput, InvoiceMain } from "./invoice.list.styled"
 import { Fab, FormControl, InputLabel, MenuItem, Pagination, Select, SelectChangeEvent, TextField, Tooltip } from "@mui/material"
 import AddIcon from '@mui/icons-material/Add';
@@ -9,12 +9,15 @@ import { CardSearch, CardTableActions, DefaultTable, DesactiveTableButton, Pagin
 import { ImPencil2 } from "react-icons/im";
 import { RiDeleteBinFill } from "react-icons/ri";
 import { api } from "../../../hooks/useApi";
+import { toast } from "react-toastify";
 
 
 
 
 
 export const InvoiceList = () => {
+
+    const navigate = useNavigate()
 
     const [haveData, setHaveData] = useState(true)
     const [isModalOpen, setModalOpen] = useState(false);
@@ -43,16 +46,36 @@ export const InvoiceList = () => {
     }
 
     const getInvoice = async (page: number = 0) => {
-        await api.get(`/invoice?page=${page}&size=8`)
-            .then(response => {
-                setResponse(response)
+
+        try {
+
+
+            await api.get(`/invoice?page=${page}&size=8`)
+                .then(response => {
+                    setResponse(response)
+                })
+        } catch (error: any) {
+
+            toast.error(`Error: ${error.message}`, {
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
             })
+
+            navigate('/login')
+
         }
-        
-       
-    useEffect(()=>{
+
+    }
+
+
+    useEffect(() => {
         getInvoice()
-    },[])
+    }, [])
 
     useEffect(() => {
 
@@ -189,7 +212,7 @@ export const InvoiceList = () => {
                     </thead>
                     <tbody>
                         {invoices.map((invoice) => (
-                                <tr key={invoice.invoiceId} >
+                            <tr key={invoice.invoiceId} >
                                 <td>{invoice.invoiceId}</td>
                                 <td>{invoice.invoiceNumber}</td>
                                 <td>{invoice.invoiceSerie}</td>
