@@ -35,16 +35,17 @@ import { SearchProduct } from './search/sale.product.search';
 import { Modal, Select } from 'antd';
 import cart from '../../common/assets/cart.png'
 import { RemoveItemModal } from '../../components/modal/SimpleModal';
+import { SaleInterface } from '../../interfaces/Sale.interface';
 
 
-interface SaleInterface {
-    item: number,
-    id: number,
-    name: string,
-    quantity: number,
-    price: number,
-    value: number
-}
+// interface SaleInterface {
+//     item: number,
+//     id: number,
+//     name: string,
+//     quantity: number,
+//     price: number,
+//     value: number
+// }
 
 
 export const Sale = () => {
@@ -84,19 +85,48 @@ export const Sale = () => {
 
     const nameInputRef = useRef<HTMLInputElement>(null)
 
+    // const setFinalList = () => {
+
+    //     let currentList: any = []
+
+    //     for (let item of itemsInProcess) {
+    //         for (let x = 1; x <= item.productQuantity; x++) {
+    //             currentList.push(item)
+    //         }
+    //     }
+
+    //     setFinalItemList(currentList)
+
+    // }
+
+
     const setFinalList = () => {
-
-        let currentList: any = []
-
+        let userId = localStorage.getItem("currentUserId");
+    
+        type ProductType = { [key: number]: number };
+        const currentProducts: ProductType = {};  // Alterado para ser um objeto, não um array
+    
         for (let item of itemsInProcess) {
-            for (let x = 1; x <= item.productQuantity; x++) {
-                currentList.push(item)
-            }
+            currentProducts[item.productId] = Number(item.productQuantity); // Alterado para adicionar diretamente ao objeto
         }
-
-        setFinalItemList(currentList)
-
+    
+        const sale: SaleInterface = {
+            clientId: 1,
+            createAt: new Date(),
+            totalValue: finalTotalValue,
+            userId: Number(userId),
+            products: currentProducts
+        }
+    
+        console.log('Sale: ', sale);
+    
+        api.post('/sale', sale)
+            .then(res => {
+                clear();
+            }).catch(error => console.log(error));
     }
+    
+    
 
     const [product, setProduct] = useState<any>({})
     // const [prod, setProd] = useState<any>(null)
@@ -299,15 +329,15 @@ export const Sale = () => {
     const confirmRemoveItem = (item: any) => {
         // Filtrando os itens
         const filteredItems = itemsInProcess.filter(i => i.productId !== item.productId);
-        
+
         // Atualizando o localStorage
         localStorage.setItem('currentSale', JSON.stringify(filteredItems));
-        
+
         // Atualizando o estado
         setItemsInProcess(filteredItems);
         setRemoveItemModalVisible(false);
     };
-    
+
 
 
 

@@ -30,7 +30,9 @@ const Footer = ({ children }: any) => {
 
     const userProfile = ProfileDisplayName[user?.profile?.profileName as keyof typeof ProfileDisplayName] || '';
 
+
     localStorage.setItem('currentProfile', user?.profile?.profileName)
+    localStorage.setItem('currentUserId', user?.userId)
     
 
     return (
