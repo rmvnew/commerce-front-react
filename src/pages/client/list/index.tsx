@@ -10,16 +10,19 @@ import { RiDeleteBinFill } from 'react-icons/ri';
 import { Fab, FormControl, InputLabel, MenuItem, Pagination, Select, SelectChangeEvent, TextField, Tooltip } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import ConfirmationModal from "../../../components/modal/ConfirmationModal";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { parseISO, format } from 'date-fns';
 import { utcToZonedTime } from 'date-fns-tz'
 import { ImageNotFound } from "../../../common/imageNotFound/imageNotfound";
 import { CardSearch, CardTableActions, DefaultTable, DesactiveTableButton, PaginationCard, TableButtonNavLink, TitleFont } from "../../../common/global.styled";
+import { toast } from "react-toastify";
 
 
 
 
 export const ClientList = () => {
+
+    const navigate = useNavigate()
 
     const [clients, setClients] = useState<any[]>([]);
     const [pages, setPages] = useState(0);
@@ -31,8 +34,14 @@ export const ClientList = () => {
     const [haveData, setHaveData] = useState(true)
 
     const setResponse = (res: any) => {
+
+        // console.log('Res: ',res);
+
+
         setClients(res.data.content)
         setPages(res.data.totalPages)
+
+
     }
 
     const handleChange = (e: any, currentPage: any) => {
@@ -40,36 +49,67 @@ export const ClientList = () => {
         setPage(numberPage)
     }
 
-    const getClient = async (page: number = 0) => {
-        await api.get(`/client?page=${page}&size=8`)
-            .then(response => {
-                setResponse(response);
-            });
-    }
+    // const getClient = async (page: number = 0) => {
+    //     await api.get(`/client?page=${page}&size=8`)
+    //         .then(response => {
+    //             setResponse(response);
+    //         });
+    // }
 
-    const getClientByFilter = async (search: string, page: number = 0) => {
+    const getClientByFilter = async (search: string = '', page: number = 0) => {
 
+        try {
 
-        const query = `/client?${selectValue}=${search}&page=${page}&size=8`
+            const query = `/client?${selectValue}=${search}&page=${page}&size=8`
 
+            await api.get(query)
+                .then(response => {
+                    setResponse(response);
+                });
 
+        } catch (error: any) {
 
-        await api.get(query)
-            .then(response => {
-                setResponse(response);
-            });
+            toast.error(`Error: ${error.message}`, {
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            })
+
+            navigate('/login')
+
+        }
     }
 
     const changeStatus = async (id: number) => {
-        await api.patch(`/client/${id}`)
-            .then(res => {
-                getClient()
+        try {
+            await api.patch(`/client/${id}`)
+                .then(res => {
+                    getClientByFilter()
+                })
+        } catch (error: any) {
+
+            toast.error(`Error: ${error.message}`, {
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
             })
+
+            navigate('/login')
+
+        }
     }
 
-    useEffect(() => {
-        getClient(page)
-    }, [page]);
+    // useEffect(() => {
+    //     getClient(page)
+    // }, [page]);
 
     useEffect(() => {
 
@@ -239,13 +279,13 @@ export const ClientList = () => {
                             <tr key={client.clientId} >
                                 <td>{client.clientId}</td>
                                 <td>{client.clientName}</td>
-                                <td>{client.company ? formatCnpj(client.clientCnpj) : ''}</td>
-                                <td>{client.company ? '' : formatCpf(client.clientCpf)}</td>
+                                <td>{client.company ? formatCnpj(client.clientCnpj ? client.clientCnpj : '00000000000000') : ''}</td>
+                                <td>{client.company ? '' : formatCpf(client.clientCpf ? client.clientCpf : '00000000000')}</td>
                                 <td>{client.clientEmail}</td>
 
                                 <td>{formatDate(client.createAt)}</td>
                                 <td>
-                                    <CardTableActions>
+                                    {client.clientId !== 1 && <CardTableActions>
                                         <TableButtonNavLink to={"/client/register"} state={{
                                             data: {
                                                 clientId: client.clientId,
@@ -256,12 +296,12 @@ export const ClientList = () => {
                                                 clientResponsible: client.clientResponsible,
                                                 telephone: client.telephone,
                                                 company: client.company,
-                                                zipcode: client.address.zipcode,
-                                                state: client.address.state,
-                                                city: client.address.city,
-                                                district: client.address.district,
-                                                street: client.address.street,
-                                                homeNumber: client.address.homeNumber
+                                                zipcode: client.address && client.address.zipcode ? client.address.zipcode : '',
+                                                state: client.address && client.address.state ? client.address.state : '',
+                                                city: client.address && client.address.city ? client.address.city : '',
+                                                district: client.address && client.address.district ? client.address.district : '',
+                                                street: client.address && client.address.street ? client.address.street : '',
+                                                homeNumber: client.address && client.address.homeNumber ? client.address.homeNumber : ''
                                             }
                                         }} className="btn btn-warning"><ImPencil2 /></TableButtonNavLink>
                                         <DesactiveTableButton
@@ -270,7 +310,7 @@ export const ClientList = () => {
                                         >
                                             <RiDeleteBinFill />
                                         </DesactiveTableButton>
-                                    </CardTableActions>
+                                    </CardTableActions>}
                                 </td>
                             </tr>
                         ))}
